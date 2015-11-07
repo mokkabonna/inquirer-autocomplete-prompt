@@ -151,7 +151,7 @@ Prompt.prototype.search = function(searchTerm) {
 
   return thisPromise.then(function inner(choices) {
     //if another search is triggered before the current search finishes, don't set results
-    if(thisPromise !== self.lastPromise) return;
+    if (thisPromise !== self.lastPromise) return;
 
     choices = new Choices(choices);
     self.currentChoices = choices;
