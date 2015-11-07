@@ -10,6 +10,7 @@ var Choices = require('./node_modules/inquirer/lib/objects/choices');
 var observe = require('./node_modules/inquirer/lib/utils/events');
 var utils = require('./node_modules/inquirer/lib/utils/readline');
 var Paginator = require('./node_modules/inquirer/lib/utils/paginator');
+var readline = require('readline');
 
 /**
  * Module exports
