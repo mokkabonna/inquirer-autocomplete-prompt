@@ -1,6 +1,9 @@
-describe('inquirer-autocomplete-prompt', function () {
+describe('inquirer-autocomplete-prompt', function() {
 
-  it('should work as expected', function (done) {
+  var inquirer = require('inquirer');
+  inquirer.registerPrompt('autocomplete', require('../index'));
+
+  it('should work as expected', function(done) {
     done()
   })
 
