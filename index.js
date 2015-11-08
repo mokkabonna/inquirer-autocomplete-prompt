@@ -110,11 +110,15 @@ Prompt.prototype.render = function() {
 
 Prompt.prototype.onSubmit = function(line) {
   var choice = {}
-  if (this.currentChoices.length <= this.selected) {
+  if (this.opt.acceptInput && this.currentChoices.length <= this.selected) {
     this.rl.write(line)
+    this.rl.line = ''
     choice.value = line
     this.answer = line
-    this.rl.line = ''
+  } else if (!this.opt.acceptInput && this.currentChoices.length <= this.selected) {
+    this.rl.write(line)
+    this.search(line)
+    return;  
   } else {
     choice = this.currentChoices.getChoice(this.selected);
     this.answer = choice.value;
