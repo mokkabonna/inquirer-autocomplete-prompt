@@ -8,7 +8,6 @@ var figures = require('figures');
 var Base = require('./node_modules/inquirer/lib/prompts/base');
 var Choices = require('./node_modules/inquirer/lib/objects/choices');
 var observe = require('./node_modules/inquirer/lib/utils/events');
-var readline = require('readline');
 var utils = require('./node_modules/inquirer/lib/utils/readline');
 var Paginator = require('./node_modules/inquirer/lib/utils/paginator');
 var readline = require('readline');
