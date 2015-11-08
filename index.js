@@ -8,9 +8,9 @@ var figures = require('figures');
 var Base = require('./node_modules/inquirer/lib/prompts/base');
 var Choices = require('./node_modules/inquirer/lib/objects/choices');
 var observe = require('./node_modules/inquirer/lib/utils/events');
+var readline = require('readline');
 var utils = require('./node_modules/inquirer/lib/utils/readline');
 var Paginator = require('./node_modules/inquirer/lib/utils/paginator');
-var readline = require('readline');
 
 /**
  * Module exports
@@ -81,7 +81,8 @@ Prompt.prototype.render = function() {
   var message = this.getQuestion();
 
   if (this.firstRender) {
-    message += chalk.dim('(Use arrow keys or type to search)');
+    var suggesText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
+    message += chalk.dim('(Use arrow keys or type to search' + suggesText + ')');
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
@@ -109,14 +110,23 @@ Prompt.prototype.render = function() {
  */
 
 Prompt.prototype.onSubmit = function(line) {
-  if (this.currentChoices.length <= this.selected) {
-    this.rl.write(line)
-    this.search(line)
+  var choice = {};
+  if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
+    this.rl.write(line);
+    this.search(line);
     return;
   }
 
-  var choice = this.currentChoices.getChoice(this.selected);
-  this.answer = choice.value;
+  if (this.opt.suggestOnly) {
+    this.rl.write(line);
+    choice.value = line;
+    this.answer = line;
+    this.rl.line = '';
+  } else {
+    choice = this.currentChoices.getChoice(this.selected);
+    this.answer = choice.value;
+  }
+
 
   this.status = 'answered';
 
@@ -175,7 +185,12 @@ Prompt.prototype.ensureSelectedInRange = function() {
 Prompt.prototype.onKeypress = function(e) {
   var len;
   var keyName = (e.key && e.key.name) || undefined;
-  if (keyName === 'down') {
+
+  if (keyName === 'tab' && this.opt.suggestOnly) {
+    this.rl.line = this.currentChoices.getChoice(this.selected).value;
+    this.render();
+    readline.moveCursor(this.rl.output, 0, 5);
+  } else if (keyName === 'down') {
     len = this.currentChoices.length;
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();

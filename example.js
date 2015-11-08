@@ -85,6 +85,7 @@ function searchStates(answers, input) {
 inquirer.prompt([{
   type: 'autocomplete',
   name: 'from',
+  suggestOnly: true,
   message: 'Select a state to travel from',
   source: searchStates
 }, {
