@@ -118,7 +118,7 @@ Prompt.prototype.onSubmit = function(line) {
   } else if (!this.opt.acceptInput && this.currentChoices.length <= this.selected) {
     this.rl.write(line)
     this.search(line)
-    return;  
+    return;
   } else {
     choice = this.currentChoices.getChoice(this.selected);
     this.answer = choice.value;
