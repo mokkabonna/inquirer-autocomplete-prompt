@@ -174,13 +174,14 @@ Prompt.prototype.ensureSelectedInRange = function() {
 
 Prompt.prototype.onKeypress = function(e) {
   var len;
-  if (e.key.name === 'down') {
+  var keyName = (e.key && e.key.name) || undefined;
+  if (keyName === 'down') {
     len = this.currentChoices.length;
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
     this.render();
     readline.moveCursor(this.rl.output, -2, 0)
-  } else if (e.key.name === 'up') {
+  } else if (keyName === 'up') {
     len = this.currentChoices.length;
     this.selected = (this.selected > 0) ? this.selected - 1 : len - 1;
     this.ensureSelectedInRange();
