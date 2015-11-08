@@ -86,7 +86,8 @@ inquirer.prompt([{
   type: 'autocomplete',
   name: 'from',
   message: 'Select a state to travel from',
-  source: searchStates
+  source: searchStates,
+  acceptInput: true
 }, {
   type: 'autocomplete',
   name: 'to',
