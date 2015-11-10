@@ -21,6 +21,7 @@
   },
   "author": "Martin Hansen <martin@martinhansen.no>",
   "license": "ISC",
+  "readme": "README.md",
   "devDependencies": {
     "istanbul": "^0.3.8",
     "jscs": "^1.6.1",
