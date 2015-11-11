@@ -10,7 +10,7 @@ var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
 var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
-var readline = require('readline');
+var ansiEscapes = require('ansi-escapes');
 
 /**
  * Module exports
@@ -190,15 +190,16 @@ Prompt.prototype.onKeypress = function(e) {
   var keyName = (e.key && e.key.name) || undefined;
 
   if (keyName === 'tab' && this.opt.suggestOnly) {
-    this.rl.line = this.currentChoices.getChoice(this.selected).value;
+    this.rl.write(ansiEscapes.cursorLeft);
+    var autoCompleted = this.currentChoices.getChoice(this.selected).value;
+    this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
+    this.rl.line = autoCompleted
     this.render();
-    readline.moveCursor(this.rl.output, 0, 5);
   } else if (keyName === 'down') {
     len = this.currentChoices.length;
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
     this.render();
-    readline.moveCursor(this.rl.output, -2, 0)
   } else if (keyName === 'up') {
     len = this.currentChoices.length;
     this.selected = (this.selected > 0) ? this.selected - 1 : len - 1;
