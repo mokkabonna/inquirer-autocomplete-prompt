@@ -63,7 +63,7 @@ Prompt.prototype._run = function(cb) {
   }
 
   //call once at init
-  self.search();
+  self.search(null);
 
   return this;
 };
