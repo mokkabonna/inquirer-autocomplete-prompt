@@ -14,7 +14,7 @@
     "checkStyle": "jscs .",
     "pretest": "npm run-script lint && npm run-script checkStyle",
     "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
-    "posttest": "istanbul check-coverage --statements 0 --branches 0 --functions 0 --lines 0 && rm -rf coverage"
+    "posttest": "istanbul check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
