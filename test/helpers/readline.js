@@ -3,7 +3,9 @@ var sinon = require('sinon');
 var util = require('util');
 var _ = require('lodash');
 
-var stub = {
+var stub = {};
+
+_.assign(stub, {
   write: sinon.stub().returns(stub),
   moveCursor: sinon.stub().returns(stub),
   setPrompt: sinon.stub().returns(stub),
@@ -23,7 +25,7 @@ var stub = {
       this.__raw__ += str;
     }
   }
-};
+});
 
 var ReadlineStub = function() {
   this.line = '';
