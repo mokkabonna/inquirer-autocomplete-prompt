@@ -1,6 +1,5 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var _ = require('lodash');
 var Promise = require('bluebird');
 var inquirer = require('inquirer');
 var ReadlineStub = require('../helpers/readline');
