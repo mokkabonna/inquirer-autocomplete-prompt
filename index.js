@@ -5,11 +5,11 @@
 var util = require('util');
 var chalk = require('chalk');
 var figures = require('figures');
-var Base = require('./node_modules/inquirer/lib/prompts/base');
-var Choices = require('./node_modules/inquirer/lib/objects/choices');
-var observe = require('./node_modules/inquirer/lib/utils/events');
-var utils = require('./node_modules/inquirer/lib/utils/readline');
-var Paginator = require('./node_modules/inquirer/lib/utils/paginator');
+var Base = require('inquirer/lib/prompts/base');
+var Choices = require('inquirer/lib/objects/choices');
+var observe = require('inquirer/lib/utils/events');
+var utils = require('inquirer/lib/utils/readline');
+var Paginator = require('inquirer/lib/utils/paginator');
 var readline = require('readline');
 
 /**
