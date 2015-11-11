@@ -63,7 +63,7 @@ Prompt.prototype._run = function(cb) {
   }
 
   //call once at init
-  self.search();
+  self.search(null);
 
   return this;
 };
@@ -153,8 +153,11 @@ Prompt.prototype.search = function(searchTerm) {
     //if another search is triggered before the current search finishes, don't set results
     if (thisPromise !== self.lastPromise) return;
 
-    choices = new Choices(choices);
-    self.currentChoices = choices;
+    choices = new Choices(choices.filter(function(choice) {
+      return choice.type !== 'separator';
+    }));
+
+    self.currentChoices = choices
     self.searching = false;
     self.render();
   });
@@ -163,7 +166,7 @@ Prompt.prototype.search = function(searchTerm) {
 
 
 Prompt.prototype.ensureSelectedInRange = function() {
-  var selectedIndex = Math.min(this.selected, this.currentChoices.length - 1); //not above currentChoices length - 1
+  var selectedIndex = Math.min(this.selected, this.currentChoices.length); //not above currentChoices length - 1
   this.selected = Math.max(selectedIndex, 0); //not below 0
 }
 
@@ -188,7 +191,6 @@ Prompt.prototype.onKeypress = function(e) {
     this.render();
   } else {
     this.render(); //render input automatically
-
     //Only search if input have actually changed, not because of other keypresses
     if (this.lastSearchTerm !== this.rl.line) {
       this.search(this.rl.line); //trigger new search

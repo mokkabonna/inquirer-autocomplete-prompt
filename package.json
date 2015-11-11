@@ -13,7 +13,7 @@
     "lint": "jshint .",
     "checkStyle": "jscs .",
     "pretest": "npm run-script lint && npm run-script checkStyle",
-    "test": "istanbul cover ./node_modules/.bin/_mocha test",
+    "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
     "posttest": "istanbul check-coverage --statements 0 --branches 0 --functions 0 --lines 0 && rm -rf coverage"
   },
   "publishConfig": {
@@ -22,11 +22,15 @@
   "author": "Martin Hansen <martin@martinhansen.no>",
   "license": "ISC",
   "devDependencies": {
+    "bluebird": "^3.0.5",
+    "chai": "^3.4.1",
     "istanbul": "^0.3.8",
     "jscs": "^1.6.1",
     "jshint": "^2.5.6",
+    "lodash": "^3.10.1",
     "mocha": "^2.2.1",
-    "promise": "^7.0.4"
+    "promise": "^7.0.4",
+    "sinon": "^1.17.2"
   },
   "repository": {
     "type": "git",

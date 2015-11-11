@@ -22,9 +22,8 @@
 , "newcap": true
 , "node": true
 , "noempty": false
-, "nonew": true
+, "nonew": false
 , "quotmark": "single"
-, "nonew": true
 , "predef":
   [ "describe"
   , "it"

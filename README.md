@@ -35,7 +35,7 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **Source** will be called with previous answers object and the current user input each time the user types, it **must** return a promise.
 
-**Source** will be called once at at first before the user types anything with a empty search string. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
+**Source** will be called once at at first before the user types anything with **null** as the value. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
 
 
 
