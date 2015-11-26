@@ -13,6 +13,7 @@ npm install --save inquirer-autocomplete-prompt
 
 ## Usage
 
+
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
 ```javascript
