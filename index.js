@@ -109,14 +109,20 @@ Prompt.prototype.render = function() {
  */
 
 Prompt.prototype.onSubmit = function(line) {
-  if (this.currentChoices.length <= this.selected) {
+  var choice = {}
+  if (this.opt.acceptInput && this.currentChoices.length <= this.selected) {
+    this.rl.write(line)
+    this.rl.line = ''
+    choice.value = line
+    this.answer = line
+  } else if (!this.opt.acceptInput && this.currentChoices.length <= this.selected) {
     this.rl.write(line)
     this.search(line)
     return;
+  } else {
+    choice = this.currentChoices.getChoice(this.selected);
+    this.answer = choice.value;
   }
-
-  var choice = this.currentChoices.getChoice(this.selected);
-  this.answer = choice.value;
 
   this.status = 'answered';
 

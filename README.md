@@ -30,15 +30,15 @@ Change `autocomplete` to whatever you might prefer.
 
 > **Note:** _allowed options written inside square brackets (`[]`) are optional. Others are required._
 
-`type`, `name`, `message`, `source`[, `filter`, `when`]
+`type`, `name`, `message`, `source`[, `filter`, `when`, `acceptInput`]
 
-See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source**.
+See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source** and **acceptInput**.
 
 **Source** will be called with previous answers object and the current user input each time the user types, it **must** return a promise.
 
 **Source** will be called once at at first before the user types anything with **null** as the value. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
 
-
+**acceptInput** is a boolean, defaulting to `false`. If `true`, the user can input arbitrary text as a selection — that is to say, even if the choice does not appear in the list. See `example.js` for an example.
 
 #### Example
 
