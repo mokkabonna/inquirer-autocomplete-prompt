@@ -8,7 +8,6 @@ var figures = require('figures');
 var Base = require('inquirer/lib/prompts/base');
 var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
-var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
 var readline = require('readline');
 
@@ -52,15 +51,13 @@ util.inherits(Prompt, Base);
 Prompt.prototype._run = function(cb) {
   var self = this;
   self.done = cb;
-
   var events = observe(self.rl);
+  var submit = events.line.map( this.filterInput.bind(this) );
 
-  events.line.takeWhile(dontHaveAnswer).forEach(self.onSubmit.bind(this));
-  events.keypress.takeWhile(dontHaveAnswer).forEach(self.onKeypress.bind(this));
+  this.handleSubmitEvents( submit );
 
-  function dontHaveAnswer() {
-    return !self.answer;
-  }
+  events.line.take(1).forEach( self.onSubmit.bind(this) );
+  events.keypress.takeUntil(events.line).forEach(self.onKeypress.bind(this));
 
   //call once at init
   self.search(null);
@@ -75,8 +72,6 @@ Prompt.prototype._run = function(cb) {
  */
 
 Prompt.prototype.render = function() {
-  var cursor = 0;
-
   // Render question
   var message = this.getQuestion();
 
@@ -87,21 +82,15 @@ Prompt.prototype.render = function() {
   if (this.status === 'answered') {
     message += chalk.cyan(this.answer);
   } else if (this.searching) {
-    message += this.rl.line + '\n  ' + chalk.dim('Searching...');
+    message += '\n  ' + chalk.dim('Searching...');
   } else if (this.currentChoices.length) {
     var choicesStr = listRender(this.currentChoices, this.selected);
-    message += this.rl.line + '\n' + this.paginator.paginate(choicesStr, this.selected);
+    message += '\n' + this.paginator.paginate(choicesStr, this.selected);
   } else {
-    message += this.rl.line + '\n  ' + chalk.yellow('No results...');
+    message += '\n  ' + chalk.yellow('No results...');
   }
-
-  cursor = cursor + message.split('\n').length - 1;
-
   this.firstRender = false;
-
-  this.screen.render(message, {
-    cursor: cursor
-  });
+  this.screen.render(this.rl.line||(String.fromCharCode(8)), message);
 };
 
 /**
@@ -124,7 +113,7 @@ Prompt.prototype.onSubmit = function(line) {
   this.render();
 
   this.screen.done();
-  utils.showCursor(this.rl);
+  this.rl.output.write('\n');
 
   this.done(choice.value);
 
@@ -196,6 +185,17 @@ Prompt.prototype.onKeypress = function(e) {
       this.search(this.rl.line); //trigger new search
     }
   }
+};
+
+/**
+ * When user press `enter` key
+ */
+
+Prompt.prototype.filterInput = function( input ) {
+  if ( !input ) {
+    return this.opt.default != null ? this.opt.default : '';
+  }
+  return input;
 };
 
 
