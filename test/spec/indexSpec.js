@@ -202,11 +202,7 @@ describe('inquirer-autocomplete-prompt', function() {
   });
 
   function getPromiseForAnswer() {
-    return new Promise(function(resolve) {
-      prompt.run(function(answer) {
-        resolve(answer);
-      });
-    });
+    return prompt.run();
   }
 
   function typeNonChar() {
