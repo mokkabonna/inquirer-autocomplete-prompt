@@ -8,8 +8,8 @@ var figures = require('figures');
 var Base = require('inquirer/lib/prompts/base');
 var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
+var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
-var readline = require('readline');
 
 /**
  * Module exports
@@ -123,7 +123,6 @@ Prompt.prototype.onSubmit = function(line) {
   this.screen.done();
 
   this.done(choice.value);
-
 };
 
 Prompt.prototype.search = function(searchTerm) {
@@ -179,7 +178,7 @@ Prompt.prototype.onKeypress = function(e) {
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
     this.render();
-    readline.moveCursor(this.rl.output, -2, 0)
+    utils.up(this.rl, 2);
   } else if (keyName === 'up') {
     len = this.currentChoices.length;
     this.selected = (this.selected > 0) ? this.selected - 1 : len - 1;
