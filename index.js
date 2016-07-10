@@ -52,6 +52,10 @@ Prompt.prototype._run = function(cb) {
   var self = this;
   self.done = cb;
 
+  if (self.rl.history instanceof Array) {
+    self.rl.history = [];
+  }
+
   var events = observe(self.rl);
 
   events.line.takeWhile(dontHaveAnswer).forEach(self.onSubmit.bind(this));
