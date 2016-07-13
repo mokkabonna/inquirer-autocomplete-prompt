@@ -202,15 +202,11 @@ describe('inquirer-autocomplete-prompt', function() {
   });
 
   function getPromiseForAnswer() {
-    return new Promise(function(resolve) {
-      prompt.run(function(answer) {
-        resolve(answer);
-      });
-    });
+    return prompt.run();
   }
 
   function typeNonChar() {
-    rl.emit('keypress', '', {
+    rl.input.emit('keypress', '', {
       name: 'shift'
     });
   }
@@ -218,18 +214,18 @@ describe('inquirer-autocomplete-prompt', function() {
   function type(word) {
     word.split('').forEach(function(char) {
       rl.line = rl.line + char;
-      rl.emit('keypress', char)
+      rl.input.emit('keypress', char)
     });
   }
 
   function moveDown() {
-    rl.emit('keypress', '', {
+    rl.input.emit('keypress', '', {
       name: 'down'
     });
   }
 
   function moveUp() {
-    rl.emit('keypress', '', {
+    rl.input.emit('keypress', '', {
       name: 'up'
     });
   }
