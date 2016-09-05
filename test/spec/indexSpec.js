@@ -159,18 +159,25 @@ describe('inquirer-autocomplete-prompt', function() {
 
     describe('with choices', function() {
       var promiseForAnswer;
+      var answerValue= {};
 
       beforeEach(function() {
         promiseForAnswer = getPromiseForAnswer();
-        resolve(defaultChoices);
+        resolve([{
+          name: 'foo',
+          value: answerValue,
+          short: 'short'
+        }]);
         return promise;
       });
 
       it('stores the value as the answer and status to answered', function() {
         enter();
         return promiseForAnswer.then(function(answer) {
-          expect(answer).to.equal('foo');
-          expect(prompt.answer).to.equal('foo');
+          expect(answer).to.equal(answerValue);
+          expect(prompt.answer).to.equal(answerValue);
+          expect(prompt.shortAnswer).to.equal('short');
+          expect(prompt.answerName).to.equal('foo');
           expect(prompt.status).to.equal('answered');
         })
       });
@@ -191,8 +198,8 @@ describe('inquirer-autocomplete-prompt', function() {
           enter();
           sinon.assert.notCalled(source);
           return promiseForAnswer.then(function(answer) {
-            expect(answer).to.equal('foo');
-            expect(prompt.answer).to.equal('foo');
+            expect(answer).to.equal(answerValue);
+            expect(prompt.answer).to.equal(answerValue);
             expect(prompt.status).to.equal('answered');
           })
         });

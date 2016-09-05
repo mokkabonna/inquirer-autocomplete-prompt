@@ -87,7 +87,7 @@ Prompt.prototype.render = function() {
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
-    content += chalk.cyan(this.answer);
+    content += chalk.cyan(this.shortAnswer || this.answerName || this.answer);
   } else if (this.searching) {
     content += this.rl.line;
     bottomContent += '  ' + chalk.dim('Searching...');
@@ -118,6 +118,8 @@ Prompt.prototype.onSubmit = function(line) {
 
   var choice = this.currentChoices.getChoice(this.selected);
   this.answer = choice.value;
+  this.answerName = choice.name;
+  this.shortAnswer = choice.short;
 
   this.status = 'answered';
 
