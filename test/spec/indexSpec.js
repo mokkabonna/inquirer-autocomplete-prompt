@@ -159,7 +159,7 @@ describe('inquirer-autocomplete-prompt', function() {
 
     describe('with choices', function() {
       var promiseForAnswer;
-      var answerValue= {};
+      var answerValue = {};
 
       beforeEach(function() {
         promiseForAnswer = getPromiseForAnswer();
