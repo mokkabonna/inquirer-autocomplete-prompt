@@ -65,8 +65,13 @@ Prompt.prototype._run = function(cb) {
     return !self.answer;
   }
 
-  //call once at init
-  self.search(null);
+  if (!!self.opt.initial) {
+    // emit a keypress event to pass in the initial option
+    self.rl.input.emit('keypress', self.opt.initial) // trigger the search
+  } else {
+    // call once at init
+    self.search(null);
+  }
 
   return this;
 };
