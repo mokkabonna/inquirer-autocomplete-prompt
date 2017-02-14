@@ -83,16 +83,21 @@ function searchStates(answers, input) {
   });
 }
 
+var args = process.argv.slice(2);
+
 inquirer.prompt([{
   type: 'autocomplete',
   name: 'from',
   message: 'Select a state to travel from',
-  source: searchStates
+  source: searchStates,
+  initial: args[0]
 }, {
   type: 'autocomplete',
   name: 'to',
   message: 'Select a state to travel to',
-  source: searchStates
-}], function(answers) {
-  console.log(JSON.stringify(answers, null, 2));
-});
+  source: searchStates,
+  initial: args[1]
+}])
+  .then(function(answers) {
+    console.log(JSON.stringify(answers, null, 2));
+  })
