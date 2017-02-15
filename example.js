@@ -87,12 +87,12 @@ inquirer.prompt([{
   type: 'autocomplete',
   name: 'from',
   suggestOnly: true,
-  message: 'Select a state to travel from',
+  message: 'Select a state to travel from, you can type any value',
   source: searchStates
 }, {
   type: 'autocomplete',
   name: 'to',
-  message: 'Select a state to travel to',
+  message: 'Select a state to travel to, select one from the list.',
   source: searchStates
 }], function(answers) {
   console.log(JSON.stringify(answers, null, 2));
