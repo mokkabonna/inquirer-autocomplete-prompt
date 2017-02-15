@@ -83,12 +83,13 @@ function searchStates(answers, input) {
   });
 }
 
+
 inquirer.prompt([{
   type: 'autocomplete',
   name: 'from',
   suggestOnly: true,
   message: 'Select a state to travel from, you can type any value',
-  source: searchStates
+  source: searchStates,
 }, {
   type: 'autocomplete',
   name: 'to',

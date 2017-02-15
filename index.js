@@ -120,10 +120,10 @@ Prompt.prototype.onSubmit = function(line) {
   }
 
   if (this.opt.suggestOnly) {
-    choice.value = this.rl.line;
-    this.answer = this.rl.line;
-    this.answerName = this.rl.line;
-    this.shortAnswer = this.rl.line;
+    choice.value = line;
+    this.answer = line;
+    this.answerName = line;
+    this.shortAnswer = line;
     this.rl.line = '';
   } else {
     choice = this.currentChoices.getChoice(this.selected);
