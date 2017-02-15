@@ -53,6 +53,10 @@ Prompt.prototype._run = function(cb) {
   var self = this;
   self.done = cb;
 
+  if (self.rl.history instanceof Array) {
+    self.rl.history = [];
+  }
+
   var events = observe(self.rl);
 
   events.line.takeWhile(dontHaveAnswer).forEach(self.onSubmit.bind(this));
@@ -75,10 +79,9 @@ Prompt.prototype._run = function(cb) {
  */
 
 Prompt.prototype.render = function() {
-  var cursor = 0;
-
   // Render question
-  var message = this.getQuestion();
+  var content = this.getQuestion();
+  var bottomContent = '';
 
   if (this.firstRender) {
     var suggesText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
@@ -86,23 +89,22 @@ Prompt.prototype.render = function() {
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
-    message += chalk.cyan(this.answer);
+    content += chalk.cyan(this.shortAnswer || this.answerName || this.answer);
   } else if (this.searching) {
-    message += this.rl.line + '\n  ' + chalk.dim('Searching...');
+    content += this.rl.line;
+    bottomContent += '  ' + chalk.dim('Searching...');
   } else if (this.currentChoices.length) {
     var choicesStr = listRender(this.currentChoices, this.selected);
-    message += this.rl.line + '\n' + this.paginator.paginate(choicesStr, this.selected);
+    content += this.rl.line;
+    bottomContent += this.paginator.paginate(choicesStr, this.selected);
   } else {
-    message += this.rl.line + '\n  ' + chalk.yellow('No results...');
+    content += this.rl.line;
+    bottomContent += '  ' + chalk.yellow('No results...');
   }
-
-  cursor = cursor + message.split('\n').length - 1;
 
   this.firstRender = false;
 
-  this.screen.render(message, {
-    cursor: cursor
-  });
+  this.screen.render(content, bottomContent);
 };
 
 /**
@@ -125,6 +127,8 @@ Prompt.prototype.onSubmit = function(line) {
   } else {
     choice = this.currentChoices.getChoice(this.selected);
     this.answer = choice.value;
+    this.answerName = choice.name;
+    this.shortAnswer = choice.short;
   }
 
 
@@ -134,10 +138,8 @@ Prompt.prototype.onSubmit = function(line) {
   this.render();
 
   this.screen.done();
-  utils.showCursor(this.rl);
 
   this.done(choice.value);
-
 };
 
 Prompt.prototype.search = function(searchTerm) {
@@ -200,6 +202,7 @@ Prompt.prototype.onKeypress = function(e) {
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
     this.render();
+    utils.up(this.rl, 2);
   } else if (keyName === 'up') {
     len = this.currentChoices.length;
     this.selected = (this.selected > 0) ? this.selected - 1 : len - 1;

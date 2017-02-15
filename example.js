@@ -72,6 +72,7 @@ var states = [
 ];
 
 function searchStates(answers, input) {
+  input = input || '';
   return new Promise(function(resolve) {
     setTimeout(function() {
 
