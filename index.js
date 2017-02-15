@@ -10,7 +10,6 @@ var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
 var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
-var ansiEscapes = require('ansi-escapes');
 
 /**
  * Module exports
@@ -84,8 +83,7 @@ Prompt.prototype.render = function() {
   var bottomContent = '';
 
   if (this.firstRender) {
-    var suggestText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
-    content += chalk.dim('(Use arrow keys or type to search' + suggestText + ')');
+    content += chalk.dim('(Use arrow keys or type to search)');
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
@@ -112,26 +110,16 @@ Prompt.prototype.render = function() {
  */
 
 Prompt.prototype.onSubmit = function(line) {
-  var choice = {};
-  if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
-    this.rl.write(line);
-    this.search(line);
+  if (this.currentChoices.length <= this.selected) {
+    this.rl.write(line)
+    this.search(line)
     return;
   }
 
-  if (this.opt.suggestOnly) {
-    choice.value = this.rl.line;
-    this.answer = this.rl.line;
-    this.answerName = this.rl.line;
-    this.shortAnswer = this.rl.line;
-    this.rl.line = '';
-  } else {
-    choice = this.currentChoices.getChoice(this.selected);
-    this.answer = choice.value;
-    this.answerName = choice.name;
-    this.shortAnswer = choice.short;
-  }
-
+  var choice = this.currentChoices.getChoice(this.selected);
+  this.answer = choice.value;
+  this.answerName = choice.name;
+  this.shortAnswer = choice.short;
 
   this.status = 'answered';
 
@@ -191,14 +179,7 @@ Prompt.prototype.ensureSelectedInRange = function() {
 Prompt.prototype.onKeypress = function(e) {
   var len;
   var keyName = (e.key && e.key.name) || undefined;
-
-  if (keyName === 'tab' && this.opt.suggestOnly) {
-    this.rl.write(ansiEscapes.cursorLeft);
-    var autoCompleted = this.currentChoices.getChoice(this.selected).value;
-    this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
-    this.rl.line = autoCompleted
-    this.render();
-  } else if (keyName === 'down') {
+  if (keyName === 'down') {
     len = this.currentChoices.length;
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
