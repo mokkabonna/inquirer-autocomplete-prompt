@@ -84,8 +84,8 @@ Prompt.prototype.render = function() {
   var bottomContent = '';
 
   if (this.firstRender) {
-    var suggesText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
-    message += chalk.dim('(Use arrow keys or type to search' + suggesText + ')');
+    var suggestText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
+    content += chalk.dim('(Use arrow keys or type to search' + suggestText + ')');
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
