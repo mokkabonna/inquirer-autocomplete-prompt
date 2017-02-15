@@ -90,6 +90,7 @@ inquirer.prompt([{
   suggestOnly: true,
   message: 'Select a state to travel from, you can type any value',
   source: searchStates,
+  pageSize: 4,
   validate: function(val) {
     return val ? true : 'Type something!';
   },

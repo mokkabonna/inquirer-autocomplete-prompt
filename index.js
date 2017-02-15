@@ -96,7 +96,7 @@ Prompt.prototype.render = function(error) {
   } else if (this.currentChoices.length) {
     var choicesStr = listRender(this.currentChoices, this.selected);
     content += this.rl.line;
-    bottomContent += this.paginator.paginate(choicesStr, this.selected);
+    bottomContent += this.paginator.paginate(choicesStr, this.selected, this.opt.pageSize);
   } else {
     content += this.rl.line;
     bottomContent += '  ' + chalk.yellow('No results...');
