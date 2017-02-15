@@ -78,7 +78,7 @@ Prompt.prototype._run = function(cb) {
  * @return {Prompt} self
  */
 
-Prompt.prototype.render = function() {
+Prompt.prototype.render = function(error) {
   // Render question
   var content = this.getQuestion();
   var bottomContent = '';
@@ -102,6 +102,10 @@ Prompt.prototype.render = function() {
     bottomContent += '  ' + chalk.yellow('No results...');
   }
 
+  if (error){
+    bottomContent += '\n' + chalk.red('>> ') + error;
+  }
+
   this.firstRender = false;
 
   this.screen.render(content, bottomContent);
@@ -112,6 +116,14 @@ Prompt.prototype.render = function() {
  */
 
 Prompt.prototype.onSubmit = function(line) {
+  if(typeof this.opt.validate === 'function' && this.opt.suggestOnly){
+    var validationResult = this.opt.validate(line);
+    if(validationResult !== true){
+      this.render(validationResult || 'Enter something!');
+      return;
+    }
+  }
+
   var choice = {};
   if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
     this.rl.write(line);
