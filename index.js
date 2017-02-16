@@ -10,6 +10,7 @@ var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
 var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
+var ansiEscapes = require('ansi-escapes');
 
 /**
  * Module exports
@@ -77,13 +78,14 @@ Prompt.prototype._run = function(cb) {
  * @return {Prompt} self
  */
 
-Prompt.prototype.render = function() {
+Prompt.prototype.render = function(error) {
   // Render question
   var content = this.getQuestion();
   var bottomContent = '';
 
   if (this.firstRender) {
-    content += chalk.dim('(Use arrow keys or type to search)');
+    var suggestText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
+    content += chalk.dim('(Use arrow keys or type to search' + suggestText + ')');
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
@@ -94,10 +96,14 @@ Prompt.prototype.render = function() {
   } else if (this.currentChoices.length) {
     var choicesStr = listRender(this.currentChoices, this.selected);
     content += this.rl.line;
-    bottomContent += this.paginator.paginate(choicesStr, this.selected);
+    bottomContent += this.paginator.paginate(choicesStr, this.selected, this.opt.pageSize);
   } else {
     content += this.rl.line;
     bottomContent += '  ' + chalk.yellow('No results...');
+  }
+
+  if (error) {
+    bottomContent += '\n' + chalk.red('>> ') + error;
   }
 
   this.firstRender = false;
@@ -110,16 +116,34 @@ Prompt.prototype.render = function() {
  */
 
 Prompt.prototype.onSubmit = function(line) {
-  if (this.currentChoices.length <= this.selected) {
-    this.rl.write(line)
-    this.search(line)
+  if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
+    var validationResult = this.opt.validate(line);
+    if (validationResult !== true) {
+      this.render(validationResult || 'Enter something, tab to autocomplete!');
+      return;
+    }
+  }
+
+  var choice = {};
+  if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
+    this.rl.write(line);
+    this.search(line);
     return;
   }
 
-  var choice = this.currentChoices.getChoice(this.selected);
-  this.answer = choice.value;
-  this.answerName = choice.name;
-  this.shortAnswer = choice.short;
+  if (this.opt.suggestOnly) {
+    choice.value = this.rl.line;
+    this.answer = line;
+    this.answerName = line;
+    this.shortAnswer = line;
+    this.rl.line = '';
+  } else {
+    choice = this.currentChoices.getChoice(this.selected);
+    this.answer = choice.value;
+    this.answerName = choice.name;
+    this.shortAnswer = choice.short;
+  }
+
 
   this.status = 'answered';
 
@@ -179,7 +203,14 @@ Prompt.prototype.ensureSelectedInRange = function() {
 Prompt.prototype.onKeypress = function(e) {
   var len;
   var keyName = (e.key && e.key.name) || undefined;
-  if (keyName === 'down') {
+
+  if (keyName === 'tab' && this.opt.suggestOnly) {
+    this.rl.write(ansiEscapes.cursorLeft);
+    var autoCompleted = this.currentChoices.getChoice(this.selected).value;
+    this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
+    this.rl.line = autoCompleted
+    this.render();
+  } else if (keyName === 'down') {
     len = this.currentChoices.length;
     this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
