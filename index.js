@@ -102,7 +102,7 @@ Prompt.prototype.render = function(error) {
     bottomContent += '  ' + chalk.yellow('No results...');
   }
 
-  if (error){
+  if (error) {
     bottomContent += '\n' + chalk.red('>> ') + error;
   }
 
@@ -116,9 +116,9 @@ Prompt.prototype.render = function(error) {
  */
 
 Prompt.prototype.onSubmit = function(line) {
-  if(typeof this.opt.validate === 'function' && this.opt.suggestOnly){
+  if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
     var validationResult = this.opt.validate(line);
-    if(validationResult !== true){
+    if (validationResult !== true) {
       this.render(validationResult || 'Enter something!');
       return;
     }
@@ -132,7 +132,7 @@ Prompt.prototype.onSubmit = function(line) {
   }
 
   if (this.opt.suggestOnly) {
-    choice.value = line;
+    choice.value = this.rl.line;
     this.answer = line;
     this.answerName = line;
     this.shortAnswer = line;
