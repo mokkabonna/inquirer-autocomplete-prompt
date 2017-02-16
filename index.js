@@ -119,7 +119,7 @@ Prompt.prototype.onSubmit = function(line) {
   if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
     var validationResult = this.opt.validate(line);
     if (validationResult !== true) {
-      this.render(validationResult || 'Enter something!');
+      this.render(validationResult || 'Enter something, tab to autocomplete!');
       return;
     }
   }
