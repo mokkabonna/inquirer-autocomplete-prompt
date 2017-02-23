@@ -5,6 +5,7 @@
 'use strict';
 var inquirer = require('inquirer');
 var _ = require('lodash');
+var fuzzy = require('fuzzy');
 var Promise = require('promise');
 
 inquirer.registerPrompt('autocomplete', require('./index'));
@@ -75,9 +76,9 @@ function searchStates(answers, input) {
   input = input || '';
   return new Promise(function(resolve) {
     setTimeout(function() {
-
-      resolve(states.filter(function(state) {
-        return new RegExp(input, 'i').exec(state) !== null;
+      var fuzzyResult = fuzzy.filter(input, states);
+      resolve(fuzzyResult.map(function(el) {
+        return el.original;
       }));
     }, _.random(30, 500));
   });

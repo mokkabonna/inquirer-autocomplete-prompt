@@ -59,7 +59,9 @@ inquirer.prompt([{
 });
 ```
 
-See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example
+See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
+
+I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy) if you want fuzzy search. Again, see the example for a demonstration of this.
 
 ![Autocomplete prompt](https://cloud.githubusercontent.com/assets/230877/9003165/bd188d9a-376b-11e5-8ddf-5186bc9eb453.png)
 
