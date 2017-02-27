@@ -84,22 +84,25 @@ function searchStates(answers, input) {
   });
 }
 
-
-inquirer.prompt([{
-  type: 'autocomplete',
-  name: 'from',
-  suggestOnly: true,
-  message: 'Select a state to travel from, you can type any value',
-  source: searchStates,
-  pageSize: 4,
-  validate: function(val) {
-    return val ? true : 'Type something!';
-  },
-}, {
-  type: 'autocomplete',
-  name: 'to',
-  message: 'Select a state to travel to, select one from the list.',
-  source: searchStates
-}], function(answers) {
+inquirer.prompt([
+  {
+    type: 'autocomplete',
+    name: 'from',
+    suggestOnly: true,
+    message: 'Select a state to travel from, you can type any value',
+    source: searchStates,
+    pageSize: 4,
+    validate: function(val) {
+      return val
+        ? true
+        : 'Type something!';
+    }
+  }, {
+    type: 'autocomplete',
+    name: 'to',
+    message: 'Select a state to travel to, select one from the list.',
+    source: searchStates
+  }
+], function(answers) {
   console.log(JSON.stringify(answers, null, 2));
 });
