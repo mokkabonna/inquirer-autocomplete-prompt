@@ -103,6 +103,7 @@ inquirer.prompt([
     message: 'Select a state to travel to, select one from the list.',
     source: searchStates
   }
-], function(answers) {
+])
+.then(answers =>  {
   console.log(JSON.stringify(answers, null, 2));
 });
