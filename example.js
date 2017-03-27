@@ -72,6 +72,16 @@ var states = [
   'Wyoming'
 ];
 
+var foods = [
+'Apple',
+'Orange',
+'Banana',
+'Kiwi',
+'Lichi',
+'Grapefruit',
+]
+
+
 function searchStates(answers, input) {
   input = input || '';
   return new Promise(function(resolve) {
@@ -84,13 +94,26 @@ function searchStates(answers, input) {
   });
 }
 
+
+function searchFood(answers, input) {
+  input = input || '';
+  return new Promise(function(resolve) {
+    setTimeout(function() {
+      var fuzzyResult = fuzzy.filter(input, foods);
+      resolve(fuzzyResult.map(function(el) {
+        return el.original;
+      }));
+    }, _.random(30, 500));
+  });
+}
+
 inquirer.prompt([
   {
     type: 'autocomplete',
-    name: 'from',
+    name: 'fruit',
     suggestOnly: true,
-    message: 'Select a state to travel from, you can type any value',
-    source: searchStates,
+    message: 'What is your favorite fruit?',
+    source: searchFood,
     pageSize: 4,
     validate: function(val) {
       return val
@@ -99,8 +122,8 @@ inquirer.prompt([
     }
   }, {
     type: 'autocomplete',
-    name: 'to',
-    message: 'Select a state to travel to, select one from the list.',
+    name: 'state',
+    message: 'Select a state to travel from',
     source: searchStates
   }
 ], function(answers) {
