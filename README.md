@@ -63,7 +63,7 @@ See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt
 
 I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy) if you want fuzzy search. Again, see the example for a demonstration of this.
 
-![Autocomplete prompt](https://cloud.githubusercontent.com/assets/230877/9003165/bd188d9a-376b-11e5-8ddf-5186bc9eb453.png)
+![Autocomplete prompt](./inquirer.gif)
 
 ## Credits
 [Martin Hansen](https://github.com/mokkabonna/)
