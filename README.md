@@ -54,7 +54,7 @@ inquirer.prompt([{
   source: function(answersSoFar, input) {
     return myApi.searchStates(input);
   }
-}], function(answers) {
+}]).then(function(answers) {
   //etc
 });
 ```
