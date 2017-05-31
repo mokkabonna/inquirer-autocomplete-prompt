@@ -132,10 +132,10 @@ Prompt.prototype.onSubmit = function(line) {
   }
 
   if (this.opt.suggestOnly) {
-    choice.value = this.rl.line;
-    this.answer = line;
-    this.answerName = line;
-    this.shortAnswer = line;
+    choice.value = line || this.rl.line;
+    this.answer = line || this.rl.line;
+    this.answerName = line || this.rl.line;
+    this.shortAnswer = line || this.rl.line;
     this.rl.line = '';
   } else {
     choice = this.currentChoices.getChoice(this.selected);
