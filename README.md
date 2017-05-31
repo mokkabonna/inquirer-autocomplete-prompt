@@ -1,5 +1,7 @@
 # inquirer-autocomplete-prompt
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mokkabonna/inquirer-autocomplete-prompt.svg)](https://greenkeeper.io/)
+
 Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
 [![build status](https://secure.travis-ci.org/mokkabonna/inquirer-autocomplete-prompt.svg)](http://travis-ci.org/mokkabonna/inquirer-autocomplete-prompt)

@@ -170,6 +170,7 @@ describe('inquirer-autocomplete-prompt', function() {
       beforeEach(function() {
         prompt.run();
         source.reset();
+        source.returns(promise);
       });
 
       it('searches after each char when user types', function() {
@@ -198,6 +199,7 @@ describe('inquirer-autocomplete-prompt', function() {
         beforeEach(function() {
           prompt.run();
           source.reset();
+          source.returns(promise);
         });
 
         it('searches again, since not possible to select something that does not exist', function() {
