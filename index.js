@@ -149,7 +149,11 @@ Prompt.prototype.onSubmit = function(line) {
 
   runAsync(this.opt.filter, function(err, value) {
     choice.value = value;
-    this.answer = value
+    self.answer = value;
+
+    if(self.opt.suggestOnly){
+      self.shortAnswer = value;
+    }
 
     self.status = 'answered';
     // Rerender prompt
