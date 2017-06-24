@@ -53,6 +53,53 @@ describe('inquirer-autocomplete-prompt', function() {
       });
     });
 
+    it('applies filter async with done callback', function() {
+      prompt = new Prompt({
+        message: 'test',
+        name: 'name',
+        filter: function(val) {
+          var done = this.async();
+          setTimeout(function() {
+            done(null, val.slice(0, 2));
+          }, 100);
+        },
+        suggestOnly: true,
+        source: source
+      }, rl);
+
+      promiseForAnswer = getPromiseForAnswer();
+
+      type('banana');
+      enter();
+
+      return promiseForAnswer.then(function(answer) {
+        expect(answer).to.equal('ba');
+      });
+    });
+
+    it('applies filter async with promise', function() {
+      prompt = new Prompt({
+        message: 'test',
+        name: 'name',
+        filter: function(val) {
+          return new Promise(function(resolve, reject){
+            resolve(val.slice(0, 2));
+          });
+        },
+        suggestOnly: true,
+        source: source
+      }, rl);
+
+      promiseForAnswer = getPromiseForAnswer();
+
+      type('banana');
+      enter();
+
+      return promiseForAnswer.then(function(answer) {
+        expect(answer).to.equal('ba');
+      });
+    });
+
     describe('when tab pressed', function() {
 
       var promiseForAnswer;
@@ -107,6 +154,57 @@ describe('inquirer-autocomplete-prompt', function() {
         name: 'name',
         filter: function(val) {
           return val.slice(0, 2)
+        },
+        source: source
+      }, rl);
+
+      promiseForAnswer = getPromiseForAnswer();
+      resolve(defaultChoices);
+
+      return promise.then(function() {
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function(answer) {
+          expect(answer).to.equal('ba');
+        });
+      })
+    });
+
+    it('applies filter async with done calback', function() {
+      prompt = new Prompt({
+        message: 'test',
+        name: 'name',
+        filter: function(val) {
+          var done = this.async();
+          setTimeout(function() {
+            done(null, val.slice(0, 2));
+          }, 100);
+        },
+        source: source
+      }, rl);
+
+      promiseForAnswer = getPromiseForAnswer();
+      resolve(defaultChoices);
+
+      return promise.then(function() {
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function(answer) {
+          expect(answer).to.equal('ba');
+        });
+      })
+    });
+
+    it('applies filter async with promise', function() {
+      prompt = new Prompt({
+        message: 'test',
+        name: 'name',
+        filter: function(val) {
+          return new Promise(function(resolve, reject) {
+            resolve(val.slice(0, 2));
+          });
         },
         source: source
       }, rl);

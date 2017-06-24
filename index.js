@@ -5,6 +5,7 @@
 var util = require('util');
 var chalk = require('chalk');
 var figures = require('figures');
+var runAsync = require('run-async');
 var Base = require('inquirer/lib/prompts/base');
 var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
@@ -116,6 +117,7 @@ Prompt.prototype.render = function(error) {
  */
 
 Prompt.prototype.onSubmit = function(line) {
+  var self = this;
   if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
     var validationResult = this.opt.validate(line);
     if (validationResult !== true) {
@@ -144,19 +146,24 @@ Prompt.prototype.onSubmit = function(line) {
     this.shortAnswer = choice.short;
   }
 
-  if(typeof this.opt.filter === 'function'){
-    choice.value = this.opt.filter(choice.value);
-    this.answer = choice.value
-  }
-
-  this.status = 'answered';
 
   // Rerender prompt
-  this.render();
 
-  this.screen.done();
 
-  this.done(choice.value);
+  if(typeof this.opt.filter === 'function'){
+    var filter = runAsync(this.opt.filter, function(err, value) {
+      choice.value = value;
+      this.answer = value
+
+      self.status = 'answered';
+      self.render();
+      self.screen.done();
+      self.done(choice.value);
+    })(choice.value);
+  }else {
+    this.done(choice.value);
+  }
+
 };
 
 Prompt.prototype.search = function(searchTerm) {
