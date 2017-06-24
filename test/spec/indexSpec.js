@@ -32,6 +32,27 @@ describe('inquirer-autocomplete-prompt', function() {
       }, rl);
     });
 
+    it('applies filter', function() {
+      prompt = new Prompt({
+        message: 'test',
+        name: 'name',
+        filter: function(val) {
+          return val.slice(0, 2)
+        },
+        suggestOnly: true,
+        source: source
+      }, rl);
+
+      promiseForAnswer = getPromiseForAnswer();
+
+      type('banana');
+      enter();
+
+      return promiseForAnswer.then(function(answer) {
+        expect(answer).to.equal('ba');
+      });
+    });
+
     describe('when tab pressed', function() {
 
       var promiseForAnswer;
@@ -78,6 +99,29 @@ describe('inquirer-autocomplete-prompt', function() {
         name: 'name',
         source: source
       }, rl);
+    });
+
+    it('applies filter', function() {
+      prompt = new Prompt({
+        message: 'test',
+        name: 'name',
+        filter: function(val) {
+          return val.slice(0, 2)
+        },
+        source: source
+      }, rl);
+
+      promiseForAnswer = getPromiseForAnswer();
+      resolve(defaultChoices);
+
+      return promise.then(function() {
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function(answer) {
+          expect(answer).to.equal('ba');
+        });
+      })
     });
 
     it('requires a name', function() {
@@ -223,9 +267,7 @@ describe('inquirer-autocomplete-prompt', function() {
           return promise;
         });
 
-        it('selects the actual value typed', function() {
-
-        });
+        it('selects the actual value typed');
       });
 
       describe('with choices', function() {

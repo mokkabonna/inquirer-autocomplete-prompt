@@ -144,6 +144,10 @@ Prompt.prototype.onSubmit = function(line) {
     this.shortAnswer = choice.short;
   }
 
+  if(typeof this.opt.filter === 'function'){
+    choice.value = this.opt.filter(choice.value);
+    this.answer = choice.value
+  }
 
   this.status = 'answered';
 
