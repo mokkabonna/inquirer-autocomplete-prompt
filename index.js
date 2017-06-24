@@ -147,22 +147,16 @@ Prompt.prototype.onSubmit = function(line) {
   }
 
 
-  // Rerender prompt
+  runAsync(this.opt.filter, function(err, value) {
+    choice.value = value;
+    this.answer = value
 
-
-  if(typeof this.opt.filter === 'function'){
-    var filter = runAsync(this.opt.filter, function(err, value) {
-      choice.value = value;
-      this.answer = value
-
-      self.status = 'answered';
-      self.render();
-      self.screen.done();
-      self.done(choice.value);
-    })(choice.value);
-  }else {
-    this.done(choice.value);
-  }
+    self.status = 'answered';
+    // Rerender prompt
+    self.render();
+    self.screen.done();
+    self.done(choice.value);
+  })(choice.value);
 
 };
 
