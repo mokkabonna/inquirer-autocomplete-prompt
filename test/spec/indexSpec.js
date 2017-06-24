@@ -217,7 +217,7 @@ describe('inquirer-autocomplete-prompt', function() {
             name: 'foo',
             value: answerValue,
             short: 'short'
-        }]);
+          }]);
           return promise;
         });
 
@@ -236,7 +236,7 @@ describe('inquirer-autocomplete-prompt', function() {
             name: 'foo',
             value: answerValue,
             short: 'short'
-        }]);
+          }]);
           return promise;
         });
 
