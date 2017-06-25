@@ -13,6 +13,7 @@ describe('inquirer-autocomplete-prompt', function() {
   var promise;
   var rl;
   var defaultChoices;
+  var promiseForAnswer;
 
   describe('suggestOnly = true', function() {
     beforeEach(function() {
@@ -82,7 +83,7 @@ describe('inquirer-autocomplete-prompt', function() {
         message: 'test',
         name: 'name',
         filter: function(val) {
-          return new Promise(function(resolve, reject){
+          return new Promise(function(resolve) {
             resolve(val.slice(0, 2));
           });
         },
@@ -202,7 +203,7 @@ describe('inquirer-autocomplete-prompt', function() {
         message: 'test',
         name: 'name',
         filter: function(val) {
-          return new Promise(function(resolve, reject) {
+          return new Promise(function(resolve) {
             resolve(val.slice(0, 2));
           });
         },

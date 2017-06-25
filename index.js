@@ -151,7 +151,7 @@ Prompt.prototype.onSubmit = function(line) {
     choice.value = value;
     self.answer = value;
 
-    if(self.opt.suggestOnly){
+    if (self.opt.suggestOnly) {
       self.shortAnswer = value;
     }
 
