@@ -37,6 +37,7 @@ function Prompt() {
   this.selected = 0;
 
   // Make sure no default is set (so it won't be printed)
+  this.default = this.opt.default;
   this.opt.default = null;
 
   this.paginator = new Paginator();
@@ -190,6 +191,15 @@ Prompt.prototype.search = function(searchTerm) {
     choices = new Choices(choices.filter(function(choice) {
       return choice.type !== 'separator';
     }));
+
+    if (self.firstRender) {
+      // If default is a Number, then use as index. Otherwise, check for value.
+      if (typeof self.default === 'number' && self.default >= 0 && self.default < choices.realLength) {
+        self.selected = self.default;
+      } else if (typeof self.default !== 'number' && self.default != null) {
+        self.selected = choices.pluck('value').indexOf(self.default);
+      }
+    }
 
     self.currentChoices = choices
     self.searching = false;
