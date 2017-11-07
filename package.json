@@ -35,7 +35,7 @@
     "lodash": "^4.17.4",
     "mocha": "^4.0.0",
     "promise": "^8.0.0",
-    "sinon": "^3.0.0"
+    "sinon": "^4.1.2"
   },
   "repository": {
     "type": "git",
