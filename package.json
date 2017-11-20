@@ -10,8 +10,7 @@
     "chalk": "^2.0.0",
     "figures": "^2.0.0",
     "inquirer": "3.2.0",
-    "run-async": "^2.3.0",
-    "util": "^0.10.3"
+    "run-async": "^2.3.0"
   },
   "scripts": {
     "lint": "jshint .",
