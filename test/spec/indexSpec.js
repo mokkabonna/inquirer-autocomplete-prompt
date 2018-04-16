@@ -253,10 +253,10 @@ describe('inquirer-autocomplete-prompt', function() {
       }).to.throw(/source/);
     });
 
-    it('immediately calls source with null', function() {
+    it('immediately calls source with undefined', function() {
       prompt.run();
       sinon.assert.calledOnce(source);
-      sinon.assert.calledWithExactly(source, undefined, null);
+      sinon.assert.calledWithExactly(source, undefined, undefined);
     });
 
     describe('when it has some results', function() {
