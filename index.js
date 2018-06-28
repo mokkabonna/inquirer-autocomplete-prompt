@@ -118,7 +118,7 @@ Prompt.prototype.render = function(error) {
 
 Prompt.prototype.onSubmit = function(line) {
   var self = this;
-  if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
+  if (typeof this.opt.validate === 'function' && (this.opt.suggestOnly || this.opt.alwaysValidate) {
     var validationResult = this.opt.validate(line);
     if (validationResult !== true) {
       this.render(validationResult || 'Enter something, tab to autocomplete!');
