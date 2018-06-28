@@ -1,6 +1,5 @@
 # inquirer-autocomplete-prompt
 
-
 [![Greenkeeper badge](https://badges.greenkeeper.io/mokkabonna/inquirer-autocomplete-prompt.svg)](https://greenkeeper.io/)
 
 Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
@@ -15,7 +14,6 @@ npm install --save inquirer-autocomplete-prompt
 ```
 
 ## Usage
-
 
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
@@ -33,7 +31,7 @@ Change `autocomplete` to whatever you might prefer.
 
 > **Note:** _allowed options written inside square brackets (`[]`) are optional. Others are required._
 
-`type`, `name`, `message`, `source`[, `pageSize`, `filter`, `when`, `suggestOnly`, `validate`]
+`type`, `name`, `message`, `source`[, `pageSize`, `filter`, `when`, `suggestOnly`, `validate`, `alwaysValidate`]
 
 See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source** and **suggestOnly**.
 
@@ -45,21 +43,29 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **validate** is only active when **suggestOnly** is set to **true**. It behaves like validate for the input prompt.
 
+**alwaysValidate** is default **false**. Normally user input isn't validated when **suggestOnly** is set to **false**. This flag lets you override that behavior.
 
 #### Example
 
 ```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
-inquirer.prompt([{
-  type: 'autocomplete',
-  name: 'from',
-  message: 'Select a state to travel from',
-  source: function(answersSoFar, input) {
-    return myApi.searchStates(input);
-  }
-}]).then(function(answers) {
-  //etc
-});
+inquirer.registerPrompt(
+  "autocomplete",
+  require("inquirer-autocomplete-prompt")
+);
+inquirer
+  .prompt([
+    {
+      type: "autocomplete",
+      name: "from",
+      message: "Select a state to travel from",
+      source: function(answersSoFar, input) {
+        return myApi.searchStates(input);
+      }
+    }
+  ])
+  .then(function(answers) {
+    //etc
+  });
 ```
 
 See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
@@ -69,6 +75,7 @@ I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy)
 ![Autocomplete prompt](./inquirer.gif)
 
 ## Credits
+
 [Martin Hansen](https://github.com/mokkabonna/)
 
 ## License
