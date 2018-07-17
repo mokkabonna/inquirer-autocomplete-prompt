@@ -25,24 +25,30 @@ describe('inquirer-autocomplete-prompt', function() {
       source = sinon.stub().returns(promise);
 
       rl = new ReadlineStub();
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        suggestOnly: true,
-        source: source
-      }, rl);
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          suggestOnly: true,
+          source: source,
+        },
+        rl
+      );
     });
 
     it('applies filter', function() {
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        filter: function(val) {
-          return val.slice(0, 2)
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          filter: function(val) {
+            return val.slice(0, 2);
+          },
+          suggestOnly: true,
+          source: source,
         },
-        suggestOnly: true,
-        source: source
-      }, rl);
+        rl
+      );
 
       promiseForAnswer = getPromiseForAnswer();
 
@@ -55,18 +61,21 @@ describe('inquirer-autocomplete-prompt', function() {
     });
 
     it('applies filter async with done callback', function() {
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        filter: function(val) {
-          var done = this.async();
-          setTimeout(function() {
-            done(null, val.slice(0, 2));
-          }, 100);
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          filter: function(val) {
+            var done = this.async();
+            setTimeout(function() {
+              done(null, val.slice(0, 2));
+            }, 100);
+          },
+          suggestOnly: true,
+          source: source,
         },
-        suggestOnly: true,
-        source: source
-      }, rl);
+        rl
+      );
 
       promiseForAnswer = getPromiseForAnswer();
 
@@ -79,17 +88,20 @@ describe('inquirer-autocomplete-prompt', function() {
     });
 
     it('applies filter async with promise', function() {
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        filter: function(val) {
-          return new Promise(function(resolve) {
-            resolve(val.slice(0, 2));
-          });
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          filter: function(val) {
+            return new Promise(function(resolve) {
+              resolve(val.slice(0, 2));
+            });
+          },
+          suggestOnly: true,
+          source: source,
         },
-        suggestOnly: true,
-        source: source
-      }, rl);
+        rl
+      );
 
       promiseForAnswer = getPromiseForAnswer();
 
@@ -102,7 +114,6 @@ describe('inquirer-autocomplete-prompt', function() {
     });
 
     describe('when tab pressed', function() {
-
       var promiseForAnswer;
       beforeEach(function() {
         promiseForAnswer = getPromiseForAnswer();
@@ -116,7 +127,7 @@ describe('inquirer-autocomplete-prompt', function() {
 
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('foo');
-        })
+        });
       });
 
       it('accepts any input', function() {
@@ -125,14 +136,12 @@ describe('inquirer-autocomplete-prompt', function() {
 
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('banana');
-        })
+        });
       });
-
     });
   });
 
   describe('suggestOnly = false', function() {
-
     beforeEach(function() {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
       promise = new Promise(function(res, rej) {
@@ -142,22 +151,28 @@ describe('inquirer-autocomplete-prompt', function() {
       source = sinon.stub().returns(promise);
 
       rl = new ReadlineStub();
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        source: source
-      }, rl);
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          source: source,
+        },
+        rl
+      );
     });
 
     it('applies filter', function() {
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        filter: function(val) {
-          return val.slice(0, 2)
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          filter: function(val) {
+            return val.slice(0, 2);
+          },
+          source: source,
         },
-        source: source
-      }, rl);
+        rl
+      );
 
       promiseForAnswer = getPromiseForAnswer();
       resolve(defaultChoices);
@@ -169,21 +184,24 @@ describe('inquirer-autocomplete-prompt', function() {
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('ba');
         });
-      })
+      });
     });
 
     it('applies filter async with done calback', function() {
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        filter: function(val) {
-          var done = this.async();
-          setTimeout(function() {
-            done(null, val.slice(0, 2));
-          }, 100);
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          filter: function(val) {
+            var done = this.async();
+            setTimeout(function() {
+              done(null, val.slice(0, 2));
+            }, 100);
+          },
+          source: source,
         },
-        source: source
-      }, rl);
+        rl
+      );
 
       promiseForAnswer = getPromiseForAnswer();
       resolve(defaultChoices);
@@ -195,20 +213,23 @@ describe('inquirer-autocomplete-prompt', function() {
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('ba');
         });
-      })
+      });
     });
 
     it('applies filter async with promise', function() {
-      prompt = new Prompt({
-        message: 'test',
-        name: 'name',
-        filter: function(val) {
-          return new Promise(function(resolve) {
-            resolve(val.slice(0, 2));
-          });
+      prompt = new Prompt(
+        {
+          message: 'test',
+          name: 'name',
+          filter: function(val) {
+            return new Promise(function(resolve) {
+              resolve(val.slice(0, 2));
+            });
+          },
+          source: source,
         },
-        source: source
-      }, rl);
+        rl
+      );
 
       promiseForAnswer = getPromiseForAnswer();
       resolve(defaultChoices);
@@ -220,16 +241,15 @@ describe('inquirer-autocomplete-prompt', function() {
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('ba');
         });
-      })
+      });
     });
 
     it('requires a name', function() {
       expect(function() {
         new Prompt({
           message: 'foo',
-          source: source
+          source: source,
         });
-
       }).to.throw(/name/);
     });
 
@@ -237,9 +257,8 @@ describe('inquirer-autocomplete-prompt', function() {
       expect(function() {
         new Prompt({
           name: 'foo',
-          source: source
+          source: source,
         });
-
       }).to.throw(/message/);
     });
 
@@ -249,7 +268,6 @@ describe('inquirer-autocomplete-prompt', function() {
           name: 'foo',
           message: 'foo',
         });
-
       }).to.throw(/source/);
     });
 
@@ -273,7 +291,7 @@ describe('inquirer-autocomplete-prompt', function() {
 
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('bar');
-        })
+        });
       });
 
       it('moves up and down', function() {
@@ -284,7 +302,7 @@ describe('inquirer-autocomplete-prompt', function() {
 
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('bar');
-        })
+        });
       });
 
       it('loops choices going down', function() {
@@ -295,7 +313,7 @@ describe('inquirer-autocomplete-prompt', function() {
 
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('foo');
-        })
+        });
       });
 
       it('loops choices going up', function() {
@@ -304,10 +322,9 @@ describe('inquirer-autocomplete-prompt', function() {
 
         return promiseForAnswer.then(function(answer) {
           expect(answer).to.equal('bum');
-        })
-      })
+        });
+      });
     });
-
 
     describe('searching', function() {
       beforeEach(function() {
@@ -336,9 +353,7 @@ describe('inquirer-autocomplete-prompt', function() {
     });
 
     describe('submit', function() {
-
       describe('without choices', function() {
-
         beforeEach(function() {
           prompt.run();
           source.reset();
@@ -358,11 +373,13 @@ describe('inquirer-autocomplete-prompt', function() {
 
         beforeEach(function() {
           promiseForAnswer = getPromiseForAnswer();
-          resolve([{
-            name: 'foo',
-            value: answerValue,
-            short: 'short'
-          }]);
+          resolve([
+            {
+              name: 'foo',
+              value: answerValue,
+              short: 'short',
+            },
+          ]);
           return promise;
         });
 
@@ -375,11 +392,13 @@ describe('inquirer-autocomplete-prompt', function() {
 
         beforeEach(function() {
           promiseForAnswer = getPromiseForAnswer();
-          resolve([{
-            name: 'foo',
-            value: answerValue,
-            short: 'short'
-          }]);
+          resolve([
+            {
+              name: 'foo',
+              value: answerValue,
+              short: 'short',
+            },
+          ]);
           return promise;
         });
 
@@ -391,7 +410,7 @@ describe('inquirer-autocomplete-prompt', function() {
             expect(prompt.shortAnswer).to.equal('short');
             expect(prompt.answerName).to.equal('foo');
             expect(prompt.status).to.equal('answered');
-          })
+          });
         });
 
         describe('after selecting', function() {
@@ -413,13 +432,11 @@ describe('inquirer-autocomplete-prompt', function() {
               expect(answer).to.equal(answerValue);
               expect(prompt.answer).to.equal(answerValue);
               expect(prompt.status).to.equal('answered');
-            })
+            });
           });
         });
       });
-
     });
-
   });
 
   function getPromiseForAnswer() {
@@ -428,26 +445,26 @@ describe('inquirer-autocomplete-prompt', function() {
 
   function typeNonChar() {
     rl.input.emit('keypress', '', {
-      name: 'shift'
+      name: 'shift',
     });
   }
 
   function type(word) {
     word.split('').forEach(function(char) {
       rl.line = rl.line + char;
-      rl.input.emit('keypress', char)
+      rl.input.emit('keypress', char);
     });
   }
 
   function moveDown() {
     rl.input.emit('keypress', '', {
-      name: 'down'
+      name: 'down',
     });
   }
 
   function moveUp() {
     rl.input.emit('keypress', '', {
-      name: 'up'
+      name: 'up',
     });
   }
 
@@ -457,8 +474,7 @@ describe('inquirer-autocomplete-prompt', function() {
 
   function tab() {
     rl.input.emit('keypress', '', {
-      name: 'tab'
+      name: 'tab',
     });
   }
-
-})
+});

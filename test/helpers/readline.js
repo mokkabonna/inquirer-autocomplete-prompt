@@ -14,7 +14,7 @@ _.assign(stub, {
   resume: sinon.stub().returns(stub),
   _getCursorPos: sinon.stub().returns({
     cols: 0,
-    rows: 0
+    rows: 0,
   }),
   output: {
     end: sinon.stub(),
@@ -23,8 +23,8 @@ _.assign(stub, {
     __raw__: '',
     write: function(str) {
       this.__raw__ += str;
-    }
-  }
+    },
+  },
 });
 
 var ReadlineStub = function() {
