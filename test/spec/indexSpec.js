@@ -9,7 +9,6 @@ describe('inquirer-autocomplete-prompt', function() {
   var source;
   var prompt;
   var resolve;
-  var reject;
   var promise;
   var rl;
   var defaultChoices;
@@ -368,7 +367,6 @@ describe('inquirer-autocomplete-prompt', function() {
       });
 
       describe('with suggestOnly', function() {
-        var promiseForAnswer;
         var answerValue = {};
 
         beforeEach(function() {
