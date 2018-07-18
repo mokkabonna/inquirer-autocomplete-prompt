@@ -13,7 +13,6 @@ var Paginator = require('inquirer/lib/utils/paginator');
 var ansiEscapes = require('ansi-escapes');
 
 class AutocompletePrompt extends Base {
-  // TODO: Use rest parameters and spread operator here instead? (constructor(...args))
   constructor(questions, rl, answers) {
     super(questions, rl, answers);
 
@@ -53,7 +52,7 @@ class AutocompletePrompt extends Base {
       .takeWhile(dontHaveAnswer)
       .forEach(this.onKeypress.bind(this));
 
-    //call once at init
+    // Call once at init
     this.search(undefined);
 
     return this;
@@ -156,11 +155,11 @@ class AutocompletePrompt extends Base {
     var self = this;
     self.selected = 0;
 
-    //only render searching state after first time
+    // Only render searching state after first time
     if (self.searchedOnce) {
       self.searching = true;
       self.currentChoices = new Choices([]);
-      self.render(); //now render current searching state
+      self.render(); // Now render current searching state
     } else {
       self.searchedOnce = true;
     }
@@ -168,11 +167,11 @@ class AutocompletePrompt extends Base {
     self.lastSearchTerm = searchTerm;
     var thisPromise = self.opt.source(self.answers, searchTerm);
 
-    //store this promise for check in the callback
+    // Store this promise for check in the callback
     self.lastPromise = thisPromise;
 
     return thisPromise.then(function inner(choices) {
-      //if another search is triggered before the current search finishes, don't set results
+      // If another search is triggered before the current search finishes, don't set results
       if (thisPromise !== self.lastPromise) return;
 
       choices = new Choices(
@@ -188,8 +187,8 @@ class AutocompletePrompt extends Base {
   }
 
   ensureSelectedInRange() {
-    var selectedIndex = Math.min(this.selected, this.currentChoices.length); //not above currentChoices length - 1
-    this.selected = Math.max(selectedIndex, 0); //not below 0
+    var selectedIndex = Math.min(this.selected, this.currentChoices.length); // Not above currentChoices length - 1
+    this.selected = Math.max(selectedIndex, 0); // Not below 0
   }
 
   /**
@@ -220,10 +219,10 @@ class AutocompletePrompt extends Base {
       this.ensureSelectedInRange();
       this.render();
     } else {
-      this.render(); //render input automatically
-      //Only search if input have actually changed, not because of other keypresses
+      this.render(); // Render input automatically
+      // Only search if input have actually changed, not because of other keypresses
       if (this.lastSearchTerm !== this.rl.line) {
-        this.search(this.rl.line); //trigger new search
+        this.search(this.rl.line); // Trigger new search
       }
     }
   }
