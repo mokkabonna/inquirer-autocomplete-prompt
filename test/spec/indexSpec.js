@@ -2,7 +2,6 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var Promise = require('bluebird');
 var inquirer = require('inquirer');
 var ReadlineStub = require('../helpers/readline');
 var Prompt = require('../../index');
