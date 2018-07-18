@@ -14,7 +14,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "pretest": "npm run-script lint",
+    "pretest": "npm run-script lint && flow",
     "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
     "posttest": "istanbul check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
   },
@@ -29,6 +29,7 @@
   "devDependencies": {
     "chai": "^4.0.1",
     "eslint": "^5.1.0",
+    "flow-bin": "^0.76.0",
     "fuzzy": "^0.1.3",
     "istanbul": "^0.4.5",
     "lodash": "^4.17.4",

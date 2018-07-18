@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * `autocomplete` type prompt
  */
@@ -14,7 +16,11 @@ var runAsync = require('run-async');
 var { takeWhile } = require('rxjs/operators');
 
 class AutocompletePrompt extends Base {
-  constructor(questions, rl, answers) {
+  constructor(
+    questions /*: Array<any> */,
+    rl /*: readline$Interface */,
+    answers /*: Array<any> */
+  ) {
     super(questions, rl, answers);
 
     if (!this.opt.source) {
@@ -37,7 +43,7 @@ class AutocompletePrompt extends Base {
    * @param  {Function} cb      Callback when prompt is done
    * @return {this}
    */
-  _run(cb) {
+  _run(cb /*: Function */) /*: this*/ {
     this.done = cb;
 
     if (this.rl.history instanceof Array) {
@@ -65,7 +71,7 @@ class AutocompletePrompt extends Base {
    * Render the prompt to screen
    * @return {undefined}
    */
-  render(error) {
+  render(error /*: ?string */) {
     // Render question
     var content = this.getQuestion();
     var bottomContent = '';
@@ -107,7 +113,7 @@ class AutocompletePrompt extends Base {
   /**
    * When user press `enter` key
    */
-  onSubmit(line) {
+  onSubmit(line /* : string */) {
     if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
       var validationResult = this.opt.validate(line);
       if (validationResult !== true) {
@@ -154,7 +160,7 @@ class AutocompletePrompt extends Base {
     })(choice.value);
   }
 
-  search(searchTerm) {
+  search(searchTerm /* : ?string */) {
     var self = this;
     self.selected = 0;
 
@@ -198,7 +204,7 @@ class AutocompletePrompt extends Base {
    * When user type
    */
 
-  onKeypress(e) {
+  onKeypress(e /* : {key: { name: string }, value: string} */) {
     var len;
     var keyName = (e.key && e.key.name) || undefined;
 
@@ -236,7 +242,7 @@ class AutocompletePrompt extends Base {
  * @param  {Number} pointer Position of the pointer
  * @return {String}         Rendered content
  */
-function listRender(choices, pointer) {
+function listRender(choices, pointer /*: string */) /*: string */ {
   var output = '';
   var separatorOffset = 0;
 
