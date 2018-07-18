@@ -25,6 +25,9 @@
   "contributors": [
     "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
   ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.0.1",
