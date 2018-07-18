@@ -251,15 +251,6 @@ describe('inquirer-autocomplete-prompt', function() {
       }).to.throw(/name/);
     });
 
-    it('requires a message', function() {
-      expect(function() {
-        new Prompt({
-          name: 'foo',
-          source: source,
-        });
-      }).to.throw(/message/);
-    });
-
     it('requires a source parameter', function() {
       expect(function() {
         new Prompt({

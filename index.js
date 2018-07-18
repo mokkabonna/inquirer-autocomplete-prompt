@@ -2,15 +2,16 @@
  * `autocomplete` type prompt
  */
 
+var ansiEscapes = require('ansi-escapes');
 var chalk = require('chalk');
 var figures = require('figures');
-var runAsync = require('run-async');
 var Base = require('inquirer/lib/prompts/base');
 var Choices = require('inquirer/lib/objects/choices');
 var observe = require('inquirer/lib/utils/events');
 var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
-var ansiEscapes = require('ansi-escapes');
+var runAsync = require('run-async');
+var { takeWhile } = require('rxjs/operators');
 
 class AutocompletePrompt extends Base {
   constructor(questions, rl, answers) {
@@ -47,9 +48,11 @@ class AutocompletePrompt extends Base {
 
     const dontHaveAnswer = () => !this.answer;
 
-    events.line.takeWhile(dontHaveAnswer).forEach(this.onSubmit.bind(this));
+    events.line
+      .pipe(takeWhile(dontHaveAnswer))
+      .forEach(this.onSubmit.bind(this));
     events.keypress
-      .takeWhile(dontHaveAnswer)
+      .pipe(takeWhile(dontHaveAnswer))
       .forEach(this.onKeypress.bind(this));
 
     // Call once at init
