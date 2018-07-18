@@ -19,7 +19,6 @@ var ansiEscapes = require('ansi-escapes');
 
 module.exports = Prompt;
 
-
 /**
  * Constructor
  */
@@ -42,7 +41,6 @@ function Prompt() {
   this.paginator = new Paginator();
 }
 util.inherits(Prompt, Base);
-
 
 /**
  * Start the Inquiry session
@@ -73,7 +71,6 @@ Prompt.prototype._run = function(cb) {
   return this;
 };
 
-
 /**
  * Render the prompt to screen
  * @return {Prompt} self
@@ -86,7 +83,9 @@ Prompt.prototype.render = function(error) {
 
   if (this.firstRender) {
     var suggestText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
-    content += chalk.dim('(Use arrow keys or type to search' + suggestText + ')');
+    content += chalk.dim(
+      '(Use arrow keys or type to search' + suggestText + ')'
+    );
   }
   // Render choices or answer depending on the state
   if (this.status === 'answered') {
@@ -97,7 +96,11 @@ Prompt.prototype.render = function(error) {
   } else if (this.currentChoices.length) {
     var choicesStr = listRender(this.currentChoices, this.selected);
     content += this.rl.line;
-    bottomContent += this.paginator.paginate(choicesStr, this.selected, this.opt.pageSize);
+    bottomContent += this.paginator.paginate(
+      choicesStr,
+      this.selected,
+      this.opt.pageSize
+    );
   } else {
     content += this.rl.line;
     bottomContent += '  ' + chalk.yellow('No results...');
@@ -146,7 +149,6 @@ Prompt.prototype.onSubmit = function(line) {
     this.shortAnswer = choice.short;
   }
 
-
   runAsync(this.opt.filter, function(err, value) {
     choice.value = value;
     self.answer = value;
@@ -161,7 +163,6 @@ Prompt.prototype.onSubmit = function(line) {
     self.screen.done();
     self.done(choice.value);
   })(choice.value);
-
 };
 
 Prompt.prototype.search = function(searchTerm) {
@@ -187,23 +188,22 @@ Prompt.prototype.search = function(searchTerm) {
     //if another search is triggered before the current search finishes, don't set results
     if (thisPromise !== self.lastPromise) return;
 
-    choices = new Choices(choices.filter(function(choice) {
-      return choice.type !== 'separator';
-    }));
+    choices = new Choices(
+      choices.filter(function(choice) {
+        return choice.type !== 'separator';
+      })
+    );
 
-    self.currentChoices = choices
+    self.currentChoices = choices;
     self.searching = false;
     self.render();
   });
-
 };
-
 
 Prompt.prototype.ensureSelectedInRange = function() {
   var selectedIndex = Math.min(this.selected, this.currentChoices.length); //not above currentChoices length - 1
   this.selected = Math.max(selectedIndex, 0); //not below 0
-}
-
+};
 
 /**
  * When user type
@@ -218,18 +218,18 @@ Prompt.prototype.onKeypress = function(e) {
       this.rl.write(ansiEscapes.cursorLeft);
       var autoCompleted = this.currentChoices.getChoice(this.selected).value;
       this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
-      this.rl.line = autoCompleted
+      this.rl.line = autoCompleted;
       this.render();
     }
   } else if (keyName === 'down') {
     len = this.currentChoices.length;
-    this.selected = (this.selected < len - 1) ? this.selected + 1 : 0;
+    this.selected = this.selected < len - 1 ? this.selected + 1 : 0;
     this.ensureSelectedInRange();
     this.render();
     utils.up(this.rl, 2);
   } else if (keyName === 'up') {
     len = this.currentChoices.length;
-    this.selected = (this.selected > 0) ? this.selected - 1 : len - 1;
+    this.selected = this.selected > 0 ? this.selected - 1 : len - 1;
     this.ensureSelectedInRange();
     this.render();
   } else {
@@ -240,7 +240,6 @@ Prompt.prototype.onKeypress = function(e) {
     }
   }
 };
-
 
 /**
  * Function for rendering list choices
@@ -258,7 +257,7 @@ function listRender(choices, pointer) {
       return;
     }
 
-    var isSelected = (i - separatorOffset === pointer);
+    var isSelected = i - separatorOffset === pointer;
     var line = (isSelected ? figures.pointer + ' ' : '  ') + choice.name;
 
     if (isSelected) {
