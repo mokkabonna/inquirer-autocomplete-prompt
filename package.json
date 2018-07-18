@@ -22,6 +22,9 @@
     "registry": "http://registry.npmjs.org"
   },
   "author": "Martin Hansen <martin@martinhansen.no>",
+  "contributors": [
+    "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
+  ],
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.0.1",
