@@ -17,9 +17,8 @@ describe('inquirer-autocomplete-prompt', function() {
   describe('suggestOnly = true', function() {
     beforeEach(function() {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
-      promise = new Promise(function(res, rej) {
+      promise = new Promise(function(res) {
         resolve = res;
-        reject = rej;
       });
       source = sinon.stub().returns(promise);
 
@@ -143,9 +142,8 @@ describe('inquirer-autocomplete-prompt', function() {
   describe('suggestOnly = false', function() {
     beforeEach(function() {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
-      promise = new Promise(function(res, rej) {
+      promise = new Promise(function(res) {
         resolve = res;
-        reject = rej;
       });
       source = sinon.stub().returns(promise);
 
