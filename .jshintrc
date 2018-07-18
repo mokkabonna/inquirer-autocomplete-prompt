@@ -4,7 +4,6 @@
   "browser": true,
   "camelcase": true,
   "curly": false,
-  "devel": false,
   "devel": true,
   "eqeqeq": true,
   "eqnull": true,
