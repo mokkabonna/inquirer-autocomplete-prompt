@@ -5,18 +5,9 @@
   "files": [
     "index.js"
   ],
-  "dependencies": {
-    "ansi-escapes": "^3.0.0",
-    "chalk": "^2.0.0",
-    "figures": "^2.0.0",
-    "inquirer": "^6.0.0",
-    "run-async": "^2.3.0"
-  },
-  "scripts": {
-    "lint": "eslint .",
-    "pretest": "npm run-script lint && flow",
-    "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
-    "posttest": "istanbul check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
@@ -40,8 +31,17 @@
     "prettier": "^1.13.7",
     "sinon": "^4.1.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
+  "dependencies": {
+    "ansi-escapes": "^3.0.0",
+    "chalk": "^2.0.0",
+    "figures": "^2.0.0",
+    "inquirer": "^6.0.0",
+    "run-async": "^2.3.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run-script lint && flow",
+    "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
+    "posttest": "istanbul check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
   }
 }
