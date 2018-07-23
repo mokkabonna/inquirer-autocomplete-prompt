@@ -25,6 +25,7 @@
     "eslint": "^5.1.0",
     "flow-bin": "^0.76.0",
     "fuzzy": "^0.1.3",
+    "inquirer": "^6.0.0",
     "istanbul": "^0.4.5",
     "lodash": "^4.17.4",
     "mocha": "^5.0.0",
@@ -35,8 +36,10 @@
     "ansi-escapes": "^3.0.0",
     "chalk": "^2.0.0",
     "figures": "^2.0.0",
-    "inquirer": "^6.0.0",
     "run-async": "^2.3.0"
+  },
+  "peerDependencies": {
+    "inquirer": "^5.0.0 || ^6.0.0"
   },
   "scripts": {
     "lint": "eslint .",
