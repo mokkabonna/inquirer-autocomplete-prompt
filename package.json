@@ -1,7 +1,7 @@
 {
   "name": "inquirer-autocomplete-prompt",
   "description": "Autocomplete prompt for inquirer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "files": [
     "index.js"
   ],
