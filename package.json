@@ -1,44 +1,47 @@
 {
   "name": "inquirer-autocomplete-prompt",
   "description": "Autocomplete prompt for inquirer",
-  "version": "0.12.2",
+  "version": "1.0.0",
   "files": [
     "index.js"
   ],
-  "dependencies": {
-    "ansi-escapes": "^3.0.0",
-    "chalk": "^2.0.0",
-    "figures": "^2.0.0",
-    "inquirer": "3.2.0",
-    "run-async": "^2.3.0"
-  },
-  "scripts": {
-    "lint": "jshint .",
-    "checkStyle": "jscs .",
-    "pretest": "npm run-script lint && npm run-script checkStyle",
-    "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
-    "posttest": "istanbul check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
   },
   "author": "Martin Hansen <martin@martinhansen.no>",
+  "contributors": [
+    "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
+  ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "license": "ISC",
   "devDependencies": {
-    "bluebird": "^3.0.5",
     "chai": "^4.0.1",
+    "eslint": "^5.1.0",
+    "flow-bin": "^0.76.0",
     "fuzzy": "^0.1.3",
     "istanbul": "^0.4.5",
-    "jscs": "^3.0.7",
-    "jshint": "^2.5.6",
     "lodash": "^4.17.4",
     "mocha": "^5.0.0",
     "prettier": "^1.13.7",
-    "promise": "^8.0.0",
     "sinon": "^4.1.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
+  "dependencies": {
+    "ansi-escapes": "^3.0.0",
+    "chalk": "^2.0.0",
+    "figures": "^2.0.0",
+    "inquirer": "^6.0.0",
+    "run-async": "^2.3.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run-script lint && flow",
+    "test": "istanbul cover ./node_modules/.bin/_mocha test/spec",
+    "posttest": "istanbul check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
   }
 }

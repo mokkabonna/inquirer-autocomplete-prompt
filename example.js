@@ -6,7 +6,6 @@
 var inquirer = require('inquirer');
 var _ = require('lodash');
 var fuzzy = require('fuzzy');
-var Promise = require('promise');
 
 inquirer.registerPrompt('autocomplete', require('./index'));
 

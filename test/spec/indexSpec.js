@@ -1,6 +1,7 @@
+/* eslint-env mocha */
+
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var Promise = require('bluebird');
 var inquirer = require('inquirer');
 var ReadlineStub = require('../helpers/readline');
 var Prompt = require('../../index');
@@ -9,7 +10,6 @@ describe('inquirer-autocomplete-prompt', function() {
   var source;
   var prompt;
   var resolve;
-  var reject;
   var promise;
   var rl;
   var defaultChoices;
@@ -18,9 +18,8 @@ describe('inquirer-autocomplete-prompt', function() {
   describe('suggestOnly = true', function() {
     beforeEach(function() {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
-      promise = new Promise(function(res, rej) {
+      promise = new Promise(function(res) {
         resolve = res;
-        reject = rej;
       });
       source = sinon.stub().returns(promise);
 
@@ -144,9 +143,8 @@ describe('inquirer-autocomplete-prompt', function() {
   describe('suggestOnly = false', function() {
     beforeEach(function() {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
-      promise = new Promise(function(res, rej) {
+      promise = new Promise(function(res) {
         resolve = res;
-        reject = rej;
       });
       source = sinon.stub().returns(promise);
 
@@ -251,15 +249,6 @@ describe('inquirer-autocomplete-prompt', function() {
           source: source,
         });
       }).to.throw(/name/);
-    });
-
-    it('requires a message', function() {
-      expect(function() {
-        new Prompt({
-          name: 'foo',
-          source: source,
-        });
-      }).to.throw(/message/);
     });
 
     it('requires a source parameter', function() {
@@ -368,7 +357,6 @@ describe('inquirer-autocomplete-prompt', function() {
       });
 
       describe('with suggestOnly', function() {
-        var promiseForAnswer;
         var answerValue = {};
 
         beforeEach(function() {
