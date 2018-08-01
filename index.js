@@ -114,7 +114,7 @@ class AutocompletePrompt extends Base {
    * When user press `enter` key
    */
   onSubmit(line /* : string */) {
-    if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
+    if (typeof this.opt.validate === 'function') {
       var validationResult = this.opt.validate(line);
       if (validationResult !== true) {
         this.render(
@@ -124,21 +124,23 @@ class AutocompletePrompt extends Base {
       }
     }
 
-    var choice = {};
-    if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
+    var choice = this.currentChoices.getChoice(this.selected);
+    if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly && choice !== undefined) {
       this.rl.write(line);
       this.search(line);
       return;
     }
 
-    if (this.opt.suggestOnly) {
+    if (this.opt.suggestOnly || !choice) {
+      if (!choice) {
+        choice = {};
+      }
       choice.value = line || this.rl.line;
       this.answer = line || this.rl.line;
       this.answerName = line || this.rl.line;
       this.shortAnswer = line || this.rl.line;
       this.rl.line = '';
     } else {
-      choice = this.currentChoices.getChoice(this.selected);
       this.answer = choice.value;
       this.answerName = choice.name;
       this.shortAnswer = choice.short;
