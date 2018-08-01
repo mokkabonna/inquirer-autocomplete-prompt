@@ -98,7 +98,7 @@ class AutocompletePrompt extends Base {
       );
     } else {
       content += this.rl.line;
-      bottomContent += '  ' + chalk.yellow('No results...');
+      bottomContent += '  ' + chalk.yellow(this.opt.emptyText || 'No results...');
     }
 
     if (error) {
