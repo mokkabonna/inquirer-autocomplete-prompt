@@ -114,8 +114,10 @@ class AutocompletePrompt extends Base {
    * When user press `enter` key
    */
   onSubmit(line /* : string */) {
+    var choice = this.currentChoices.getChoice(this.selected);
+    
     if (typeof this.opt.validate === 'function') {
-      var validationResult = this.opt.validate(line);
+      var validationResult = this.opt.validate(choice && choice.value || line);
       if (validationResult !== true) {
         this.render(
           validationResult || 'Enter something, tab to autocomplete!'
@@ -124,7 +126,6 @@ class AutocompletePrompt extends Base {
       }
     }
 
-    var choice = this.currentChoices.getChoice(this.selected);
     if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly && choice !== undefined) {
       this.rl.write(line);
       this.search(line);
