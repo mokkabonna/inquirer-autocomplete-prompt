@@ -117,7 +117,7 @@ class AutocompletePrompt extends Base {
     var choice = this.currentChoices.getChoice(this.selected);
     
     if (typeof this.opt.validate === 'function') {
-      var validationResult = this.opt.validate(choice && choice.value || line);
+      var validationResult = this.opt.validate(choice && choice.value || line, this.answers);
       if (validationResult !== true) {
         this.render(
           validationResult || 'Enter something, tab to autocomplete!'
