@@ -101,8 +101,57 @@ function searchFood(answers, input) {
   });
 }
 
+function sliceInput(input, { cursor } = {}) {
+  var string = '';
+  var leftIndex = input.length - 1;
+  var rightIndex = input.length - 1;
+  if (/([^\s,]*)$/.test(input.slice(0, cursor))) {
+    string += RegExp.$1;
+    leftIndex = cursor - RegExp.$1.length;
+  }
+  if (/^([^\s,]*)/.test(input.slice(cursor))) {
+    string += RegExp.$1;
+    rightIndex = cursor + RegExp.$1.length;
+  }
+  return {
+    matching: string,
+    leftIndex,
+    rightIndex
+  };
+}
+
 inquirer
   .prompt([
+    {
+      type: 'autocomplete',
+      name: 'issues',
+      suggestOnly: true,
+      message: 'What issues you want to close (e.g. close #123,#234)?',
+      source: (answer, input = '', { cursor }) => {
+        var { matching, leftIndex, rightIndex } = sliceInput(input, { cursor });
+        var makeChoice = name => {
+          var name = name + matching.slice(1);
+          return {
+            name,
+            value: input.slice(0, leftIndex) + name + input.slice(rightIndex)
+          };
+        };
+
+        if (matching.startsWith('#') && matching.length > 1) {
+          return [
+            makeChoice('issue-'),
+            makeChoice('issue-a-'),
+            makeChoice('issue-ab-')
+          ];
+        }
+
+        return [];
+      },
+      pageSize: 4,
+      validate: function(val) {
+        return val ? true : 'Type something!';
+      },
+    },
     {
       type: 'autocomplete',
       name: 'fruit',
@@ -123,4 +172,5 @@ inquirer
   ])
   .then(function(answers) {
     console.log(JSON.stringify(answers, null, 2));
-  });
+  })
+  .catch(console.error);

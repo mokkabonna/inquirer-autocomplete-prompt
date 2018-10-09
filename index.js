@@ -14,6 +14,7 @@ var utils = require('inquirer/lib/utils/readline');
 var Paginator = require('inquirer/lib/utils/paginator');
 var runAsync = require('run-async');
 var { takeWhile } = require('rxjs/operators');
+var debounce = require('lodash.debounce');
 
 class AutocompletePrompt extends Base {
   constructor(
@@ -36,6 +37,8 @@ class AutocompletePrompt extends Base {
     this.opt.default = null;
 
     this.paginator = new Paginator();
+
+    this.search = debounce(this.undebouncedSearch);
   }
 
   /**
@@ -62,7 +65,7 @@ class AutocompletePrompt extends Base {
       .forEach(this.onKeypress.bind(this));
 
     // Call once at init
-    this.search(undefined);
+    this.undebouncedSearch(undefined);
 
     return this;
   }
@@ -160,7 +163,7 @@ class AutocompletePrompt extends Base {
     })(choice.value);
   }
 
-  search(searchTerm /* : ?string */) {
+  undebouncedSearch(searchTerm /* : ?string */) {
     var self = this;
     self.selected = 0;
 
@@ -172,14 +175,14 @@ class AutocompletePrompt extends Base {
     } else {
       self.searchedOnce = true;
     }
-
     self.lastSearchTerm = searchTerm;
-    var thisPromise = self.opt.source(self.answers, searchTerm);
+    var thisPromise = self.opt.source(self.answers, searchTerm, this.rl);
 
     // Store this promise for check in the callback
     self.lastPromise = thisPromise;
 
-    return thisPromise.then(function inner(choices) {
+    return Promise.resolve(thisPromise).then(function inner(choices) {
+      choices = choices || [];
       // If another search is triggered before the current search finishes, don't set results
       if (thisPromise !== self.lastPromise) return;
 
@@ -208,6 +211,10 @@ class AutocompletePrompt extends Base {
     var len;
     var keyName = (e.key && e.key.name) || undefined;
 
+    var prevCursor = this.prevCursor || 0;
+    this.prevCursor = this.rl.cursor;
+    var isCursorUpdated = prevCursor !== this.rl.cursor;
+
     if (keyName === 'tab' && this.opt.suggestOnly) {
       if (this.currentChoices.getChoice(this.selected)) {
         this.rl.write(ansiEscapes.cursorLeft);
@@ -230,7 +237,8 @@ class AutocompletePrompt extends Base {
     } else {
       this.render(); // Render input automatically
       // Only search if input have actually changed, not because of other keypresses
-      if (this.lastSearchTerm !== this.rl.line) {
+
+      if (isCursorUpdated) {
         this.search(this.rl.line); // Trigger new search
       }
     }

@@ -29,7 +29,7 @@ describe('inquirer-autocomplete-prompt', function() {
           message: 'test',
           name: 'name',
           suggestOnly: true,
-          source: source,
+          source: source
         },
         rl
       );
@@ -263,7 +263,7 @@ describe('inquirer-autocomplete-prompt', function() {
     it('immediately calls source with undefined', function() {
       prompt.run();
       sinon.assert.calledOnce(source);
-      sinon.assert.calledWithExactly(source, undefined, undefined);
+      sinon.assert.calledWithExactly(source, undefined, undefined, prompt.rl);
     });
 
     describe('when it has some results', function() {
@@ -322,19 +322,23 @@ describe('inquirer-autocomplete-prompt', function() {
         source.returns(promise);
       });
 
-      it('searches after each char when user types', function() {
+      it('searches after each char when user types', function(done) {
         type('a');
-        sinon.assert.calledWithExactly(source, undefined, 'a');
         type('bba');
-        sinon.assert.calledWithExactly(source, undefined, 'ab');
-        sinon.assert.calledWithExactly(source, undefined, 'abb');
-        sinon.assert.calledWithExactly(source, undefined, 'abba');
-        sinon.assert.callCount(source, 4);
+        sinon.assert.notCalled(source);
+        setTimeout(() => {
+          sinon.assert.calledWithExactly(source, undefined, 'abba', prompt.rl);
+          done();
+        }, 1000);
       });
 
-      it('does not search again if same searchterm (not input added)', function() {
+      it('does not search again if same searchterm (not input added)', function(done) {
         type('ice');
-        sinon.assert.calledThrice(source);
+        sinon.assert.notCalled(source);
+        setTimeout(() => {
+          sinon.assert.calledOnce(source);
+          done();
+        }, 1000);
         source.reset();
         typeNonChar();
         sinon.assert.notCalled(source);
@@ -349,10 +353,14 @@ describe('inquirer-autocomplete-prompt', function() {
           source.returns(promise);
         });
 
-        it('searches again, since not possible to select something that does not exist', function() {
+        it('searches again, since not possible to select something that does not exist', function(done) {
           sinon.assert.notCalled(source);
           enter();
-          sinon.assert.calledOnce(source);
+          sinon.assert.notCalled(source);
+          setTimeout(() => {
+            sinon.assert.calledOnce(source);
+            done();
+          });
         });
       });
 
