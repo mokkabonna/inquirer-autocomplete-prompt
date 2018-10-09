@@ -68,6 +68,8 @@ I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy)
 
 ![Autocomplete prompt](./inquirer.gif)
 
+![Autocomplete prompt](./snapshot.svg)
+
 ## Credits
 [Martin Hansen](https://github.com/mokkabonna/)
 
