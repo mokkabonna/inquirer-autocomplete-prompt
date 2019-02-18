@@ -30,7 +30,7 @@
     "lodash": "^4.17.4",
     "mocha": "^5.0.0",
     "prettier": "^1.13.7",
-    "sinon": "^4.1.2"
+    "sinon": "^7.2.4"
   },
   "dependencies": {
     "ansi-escapes": "^3.0.0",
