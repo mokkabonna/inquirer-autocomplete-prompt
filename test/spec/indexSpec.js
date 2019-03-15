@@ -601,6 +601,21 @@ describe('inquirer-autocomplete-prompt', function () {
         source.returns(promise);
       });
 
+      it('set default value as first selection', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            source: source,
+            default: 'bar',
+          },
+          rl
+        );
+        prompt.run().then(() => {
+          expect(prompt.selected).to.equal(2);
+        });
+      });
+
       it('searches after each char when user types', function () {
         type('a');
         sinon.assert.calledWithExactly(source, undefined, 'a');
