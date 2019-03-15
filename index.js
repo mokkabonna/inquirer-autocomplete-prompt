@@ -33,6 +33,7 @@ class AutocompletePrompt extends Base {
     this.selected = 0;
 
     // Make sure no default is set (so it won't be printed)
+    this.initialValue = this.opt.default;
     this.opt.default = null;
 
     this.paginator = new Paginator();
@@ -182,6 +183,13 @@ class AutocompletePrompt extends Base {
     return thisPromise.then(function inner(choices) {
       // If another search is triggered before the current search finishes, don't set results
       if (thisPromise !== self.lastPromise) return;
+
+      var selectedIndex = choices.findIndex(function(choice) {
+        return (choice.value === self.initialValue);
+      });
+      if (selectedIndex >= 0){
+        self.selected = selectedIndex;
+      }
 
       choices = new Choices(
         choices.filter(function(choice) {
