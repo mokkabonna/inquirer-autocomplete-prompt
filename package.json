@@ -35,7 +35,7 @@
   "dependencies": {
     "ansi-escapes": "^3.0.0",
     "chalk": "^2.0.0",
-    "figures": "^2.0.0",
+    "figures": "^3.0.0",
     "run-async": "^2.3.0"
   },
   "peerDependencies": {
