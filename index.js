@@ -204,7 +204,7 @@ class AutocompletePrompt extends Base {
    * When user type
    */
 
-  onKeypress(e /* : {key: { name: string }, value: string} */) {
+  onKeypress(e /* : {key: { name: string, ctrl: boolean }, value: string } */) {
     var len;
     var keyName = (e.key && e.key.name) || undefined;
 
@@ -216,13 +216,13 @@ class AutocompletePrompt extends Base {
         this.rl.line = autoCompleted;
         this.render();
       }
-    } else if (keyName === 'down') {
+    } else if (keyName === 'down' || (keyName === 'n' && e.key.ctrl)) {
       len = this.currentChoices.length;
       this.selected = this.selected < len - 1 ? this.selected + 1 : 0;
       this.ensureSelectedInRange();
       this.render();
       utils.up(this.rl, 2);
-    } else if (keyName === 'up') {
+    } else if (keyName === 'up' || (keyName === 'p' && e.key.ctrl)) {
       len = this.currentChoices.length;
       this.selected = this.selected > 0 ? this.selected - 1 : len - 1;
       this.ensureSelectedInRange();

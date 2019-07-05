@@ -283,6 +283,18 @@ describe('inquirer-autocomplete-prompt', function() {
         });
       });
 
+
+      it('should move selected cursor on ctrl n + p keypress', function() {
+        moveDownCtrl();
+        moveDownCtrl();
+        moveUpCtrl();
+        enter();
+
+        return promiseForAnswer.then(function(answer) {
+          expect(answer).to.equal('bar');
+        });
+      });
+
       it('moves up and down', function() {
         moveDown();
         moveDown();
@@ -447,6 +459,20 @@ describe('inquirer-autocomplete-prompt', function() {
   function moveDown() {
     rl.input.emit('keypress', '', {
       name: 'down',
+    });
+  }
+
+  function moveDownCtrl() {
+    rl.input.emit('keypress', '', {
+      name: 'n',
+      ctrl: true
+    });
+  }
+
+  function moveUpCtrl() {
+    rl.input.emit('keypress', '', {
+      name: 'p',
+      ctrl: true
     });
   }
 
