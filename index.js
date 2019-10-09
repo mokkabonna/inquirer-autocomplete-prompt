@@ -91,9 +91,18 @@ class AutocompletePrompt extends Base {
     } else if (this.currentChoices.length) {
       var choicesStr = listRender(this.currentChoices, this.selected);
       content += this.rl.line;
+      var indexPosition = this.selected;
+      var realIndexPosition = 0;
+      this.currentChoices.choices.every((choice, index) => {
+        if (index > indexPosition) {
+          return false;
+        }
+        realIndexPosition += choice.name.split('\n').length;
+        return true;
+      });
       bottomContent += this.paginator.paginate(
         choicesStr,
-        this.selected,
+        realIndexPosition,
         this.opt.pageSize
       );
     } else {
