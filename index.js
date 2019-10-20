@@ -115,15 +115,28 @@ class AutocompletePrompt extends Base {
    */
   onSubmit(line /* : string */) {
     if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
-      var validationResult = this.opt.validate(line);
-      if (validationResult !== true) {
-        this.render(
-          validationResult || 'Enter something, tab to autocomplete!'
-        );
-        return;
-      }
-    }
+      const checkValidationResult = validationResult => {
+        if (validationResult !== true) {
+          this.render(
+            validationResult || 'Enter something, tab to autocomplete!'
+          );
+        } else {
+          this.onSubmitAfterValidation(line);
+        }
+      };
 
+      var validationResult = this.opt.validate(line);
+      if (isPromise(validationResult)) {
+        validationResult.then(checkValidationResult);
+      } else {
+        checkValidationResult(validationResult);
+      }
+    } else {
+      this.onSubmitAfterValidation(line);
+    }
+  }
+
+  onSubmitAfterValidation(line /* : string */) {
     var choice = {};
     if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
       this.rl.write(line);
@@ -263,6 +276,10 @@ function listRender(choices, pointer /*: string */) /*: string */ {
   });
 
   return output.replace(/\n$/, '');
+}
+
+function isPromise(value) {
+  return typeof value === 'object' && typeof value.then === 'function';
 }
 
 module.exports = AutocompletePrompt;
