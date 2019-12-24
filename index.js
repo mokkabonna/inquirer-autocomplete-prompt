@@ -52,7 +52,7 @@ class AutocompletePrompt extends Base {
 
     var events = observe(this.rl);
 
-    const dontHaveAnswer = () => !this.answer;
+    const dontHaveAnswer = () => this.answer === undefined;
 
     events.line
       .pipe(takeWhile(dontHaveAnswer))
