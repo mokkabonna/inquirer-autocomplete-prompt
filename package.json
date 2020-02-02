@@ -17,7 +17,7 @@
     "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
   ],
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "license": "ISC",
   "devDependencies": {
