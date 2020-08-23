@@ -138,6 +138,133 @@ describe('inquirer-autocomplete-prompt', function () {
         });
       });
     });
+
+    describe('validation', function () {
+      it('validates sync', function (done) {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: function () {
+              return false;
+            },
+            source: source,
+            suggestOnly: true,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        let hasCompleted = false;
+
+        promise.then(function () {
+          enter();
+
+          setTimeout(() => {
+            if (hasCompleted) {
+              done(
+                new Error(
+                  'Prompt completed, but should have failed sync validation!.'
+                )
+              );
+            } else {
+              done();
+            }
+          }, 10);
+
+          promiseForAnswer.then(function () {
+            hasCompleted = true;
+          });
+        });
+      });
+
+      it('validates async false', function (done) {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: function () {
+              let res;
+              const promise = new Promise((resolve) => {
+                res = resolve;
+              });
+
+              setTimeout(function () {
+                res(false);
+              }, 10);
+
+              return promise;
+            },
+            source: source,
+            suggestOnly: true,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        let hasCompleted = false;
+
+        promise.then(function () {
+          enter();
+
+          setTimeout(() => {
+            if (hasCompleted) {
+              done(
+                new Error(
+                  'Prompt completed, but should have failed async validation!.'
+                )
+              );
+            } else {
+              done();
+            }
+          }, 50);
+
+          promiseForAnswer.then(function () {
+            hasCompleted = true;
+          });
+        });
+      });
+
+      it('validates async true', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: function () {
+              let res;
+              const promise = new Promise((resolve) => {
+                res = resolve;
+              });
+
+              setTimeout(function () {
+                res(true);
+              }, 10);
+
+              return promise;
+            },
+            source: source,
+            suggestOnly: true,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        return promise.then(function () {
+          type('banana');
+          enter();
+
+          return promiseForAnswer.then(function (answer) {
+            expect(answer).to.equal('banana');
+          });
+        });
+      });
+    });
   });
 
   describe('suggestOnly = false', function () {
