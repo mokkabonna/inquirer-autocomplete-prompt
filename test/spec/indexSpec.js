@@ -270,7 +270,12 @@ describe('inquirer-autocomplete-prompt', function () {
       var promiseForAnswer;
       beforeEach(function () {
         promiseForAnswer = getPromiseForAnswer();
-        resolve(['foo', new inquirer.Separator(), 'multiline\nline2\n\nline4', 'bum']);
+        resolve([
+          'foo',
+          new inquirer.Separator(),
+          'multiline\nline2\n\nline4',
+          'bum',
+        ]);
         return promise;
       });
 
