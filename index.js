@@ -125,7 +125,7 @@ class AutocompletePrompt extends Base {
    */
   onSubmit(line /* : string */) {
     if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
-      const checkValidationResult = validationResult => {
+      const checkValidationResult = (validationResult) => {
         if (validationResult !== true) {
           this.render(
             validationResult || 'Enter something, tab to autocomplete!'
