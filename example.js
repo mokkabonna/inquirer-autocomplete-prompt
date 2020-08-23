@@ -121,6 +121,34 @@ inquirer
       message: 'Select a state to travel from',
       source: searchStates,
     },
+    {
+      type: 'autocomplete',
+      name: 'multiline',
+      pageSize: 20,
+      message: 'Choices support multiline choices (should increase pagesize)',
+      source: () =>
+        Promise.resolve([
+          'Option1',
+          'Option2\n\nline2\nline3',
+          'Option3\n\nblank line between\n\n\nfar down\nlast line',
+          new inquirer.Separator(),
+        ]),
+    },
+    {
+      type: 'checkbox',
+      name: 'multilineCheckbox',
+      message: 'Normal checkbox multiline example',
+      choices: [
+        'Alaska\n\nmore lines\n\n\neven more\nlast line',
+        'filler1',
+        'filler2',
+        'filler3',
+        'filler4',
+        'filler5',
+        'filler6',
+        new inquirer.Separator(),
+      ],
+    },
   ])
   .then(function (answers) {
     console.log(JSON.stringify(answers, null, 2));
