@@ -75,25 +75,26 @@ var foods = ['Apple', 'Orange', 'Banana', 'Kiwi', 'Lichi', 'Grapefruit'];
 
 function searchStates(answers, input) {
   input = input || '';
-  return new Promise(function(resolve) {
-    setTimeout(function() {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
       var fuzzyResult = fuzzy.filter(input, states);
-      resolve(
-        fuzzyResult.map(function(el) {
-          return el.original;
-        })
-      );
+      const results = fuzzyResult.map(function (el) {
+        return el.original;
+      });
+
+      results.push(new inquirer.Separator());
+      resolve(results);
     }, _.random(30, 500));
   });
 }
 
 function searchFood(answers, input) {
   input = input || '';
-  return new Promise(function(resolve) {
-    setTimeout(function() {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
       var fuzzyResult = fuzzy.filter(input, foods);
       resolve(
-        fuzzyResult.map(function(el) {
+        fuzzyResult.map(function (el) {
           return el.original;
         })
       );
@@ -110,7 +111,7 @@ inquirer
       message: 'What is your favorite fruit?',
       source: searchFood,
       pageSize: 4,
-      validate: function(val) {
+      validate: function (val) {
         return val ? true : 'Type something!';
       },
     },
@@ -121,6 +122,6 @@ inquirer
       source: searchStates,
     },
   ])
-  .then(function(answers) {
+  .then(function (answers) {
     console.log(JSON.stringify(answers, null, 2));
   });

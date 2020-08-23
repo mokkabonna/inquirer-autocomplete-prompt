@@ -6,7 +6,7 @@ var inquirer = require('inquirer');
 var ReadlineStub = require('../helpers/readline');
 var Prompt = require('../../index');
 
-describe('inquirer-autocomplete-prompt', function() {
+describe('inquirer-autocomplete-prompt', function () {
   var source;
   var prompt;
   var resolve;
@@ -15,10 +15,10 @@ describe('inquirer-autocomplete-prompt', function() {
   var defaultChoices;
   var promiseForAnswer;
 
-  describe('suggestOnly = true', function() {
-    beforeEach(function() {
+  describe('suggestOnly = true', function () {
+    beforeEach(function () {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
-      promise = new Promise(function(res) {
+      promise = new Promise(function (res) {
         resolve = res;
       });
       source = sinon.stub().returns(promise);
@@ -35,12 +35,12 @@ describe('inquirer-autocomplete-prompt', function() {
       );
     });
 
-    it('applies filter', function() {
+    it('applies filter', function () {
       prompt = new Prompt(
         {
           message: 'test',
           name: 'name',
-          filter: function(val) {
+          filter: function (val) {
             return val.slice(0, 2);
           },
           suggestOnly: true,
@@ -54,19 +54,19 @@ describe('inquirer-autocomplete-prompt', function() {
       type('banana');
       enter();
 
-      return promiseForAnswer.then(function(answer) {
+      return promiseForAnswer.then(function (answer) {
         expect(answer).to.equal('ba');
       });
     });
 
-    it('applies filter async with done callback', function() {
+    it('applies filter async with done callback', function () {
       prompt = new Prompt(
         {
           message: 'test',
           name: 'name',
-          filter: function(val) {
+          filter: function (val) {
             var done = this.async();
-            setTimeout(function() {
+            setTimeout(function () {
               done(null, val.slice(0, 2));
             }, 100);
           },
@@ -81,18 +81,18 @@ describe('inquirer-autocomplete-prompt', function() {
       type('banana');
       enter();
 
-      return promiseForAnswer.then(function(answer) {
+      return promiseForAnswer.then(function (answer) {
         expect(answer).to.equal('ba');
       });
     });
 
-    it('applies filter async with promise', function() {
+    it('applies filter async with promise', function () {
       prompt = new Prompt(
         {
           message: 'test',
           name: 'name',
-          filter: function(val) {
-            return new Promise(function(resolve) {
+          filter: function (val) {
+            return new Promise(function (resolve) {
               resolve(val.slice(0, 2));
             });
           },
@@ -107,43 +107,43 @@ describe('inquirer-autocomplete-prompt', function() {
       type('banana');
       enter();
 
-      return promiseForAnswer.then(function(answer) {
+      return promiseForAnswer.then(function (answer) {
         expect(answer).to.equal('ba');
       });
     });
 
-    describe('when tab pressed', function() {
+    describe('when tab pressed', function () {
       var promiseForAnswer;
-      beforeEach(function() {
+      beforeEach(function () {
         promiseForAnswer = getPromiseForAnswer();
         resolve(defaultChoices);
         return promise;
       });
 
-      it('autocompletes the value selected in the list', function() {
+      it('autocompletes the value selected in the list', function () {
         tab();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('foo');
         });
       });
 
-      it('accepts any input', function() {
+      it('accepts any input', function () {
         type('banana');
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('banana');
         });
       });
     });
   });
 
-  describe('suggestOnly = false', function() {
-    beforeEach(function() {
+  describe('suggestOnly = false', function () {
+    beforeEach(function () {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
-      promise = new Promise(function(res) {
+      promise = new Promise(function (res) {
         resolve = res;
       });
       source = sinon.stub().returns(promise);
@@ -159,12 +159,12 @@ describe('inquirer-autocomplete-prompt', function() {
       );
     });
 
-    it('applies filter', function() {
+    it('applies filter', function () {
       prompt = new Prompt(
         {
           message: 'test',
           name: 'name',
-          filter: function(val) {
+          filter: function (val) {
             return val.slice(0, 2);
           },
           source: source,
@@ -175,24 +175,24 @@ describe('inquirer-autocomplete-prompt', function() {
       promiseForAnswer = getPromiseForAnswer();
       resolve(defaultChoices);
 
-      return promise.then(function() {
+      return promise.then(function () {
         moveDown();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('ba');
         });
       });
     });
 
-    it('applies filter async with done calback', function() {
+    it('applies filter async with done calback', function () {
       prompt = new Prompt(
         {
           message: 'test',
           name: 'name',
-          filter: function(val) {
+          filter: function (val) {
             var done = this.async();
-            setTimeout(function() {
+            setTimeout(function () {
               done(null, val.slice(0, 2));
             }, 100);
           },
@@ -204,23 +204,23 @@ describe('inquirer-autocomplete-prompt', function() {
       promiseForAnswer = getPromiseForAnswer();
       resolve(defaultChoices);
 
-      return promise.then(function() {
+      return promise.then(function () {
         moveDown();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('ba');
         });
       });
     });
 
-    it('applies filter async with promise', function() {
+    it('applies filter async with promise', function () {
       prompt = new Prompt(
         {
           message: 'test',
           name: 'name',
-          filter: function(val) {
-            return new Promise(function(resolve) {
+          filter: function (val) {
+            return new Promise(function (resolve) {
               resolve(val.slice(0, 2));
             });
           },
@@ -232,18 +232,18 @@ describe('inquirer-autocomplete-prompt', function() {
       promiseForAnswer = getPromiseForAnswer();
       resolve(defaultChoices);
 
-      return promise.then(function() {
+      return promise.then(function () {
         moveDown();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('ba');
         });
       });
     });
 
-    it('requires a name', function() {
-      expect(function() {
+    it('requires a name', function () {
+      expect(function () {
         new Prompt({
           message: 'foo',
           source: source,
@@ -251,8 +251,8 @@ describe('inquirer-autocomplete-prompt', function() {
       }).to.throw(/name/);
     });
 
-    it('requires a source parameter', function() {
-      expect(function() {
+    it('requires a source parameter', function () {
+      expect(function () {
         new Prompt({
           name: 'foo',
           message: 'foo',
@@ -260,69 +260,69 @@ describe('inquirer-autocomplete-prompt', function() {
       }).to.throw(/source/);
     });
 
-    it('immediately calls source with undefined', function() {
+    it('immediately calls source with undefined', function () {
       prompt.run();
       sinon.assert.calledOnce(source);
       sinon.assert.calledWithExactly(source, undefined, undefined);
     });
 
-    describe('when it has some results', function() {
+    describe('when it has some results', function () {
       var promiseForAnswer;
-      beforeEach(function() {
+      beforeEach(function () {
         promiseForAnswer = getPromiseForAnswer();
         resolve(defaultChoices);
         return promise;
       });
 
-      it('should move selected cursor on keypress', function() {
+      it('should move selected cursor on keypress', function () {
         moveDown();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('bar');
         });
       });
 
-      it('moves up and down', function() {
+      it('moves up and down', function () {
         moveDown();
         moveDown();
         moveUp();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('bar');
         });
       });
 
-      it('loops choices going down', function() {
+      it('loops choices going down', function () {
         moveDown();
         moveDown();
         moveDown();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('foo');
         });
       });
 
-      it('loops choices going up', function() {
+      it('loops choices going up', function () {
         moveUp();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('bum');
         });
       });
     });
 
-    describe('searching', function() {
-      beforeEach(function() {
+    describe('searching', function () {
+      beforeEach(function () {
         prompt.run();
         source.reset();
         source.returns(promise);
       });
 
-      it('searches after each char when user types', function() {
+      it('searches after each char when user types', function () {
         type('a');
         sinon.assert.calledWithExactly(source, undefined, 'a');
         type('bba');
@@ -332,7 +332,7 @@ describe('inquirer-autocomplete-prompt', function() {
         sinon.assert.callCount(source, 4);
       });
 
-      it('does not search again if same searchterm (not input added)', function() {
+      it('does not search again if same searchterm (not input added)', function () {
         type('ice');
         sinon.assert.calledThrice(source);
         source.reset();
@@ -341,25 +341,25 @@ describe('inquirer-autocomplete-prompt', function() {
       });
     });
 
-    describe('submit', function() {
-      describe('without choices', function() {
-        beforeEach(function() {
+    describe('submit', function () {
+      describe('without choices', function () {
+        beforeEach(function () {
           prompt.run();
           source.reset();
           source.returns(promise);
         });
 
-        it('searches again, since not possible to select something that does not exist', function() {
+        it('searches again, since not possible to select something that does not exist', function () {
           sinon.assert.notCalled(source);
           enter();
           sinon.assert.calledOnce(source);
         });
       });
 
-      describe('with suggestOnly', function() {
+      describe('with suggestOnly', function () {
         var answerValue = {};
 
-        beforeEach(function() {
+        beforeEach(function () {
           promiseForAnswer = getPromiseForAnswer();
           resolve([
             {
@@ -374,11 +374,11 @@ describe('inquirer-autocomplete-prompt', function() {
         it('selects the actual value typed');
       });
 
-      describe('with choices', function() {
+      describe('with choices', function () {
         var promiseForAnswer;
         var answerValue = {};
 
-        beforeEach(function() {
+        beforeEach(function () {
           promiseForAnswer = getPromiseForAnswer();
           resolve([
             {
@@ -390,9 +390,9 @@ describe('inquirer-autocomplete-prompt', function() {
           return promise;
         });
 
-        it('stores the value as the answer and status to answered', function() {
+        it('stores the value as the answer and status to answered', function () {
           enter();
-          return promiseForAnswer.then(function(answer) {
+          return promiseForAnswer.then(function (answer) {
             expect(answer).to.equal(answerValue);
             expect(prompt.answer).to.equal(answerValue);
             expect(prompt.shortAnswer).to.equal('short');
@@ -401,22 +401,22 @@ describe('inquirer-autocomplete-prompt', function() {
           });
         });
 
-        describe('after selecting', function() {
-          beforeEach(function() {
+        describe('after selecting', function () {
+          beforeEach(function () {
             enter();
             source.reset();
             return promiseForAnswer;
           });
 
-          it('stops searching on typing', function() {
+          it('stops searching on typing', function () {
             type('test');
             sinon.assert.notCalled(source);
           });
 
-          it('does not change answer on enter', function() {
+          it('does not change answer on enter', function () {
             enter();
             sinon.assert.notCalled(source);
-            return promiseForAnswer.then(function(answer) {
+            return promiseForAnswer.then(function (answer) {
               expect(answer).to.equal(answerValue);
               expect(prompt.answer).to.equal(answerValue);
               expect(prompt.status).to.equal('answered');
@@ -438,7 +438,7 @@ describe('inquirer-autocomplete-prompt', function() {
   }
 
   function type(word) {
-    word.split('').forEach(function(char) {
+    word.split('').forEach(function (char) {
       rl.line = rl.line + char;
       rl.input.emit('keypress', char);
     });
