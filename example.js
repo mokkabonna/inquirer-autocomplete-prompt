@@ -126,14 +126,46 @@ inquirer
       type: 'autocomplete',
       name: 'issues',
       suggestOnly: true,
+      message: 'What are your favorite states?',
+      source: (answers, input = '') => {
+
+        if (input.includes('#')) {
+          const index = input.indexOf('#');
+          const before = input.slice(0, index);
+          const allAfter = input.slice(index);
+          // ignore #, and take until space
+          const nextSpaceIndex = allAfter.indexOf(' ');
+          const subQuery = nextSpaceIndex === -1 ? allAfter.slice(1) : allAfter.slice(1, index + 1 + nextSpaceIndex);
+          const afterSubQuery = allAfter.slice(subQuery.length + 1);
+
+          return searchStates(answers, subQuery)
+            .then(options => {
+              return options.map((state) => ({
+                name: state,
+                value: before + state + afterSubQuery,
+              }));
+            });
+        } else {
+          return searchStates(answers, input);
+        }
+      },
+      pageSize: 4,
+      validate: function (val) {
+        return val ? true : 'Type something!';
+      },
+    },
+    {
+      type: 'autocomplete',
+      name: 'issues',
+      suggestOnly: true,
       message: 'What issues you want to close (e.g. close #123,#234)?',
       source: (answer, input = '', { cursor }) => {
         var { matching, leftIndex, rightIndex } = sliceInput(input, { cursor });
-        var makeChoice = name => {
+        var makeChoice = (name) => {
           var name = name + matching.slice(1);
           return {
             name,
-            value: input.slice(0, leftIndex) + name + input.slice(rightIndex)
+            value: input.slice(0, leftIndex) + name + input.slice(rightIndex),
           };
         };
 
@@ -141,14 +173,14 @@ inquirer
           return [
             makeChoice('issue-'),
             makeChoice('issue-a-'),
-            makeChoice('issue-ab-')
+            makeChoice('issue-ab-'),
           ];
         }
 
         return [];
       },
       pageSize: 4,
-      validate: function(val) {
+      validate: function (val) {
         return val ? true : 'Type something!';
       },
     },
@@ -159,7 +191,7 @@ inquirer
       message: 'What is your favorite fruit?',
       source: searchFood,
       pageSize: 4,
-      validate: function(val) {
+      validate: function (val) {
         return val ? true : 'Type something!';
       },
     },
@@ -170,7 +202,7 @@ inquirer
       source: searchStates,
     },
   ])
-  .then(function(answers) {
+  .then(function (answers) {
     console.log(JSON.stringify(answers, null, 2));
   })
   .catch(console.error);
