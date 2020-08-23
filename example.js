@@ -139,7 +139,7 @@ inquirer
       name: 'multilineCheckbox',
       message: 'Normal checkbox multiline example',
       choices: [
-        'Alaska\n\nmore lines\n\n\neven more\nlast line',
+        'Alaska\nmore lines\neven more\nlast line',
         'filler1',
         'filler2',
         'filler3',

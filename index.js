@@ -94,11 +94,11 @@ class AutocompletePrompt extends Base {
       var indexPosition = this.selected;
       var realIndexPosition = 0;
       this.currentChoices.choices.every((choice, index) => {
-        if (index > indexPosition - 1) {
+        if (index > indexPosition) {
           return false;
         }
         const name = choice.name;
-        realIndexPosition += name ? name.split('\n').length + 1 : 1;
+        realIndexPosition += name ? name.split('\n').length : 0;
         return true;
       });
       bottomContent += this.paginator.paginate(
