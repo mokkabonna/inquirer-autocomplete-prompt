@@ -443,19 +443,18 @@ describe('inquirer-autocomplete-prompt', function () {
         });
       });
 
-
-      it('should move selected cursor on ctrl n + p keypress', function() {
+      it('should move selected cursor on ctrl n + p keypress', function () {
         moveDownCtrl();
         moveDownCtrl();
         moveUpCtrl();
         enter();
 
-        return promiseForAnswer.then(function(answer) {
+        return promiseForAnswer.then(function (answer) {
           expect(answer).to.equal('bar');
         });
       });
 
-      it('moves up and down', function() {
+      it('moves up and down', function () {
         moveDown();
         moveDown();
         moveUp();
@@ -625,14 +624,14 @@ describe('inquirer-autocomplete-prompt', function () {
   function moveDownCtrl() {
     rl.input.emit('keypress', '', {
       name: 'n',
-      ctrl: true
+      ctrl: true,
     });
   }
 
   function moveUpCtrl() {
     rl.input.emit('keypress', '', {
       name: 'p',
-      ctrl: true
+      ctrl: true,
     });
   }
 
