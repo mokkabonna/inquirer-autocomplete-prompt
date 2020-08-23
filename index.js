@@ -88,12 +88,22 @@ class AutocompletePrompt extends Base {
     } else if (this.searching) {
       content += this.rl.line;
       bottomContent += '  ' + chalk.dim('Searching...');
-    } else if (this.currentChoices.length) {
+    } else if (this.nbChoices) {
       var choicesStr = listRender(this.currentChoices, this.selected);
       content += this.rl.line;
+      var indexPosition = this.selected;
+      var realIndexPosition = 0;
+      this.currentChoices.choices.every((choice, index) => {
+        if (index > indexPosition - 1) {
+          return false;
+        }
+        const name = choice.name;
+        realIndexPosition += name ? name.split('\n').length + 1 : 1;
+        return true;
+      });
       bottomContent += this.paginator.paginate(
         choicesStr,
-        this.selected,
+        realIndexPosition,
         this.opt.pageSize
       );
     } else {
@@ -115,17 +125,30 @@ class AutocompletePrompt extends Base {
    */
   onSubmit(line /* : string */) {
     if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
-      var validationResult = this.opt.validate(line);
-      if (validationResult !== true) {
-        this.render(
-          validationResult || 'Enter something, tab to autocomplete!'
-        );
-        return;
-      }
-    }
+      const checkValidationResult = (validationResult) => {
+        if (validationResult !== true) {
+          this.render(
+            validationResult || 'Enter something, tab to autocomplete!'
+          );
+        } else {
+          this.onSubmitAfterValidation(line);
+        }
+      };
 
+      var validationResult = this.opt.validate(line);
+      if (isPromise(validationResult)) {
+        validationResult.then(checkValidationResult);
+      } else {
+        checkValidationResult(validationResult);
+      }
+    } else {
+      this.onSubmitAfterValidation(line);
+    }
+  }
+
+  onSubmitAfterValidation(line /* : string */) {
     var choice = {};
-    if (this.currentChoices.length <= this.selected && !this.opt.suggestOnly) {
+    if (this.nbChoices <= this.selected && !this.opt.suggestOnly) {
       this.rl.write(line);
       this.search(line);
       return;
@@ -137,11 +160,15 @@ class AutocompletePrompt extends Base {
       this.answerName = line || this.rl.line;
       this.shortAnswer = line || this.rl.line;
       this.rl.line = '';
-    } else {
+    } else if (this.nbChoices) {
       choice = this.currentChoices.getChoice(this.selected);
       this.answer = choice.value;
       this.answerName = choice.name;
       this.shortAnswer = choice.short;
+    } else {
+      this.rl.write(line);
+      this.search(line);
+      return;
     }
 
     runAsync(this.opt.filter, (err, value) => {
@@ -183,20 +210,17 @@ class AutocompletePrompt extends Base {
       // If another search is triggered before the current search finishes, don't set results
       if (thisPromise !== self.lastPromise) return;
 
-      choices = new Choices(
-        choices.filter(function(choice) {
-          return choice.type !== 'separator';
-        })
-      );
-
-      self.currentChoices = choices;
+      self.currentChoices = new Choices(choices);
+      self.nbChoices = choices.filter(function (choice) {
+        return choice.type !== 'separator';
+      }).length;
       self.searching = false;
       self.render();
     });
   }
 
   ensureSelectedInRange() {
-    var selectedIndex = Math.min(this.selected, this.currentChoices.length); // Not above currentChoices length - 1
+    var selectedIndex = Math.min(this.selected, this.nbChoices); // Not above currentChoices length - 1
     this.selected = Math.max(selectedIndex, 0); // Not below 0
   }
 
@@ -217,13 +241,13 @@ class AutocompletePrompt extends Base {
         this.render();
       }
     } else if (keyName === 'down') {
-      len = this.currentChoices.length;
+      len = this.nbChoices;
       this.selected = this.selected < len - 1 ? this.selected + 1 : 0;
       this.ensureSelectedInRange();
       this.render();
       utils.up(this.rl, 2);
     } else if (keyName === 'up') {
-      len = this.currentChoices.length;
+      len = this.nbChoices;
       this.selected = this.selected > 0 ? this.selected - 1 : len - 1;
       this.ensureSelectedInRange();
       this.render();
@@ -246,7 +270,7 @@ function listRender(choices, pointer /*: string */) /*: string */ {
   var output = '';
   var separatorOffset = 0;
 
-  choices.forEach(function(choice, i) {
+  choices.forEach(function (choice, i) {
     if (choice.type === 'separator') {
       separatorOffset++;
       output += '  ' + choice + '\n';
@@ -263,6 +287,10 @@ function listRender(choices, pointer /*: string */) /*: string */ {
   });
 
   return output.replace(/\n$/, '');
+}
+
+function isPromise(value) {
+  return typeof value === 'object' && typeof value.then === 'function';
 }
 
 module.exports = AutocompletePrompt;
