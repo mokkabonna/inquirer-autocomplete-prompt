@@ -4,3 +4,5 @@ coverage
 *.sw*
 .nyc_output
 .eslintcache
+test
+.travis.yml
