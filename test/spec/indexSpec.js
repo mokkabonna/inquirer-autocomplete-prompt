@@ -266,6 +266,39 @@ describe('inquirer-autocomplete-prompt', function () {
       sinon.assert.calledWithExactly(source, undefined, undefined);
     });
 
+    describe('multiline choices', function () {
+      var promiseForAnswer;
+      beforeEach(function () {
+        promiseForAnswer = getPromiseForAnswer();
+        resolve([
+          'foo',
+          new inquirer.Separator(),
+          'multiline\nline2\n\nline4',
+          'bum',
+        ]);
+        return promise;
+      });
+
+      it('should select the correct multiline choice', function () {
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal('multiline\nline2\n\nline4');
+        });
+      });
+
+      it('should skip over the multiline choice', function () {
+        moveDown();
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal('bum');
+        });
+      });
+    });
+
     describe('when it has some results', function () {
       var promiseForAnswer;
       beforeEach(function () {
