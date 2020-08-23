@@ -188,7 +188,7 @@ class AutocompletePrompt extends Base {
       if (thisPromise !== self.lastPromise) return;
 
       self.currentChoices = new Choices(choices);
-      self.nbChoices = choices.filter(function(choice) {
+      self.nbChoices = choices.filter(function (choice) {
         return choice.type !== 'separator';
       }).length;
       self.searching = false;
@@ -247,7 +247,7 @@ function listRender(choices, pointer /*: string */) /*: string */ {
   var output = '';
   var separatorOffset = 0;
 
-  choices.forEach(function(choice, i) {
+  choices.forEach(function (choice, i) {
     if (choice.type === 'separator') {
       separatorOffset++;
       output += '  ' + choice + '\n';
