@@ -123,6 +123,12 @@ inquirer
     },
     {
       type: 'autocomplete',
+      name: 'stateNoPromise',
+      message: 'Select a state to travel to',
+      source: () => states,
+    },
+    {
+      type: 'autocomplete',
       name: 'multiline',
       pageSize: 20,
       message: 'Choices support multiline choices (should increase pagesize)',

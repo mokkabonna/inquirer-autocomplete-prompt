@@ -201,7 +201,14 @@ class AutocompletePrompt extends Base {
     }
 
     self.lastSearchTerm = searchTerm;
-    var thisPromise = self.opt.source(self.answers, searchTerm);
+
+    var thisPromise;
+    try {
+      var result = self.opt.source(self.answers, searchTerm);
+      thisPromise = Promise.resolve(result);
+    } catch (error) {
+      thisPromise = Promise.reject(error);
+    }
 
     // Store this promise for check in the callback
     self.lastPromise = thisPromise;
