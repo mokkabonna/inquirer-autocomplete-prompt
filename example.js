@@ -82,6 +82,7 @@ function searchStates(answers, input) {
         return el.original;
       });
 
+      results.splice(5, 0, new inquirer.Separator());
       results.push(new inquirer.Separator());
       resolve(results);
     }, _.random(30, 500));
@@ -111,6 +112,7 @@ inquirer
       message: 'What is your favorite fruit?',
       searchText: 'We are searching the internet for you!',
       emptyText: 'Nothing found!',
+      default: 'Banana',
       source: searchFood,
       pageSize: 4,
       validate: function (val) {
@@ -121,6 +123,7 @@ inquirer
       type: 'autocomplete',
       name: 'state',
       message: 'Select a state to travel from',
+      default: 'California',
       source: searchStates,
     },
     {
