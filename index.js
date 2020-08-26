@@ -212,7 +212,7 @@ class AutocompletePrompt extends Base {
 
       self.currentChoices = new Choices(choices);
       self.nbChoices = choices.filter(function (choice) {
-        return choice.type !== 'separator';
+        return choice.type !== 'separator' && !choice.disabled;
       }).length;
       self.searching = false;
       self.render();
@@ -274,6 +274,17 @@ function listRender(choices, pointer /*: string */) /*: string */ {
     if (choice.type === 'separator') {
       separatorOffset++;
       output += '  ' + choice + '\n';
+      return;
+    }
+
+    if (choice.disabled) {
+      separatorOffset++;
+      output += '  - ' + choice.name;
+      output +=
+        ' (' +
+        (typeof choice.disabled === 'string' ? choice.disabled : 'Disabled') +
+        ')';
+      output += '\n';
       return;
     }
 
