@@ -109,6 +109,8 @@ inquirer
       name: 'fruit',
       suggestOnly: true,
       message: 'What is your favorite fruit?',
+      searchText: 'We are searching the internet for you!',
+      emptyText: 'Nothing found!',
       source: searchFood,
       pageSize: 4,
       validate: function (val) {

@@ -87,7 +87,7 @@ class AutocompletePrompt extends Base {
       content += chalk.cyan(this.shortAnswer || this.answerName || this.answer);
     } else if (this.searching) {
       content += this.rl.line;
-      bottomContent += '  ' + chalk.dim('Searching...');
+      bottomContent += '  ' + chalk.dim(this.opt.searchText || 'Searching...');
     } else if (this.nbChoices) {
       var choicesStr = listRender(this.currentChoices, this.selected);
       content += this.rl.line;
@@ -108,7 +108,7 @@ class AutocompletePrompt extends Base {
       );
     } else {
       content += this.rl.line;
-      bottomContent += '  ' + chalk.yellow('No results...');
+      bottomContent += '  ' + chalk.yellow(this.opt.emptyText || 'No results...');
     }
 
     if (error) {
