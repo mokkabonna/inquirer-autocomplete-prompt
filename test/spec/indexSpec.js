@@ -426,6 +426,114 @@ describe('inquirer-autocomplete-prompt', function () {
       });
     });
 
+    describe('mixed choices type', () => {
+      var promiseForAnswer;
+      beforeEach(function () {
+        promiseForAnswer = getPromiseForAnswer();
+
+        resolve([
+          1234,
+          'Option 2',
+          {
+            name: 'Option 3',
+          },
+          {
+            value: 'Option 4',
+          },
+        ]);
+
+        return promise;
+      });
+
+      it('supports number', () => {
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal(1234);
+        });
+      });
+
+      it('supports string', () => {
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal('Option 2');
+        });
+      });
+
+      it('supports object with no value, uses name for value', () => {
+        moveDown();
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal('Option 3');
+        });
+      });
+
+      it('supports object with no name, uses value for name', () => {
+        moveDown();
+        moveDown();
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal('Option 4');
+        });
+      });
+    });
+
+    describe('when it has full choices', () => {
+      var promiseForAnswer;
+      beforeEach(function () {
+        promiseForAnswer = getPromiseForAnswer();
+
+        resolve([
+          {
+            name: 'Option1',
+            value: 1,
+          },
+          {
+            name: 'Option2',
+            value: 2,
+            disabled: true,
+          },
+          {
+            name: 'Option3',
+            value: 3,
+          },
+          {
+            name: 'Option4',
+            value: 4,
+            disabled: false,
+          },
+        ]);
+
+        return promise;
+      });
+
+      it('can not select disabled choices', () => {
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal(3);
+        });
+      });
+
+      it('loops back correctly (accounts for disabled)', () => {
+        moveDown();
+        moveDown();
+        moveDown();
+        enter();
+
+        return promiseForAnswer.then(function (answer) {
+          expect(answer).to.equal(1);
+        });
+      });
+    });
+
     describe('when it has some results', function () {
       var promiseForAnswer;
       beforeEach(function () {
