@@ -62,6 +62,7 @@ inquirer.prompt([{
 }]).then(function(answers) {
   //etc
 });
+
 ```
 
 See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
