@@ -29,6 +29,7 @@
     "inquirer": "^7.1.0",
     "lodash": "^4.17.15",
     "mocha": "^7.1.2",
+    "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.0.1",
     "prettier": "^2.0.5",
     "sinon": "^9.0.2"
@@ -52,7 +53,8 @@
     "prettier:check": "npm run prettier:cli -- --check",
     "prettier:fix": "npm run prettier:cli -- --write",
     "pretest": "npm run-script lint && flow",
-    "test": "nyc mocha test/spec --scripts-prepend-node-path",
+    "test": "nyc --reporter=lcov mocha test/spec --scripts-prepend-node-path",
+    "develop": "nodemon --exec nyc --reporter=lcov mocha test/spec --scripts-prepend-node-path",
     "posttest": "nyc check-coverage --statements 85 --branches 85 --functions 85 --lines 85 && rm -rf coverage"
   }
 }
