@@ -286,6 +286,100 @@ describe('inquirer-autocomplete-prompt', function () {
       );
     });
 
+    describe('default behaviour', () => {
+      it('sets the first to selected when no default', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            source: source,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve([9, 0, 'foo']);
+
+        return promise.then(() => {
+          enter();
+
+          return promiseForAnswer.then((answer) => {
+            expect(answer).to.equal(9);
+          });
+        });
+      });
+
+      it('set default value as selected when string', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            source: source,
+            default: 'foo',
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve([1, 8, 'foo', 7, 3]);
+
+        return promise.then(() => {
+          enter();
+
+          return promiseForAnswer.then((answer) => {
+            expect(answer).to.equal('foo');
+          });
+        });
+      });
+
+      it('set default value as selected when number', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            source: source,
+            default: 7,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(['foo', 1, 7, 3]);
+
+        return promise.then(() => {
+          enter();
+
+          return promiseForAnswer.then((answer) => {
+            expect(answer).to.equal(7);
+          });
+        });
+      });
+
+      it('set first default value as selected duplicates', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            source: source,
+            default: 7,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(['foo', 1, 'foo', 3]);
+
+        return promise.then(() => {
+          moveDown();
+          enter();
+
+          return promiseForAnswer.then((answer) => {
+            expect(answer).to.equal(1);
+          });
+        });
+      });
+    });
+
     it('applies filter', function () {
       prompt = new Prompt(
         {
@@ -599,21 +693,6 @@ describe('inquirer-autocomplete-prompt', function () {
         prompt.run();
         source.reset();
         source.returns(promise);
-      });
-
-      it('set default value as first selection', function () {
-        prompt = new Prompt(
-          {
-            message: 'test',
-            name: 'name',
-            source: source,
-            default: 'bar',
-          },
-          rl
-        );
-        prompt.run().then(() => {
-          expect(prompt.selected).to.equal(2);
-        });
       });
 
       it('searches after each char when user types', function () {

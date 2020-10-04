@@ -33,7 +33,7 @@ Change `autocomplete` to whatever you might prefer.
 
 `type`, `name`, `message`, `source`[, `default`, `pageSize`, `filter`, `when`, `suggestOnly`, `validate`, `searchText`, `emptyText`]
 
-See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source** and **suggestOnly**.
+See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source**, **suggestOnly**, **searchText** and **emptyText**.
 
 **source** will be called with previous answers object and the current user input each time the user types, it **must** return a promise.
 

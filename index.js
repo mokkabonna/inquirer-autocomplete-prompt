@@ -15,7 +15,8 @@ var Paginator = require('inquirer/lib/utils/paginator');
 var runAsync = require('run-async');
 var { takeWhile } = require('rxjs/operators');
 
-const isSelectable = choice => choice.type !== 'separator' && !choice.disabled;
+const isSelectable = (choice) =>
+  choice.type !== 'separator' && !choice.disabled;
 
 class AutocompletePrompt extends Base {
   constructor(
@@ -225,9 +226,10 @@ class AutocompletePrompt extends Base {
       var realChoices = choices.filter(isSelectable);
       self.nbChoices = realChoices.length;
 
-      var selectedIndex = realChoices.findIndex(function (choice) {
-        return (choice === self.initialValue || choice.value === self.initialValue);
-      });
+      var selectedIndex = realChoices.findIndex(
+        (choice) =>
+          choice === self.initialValue || choice.value === self.initialValue
+      );
 
       if (selectedIndex >= 0) {
         self.selected = selectedIndex;
