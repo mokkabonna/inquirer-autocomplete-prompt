@@ -25,6 +25,20 @@ inquirer.prompt({
 })
 ```
 
+## Typescript
+
+Add `inquirer-autocomplete-prompt` to *tsconfig.json/compilerOptions/types*
+
+```json
+{
+  "compilerOptions": {
+    "types": [
+      "inquirer-autocomplete-prompt"
+    ]
+  }
+}
+```
+
 Change `autocomplete` to whatever you might prefer.
 
 ### Options
