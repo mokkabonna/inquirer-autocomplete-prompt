@@ -124,6 +124,14 @@ inquirer
       name: 'state',
       message: 'Select a state to travel from',
       default: 'California',
+      validate(choice, answers) {
+        if (answers.fruit === 'Banana') {
+          return choice.value[0] === 'C'
+            ? true
+            : 'Since you selected Banana in the previous prompt you need to select a state that starts with "C". Makes sense.';
+        }
+        return true;
+      },
       source: searchStates,
     },
     {
