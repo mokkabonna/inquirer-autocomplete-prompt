@@ -144,7 +144,7 @@ class AutocompletePrompt extends Base {
       let validationResult;
       if (this.opt.suggestOnly) {
         validationResult = this.opt.validate(lineOrRl, this.answers);
-      } else if (this.currentChoices) {
+      } else {
         const choice = this.currentChoices.getChoice(this.selected);
         validationResult = this.opt.validate(choice, this.answers);
       }
