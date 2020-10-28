@@ -180,6 +180,35 @@ describe('inquirer-autocomplete-prompt', function () {
         });
       });
 
+      it('calls validate function correctly', function () {
+        const validate = sinon.stub().returns(true);
+        const answers = {};
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate,
+            source: source,
+            suggestOnly: true,
+          },
+          rl,
+          answers
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        return promise.then(function () {
+          tab();
+          enter();
+
+          return promiseForAnswer.then(function () {
+            sinon.assert.calledOnce(validate);
+            sinon.assert.calledWithExactly(validate, 'foo', {});
+          });
+        });
+      });
+
       it('validates async false', function (done) {
         prompt = new Prompt(
           {
@@ -714,18 +743,188 @@ describe('inquirer-autocomplete-prompt', function () {
       });
     });
 
+    describe('validation', function () {
+      it('calls the validation function with the choice object', () => {
+        const validate = sinon.stub().returns(true);
+        const answers = {};
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate,
+            source: source,
+          },
+          rl,
+          answers
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        return promise.then(function () {
+          enter();
+
+          return promiseForAnswer.then(function () {
+            sinon.assert.calledOnce(validate);
+            sinon.assert.calledWithExactly(
+              validate,
+              sinon.match({
+                disabled: undefined,
+                name: 'foo',
+                short: 'foo',
+                value: 'foo',
+              }),
+              {}
+            );
+          });
+        });
+      });
+
+      it('validates sync', function (done) {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: function () {
+              return false;
+            },
+            source: source,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        let hasCompleted = false;
+
+        promise.then(function () {
+          enter();
+
+          setTimeout(() => {
+            if (hasCompleted) {
+              done(
+                new Error(
+                  'Prompt completed, but should have failed sync validation!.'
+                )
+              );
+            } else {
+              done();
+            }
+          }, 10);
+
+          promiseForAnswer.then(function () {
+            hasCompleted = true;
+          });
+        });
+      });
+
+      it('validates async false', function (done) {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: function () {
+              let res;
+              const promise = new Promise((resolve) => {
+                res = resolve;
+              });
+
+              setTimeout(function () {
+                res(false);
+              }, 10);
+
+              return promise;
+            },
+            source: source,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        let hasCompleted = false;
+
+        promise.then(function () {
+          enter();
+
+          setTimeout(() => {
+            if (hasCompleted) {
+              done(
+                new Error(
+                  'Prompt completed, but should have failed async validation!.'
+                )
+              );
+            } else {
+              done();
+            }
+          }, 50);
+
+          promiseForAnswer.then(function () {
+            hasCompleted = true;
+          });
+        });
+      });
+
+      it('validates async true', function () {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: function () {
+              let res;
+              const promise = new Promise((resolve) => {
+                res = resolve;
+              });
+
+              setTimeout(function () {
+                res(true);
+              }, 10);
+
+              return promise;
+            },
+            source: source,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        return promise.then(function () {
+          moveDown();
+          enter();
+
+          return promiseForAnswer.then(function (answer) {
+            expect(answer).to.equal('bar');
+          });
+        });
+      });
+    });
+
     describe('submit', function () {
-      describe('without choices', function () {
+      describe('without choices in result', function () {
         beforeEach(function () {
+          rl = new ReadlineStub();
+          prompt = new Prompt(
+            {
+              message: 'test2',
+              name: 'name2',
+              source: source,
+            },
+            rl
+          );
           prompt.run();
-          source.reset();
-          source.returns(promise);
+
+          resolve([]);
+          return promise;
         });
 
         it('searches again, since not possible to select something that does not exist', function () {
-          sinon.assert.notCalled(source);
-          enter();
           sinon.assert.calledOnce(source);
+          enter();
+          sinon.assert.calledTwice(source);
         });
       });
 

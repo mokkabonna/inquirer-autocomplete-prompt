@@ -41,7 +41,7 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **suggestOnly** is default **false**. Setting it to true turns the input into a normal text input. Meaning that pressing enter selects whatever value you currently have. And pressing tab autocompletes the currently selected value in the list. This way you can accept manual input instead of forcing a selection from the list.
 
-**validate** is only active when **suggestOnly** is set to **true**. It behaves like validate for the input prompt.
+**validate** is called with the entered text when **suggestOnly** is set to **true**. When **suggestOnly** is false, validate is called with the choice object. In addition it is called with the answers object so far.
 
 **searchText** Is the text shown when searching. Defaults: `Searching...`
 

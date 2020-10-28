@@ -30,7 +30,7 @@ class AutocompletePrompt extends Base {
       this.throwParamError('source');
     }
 
-    this.currentChoices = [];
+    this.currentChoices = new Choices([]);
 
     this.firstRender = true;
     this.selected = 0;
@@ -128,25 +128,34 @@ class AutocompletePrompt extends Base {
    * When user press `enter` key
    */
   onSubmit(line /* : string */) {
-    if (typeof this.opt.validate === 'function' && this.opt.suggestOnly) {
+    const lineOrRl = line || this.rl.line;
+
+    if (typeof this.opt.validate === 'function') {
       const checkValidationResult = (validationResult) => {
         if (validationResult !== true) {
           this.render(
             validationResult || 'Enter something, tab to autocomplete!'
           );
         } else {
-          this.onSubmitAfterValidation(line);
+          this.onSubmitAfterValidation(lineOrRl);
         }
       };
 
-      var validationResult = this.opt.validate(line);
+      let validationResult;
+      if (this.opt.suggestOnly) {
+        validationResult = this.opt.validate(lineOrRl, this.answers);
+      } else {
+        const choice = this.currentChoices.getChoice(this.selected);
+        validationResult = this.opt.validate(choice, this.answers);
+      }
+
       if (isPromise(validationResult)) {
         validationResult.then(checkValidationResult);
       } else {
         checkValidationResult(validationResult);
       }
     } else {
-      this.onSubmitAfterValidation(line);
+      this.onSubmitAfterValidation(lineOrRl);
     }
   }
 
