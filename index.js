@@ -65,7 +65,7 @@ class AutocompletePrompt extends Base {
       .forEach(this.onKeypress.bind(this));
 
     // Call once at init
-    this.search(undefined);
+    this.search(this.initialValue);
 
     return this;
   }
@@ -142,10 +142,13 @@ class AutocompletePrompt extends Base {
       };
 
       let validationResult;
-      if (this.opt.suggestOnly) {
+      const choice = this.currentChoices.getChoice(this.selected);
+      if (this.initialValue && this.initialValue === (choice || {}).value) {
+        validationResult = this.opt.validate(choice.value, this.answers);
+        this.rl.line = choice.value;
+      } else if (this.opt.suggestOnly) {
         validationResult = this.opt.validate(lineOrRl, this.answers);
       } else {
-        const choice = this.currentChoices.getChoice(this.selected);
         validationResult = this.opt.validate(choice, this.answers);
       }
 
