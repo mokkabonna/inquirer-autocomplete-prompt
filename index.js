@@ -37,6 +37,9 @@ class AutocompletePrompt extends Base {
 
     // Make sure no default is set (so it won't be printed)
     this.initialValue = this.opt.default;
+    if (!this.opt.suggestOnly) {
+      this.opt.default = null;
+    }
 
     const shouldLoop = this.opt.loop === undefined ? true : this.opt.loop;
     this.paginator = new Paginator(this.screen, {
