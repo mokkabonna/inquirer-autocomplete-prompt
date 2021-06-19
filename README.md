@@ -31,7 +31,7 @@ Change `autocomplete` to whatever you might prefer.
 
 > **Note:** _allowed options written inside square brackets (`[]`) are optional. Others are required._
 
-`type`, `name`, `message`, `source`[, `default`, `pageSize`, `filter`, `when`, `suggestOnly`, `validate`, `loop`, `searchText`, `emptyText`]
+`type`, `name`, `message`, `source`[, `default`, `pageSize`, `filter`, `when`, `suggestOnly`, `validate`, `askAnswered`, `loop`, `searchText`, `emptyText`]
 
 See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source**, **suggestOnly**, **searchText** and **emptyText**.
 
