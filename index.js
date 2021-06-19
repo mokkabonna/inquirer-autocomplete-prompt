@@ -43,7 +43,7 @@ class AutocompletePrompt extends Base {
 
     const shouldLoop = this.opt.loop === undefined ? true : this.opt.loop;
     this.paginator = new Paginator(this.screen, {
-      isInfinite: shouldLoop
+      isInfinite: shouldLoop,
     });
   }
 
