@@ -43,7 +43,7 @@
     "rxjs": "^6.6.2"
   },
   "peerDependencies": {
-    "inquirer": "^5.0.0 || ^6.0.0 || ^7.0.0"
+    "inquirer": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "scripts": {
     "lint": "npm run prettier:check && npm run eslint",
