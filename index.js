@@ -134,7 +134,13 @@ class AutocompletePrompt extends Base {
    * When user press `enter` key
    */
   onSubmit(line /* : string */) {
-    const lineOrRl = line || this.rl.line;
+    let lineOrRl = line || this.rl.line;
+
+    // only set default when suggestOnly (behaving as input prompt)
+    // list prompt does only set default if matching actual item in list
+    if (this.opt.suggestOnly && !lineOrRl) {
+      lineOrRl = this.opt.default === null ? '' : this.opt.default;
+    }
 
     if (typeof this.opt.validate === 'function') {
       const checkValidationResult = (validationResult) => {
