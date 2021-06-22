@@ -5,6 +5,7 @@
   "files": [
     "index.js"
   ],
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
@@ -22,6 +23,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/inquirer": "^7.3.1",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
