@@ -1,10 +1,8 @@
 # inquirer-autocomplete-prompt
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mokkabonna/inquirer-autocomplete-prompt.svg)](https://greenkeeper.io/)
-
 Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
-[![build status](https://travis-ci.com/mokkabonna/inquirer-autocomplete-prompt.svg?branch=master)](https://travis-ci.com/github/mokkabonna/inquirer-autocomplete-prompt)
+[![build status](https://github.com/mokkabonna/inquirer-autocomplete-prompt/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/mokkabonna/inquirer-autocomplete-prompt/actions/workflows/ci.yml)
 
 ## Installation
 
