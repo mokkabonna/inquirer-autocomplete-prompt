@@ -3,13 +3,15 @@
  */
 
 'use strict';
-var inquirer = require('inquirer');
-var _ = require('lodash');
-var fuzzy = require('fuzzy');
 
-inquirer.registerPrompt('autocomplete', require('./index'));
+const inquirer = require('inquirer');
+const _ = require('lodash');
+const fuzzy = require('fuzzy');
+const inquirerPrompt = require('./index.js');
 
-var states = [
+inquirer.registerPrompt('autocomplete', inquirerPrompt);
+
+const states = [
   'Alabama',
   'Alaska',
   'American Samoa',
@@ -71,16 +73,12 @@ var states = [
   'Wyoming',
 ];
 
-var foods = ['Apple', 'Orange', 'Banana', 'Kiwi', 'Lichi', 'Grapefruit'];
+const foods = ['Apple', 'Orange', 'Banana', 'Kiwi', 'Lichi', 'Grapefruit'];
 
-function searchStates(answers, input) {
-  input = input || '';
-  return new Promise(function (resolve) {
-    setTimeout(function () {
-      var fuzzyResult = fuzzy.filter(input, states);
-      const results = fuzzyResult.map(function (el) {
-        return el.original;
-      });
+function searchStates(answers, input = '') {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const results = fuzzy.filter(input, states).map((el) => el.original);
 
       results.splice(5, 0, new inquirer.Separator());
       results.push(new inquirer.Separator());
@@ -89,16 +87,10 @@ function searchStates(answers, input) {
   });
 }
 
-function searchFood(answers, input) {
-  input = input || '';
-  return new Promise(function (resolve) {
-    setTimeout(function () {
-      var fuzzyResult = fuzzy.filter(input, foods);
-      resolve(
-        fuzzyResult.map(function (el) {
-          return el.original;
-        })
-      );
+function searchFood(answers, input = '') {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(fuzzy.filter(input, foods).map((el) => el.original));
     }, _.random(30, 500));
   });
 }
@@ -115,7 +107,7 @@ inquirer
       default: 'Banana',
       source: searchFood,
       pageSize: 4,
-      validate: function (val) {
+      validate(val) {
         return val ? true : 'Type something!';
       },
     },
@@ -130,6 +122,7 @@ inquirer
             ? true
             : 'Since you selected Banana in the previous prompt you need to select a state that starts with "C". Makes sense.';
         }
+
         return true;
       },
       source: searchStates,
@@ -169,6 +162,6 @@ inquirer
       ],
     },
   ])
-  .then(function (answers) {
+  .then((answers) => {
     console.log(JSON.stringify(answers, null, 2));
   });

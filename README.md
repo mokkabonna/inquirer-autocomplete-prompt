@@ -16,7 +16,9 @@ npm install --save inquirer-autocomplete-prompt
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
 ```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
+const inquirerPrompt = require('inquirer-autocomplete-prompt');
+
+inquirer.registerPrompt('autocomplete', inquirerPrompt);
 inquirer.prompt({
   type: 'autocomplete',
   ...
@@ -49,18 +51,21 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 #### Example
 
 ```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
-inquirer.prompt([{
-  type: 'autocomplete',
-  name: 'from',
-  message: 'Select a state to travel from',
-  source: function(answersSoFar, input) {
-    return myApi.searchStates(input);
-  }
-}]).then(function(answers) {
-  //etc
-});
+const inquirerPrompt = require('inquirer-autocomplete-prompt');
 
+inquirer.registerPrompt('autocomplete', inquirerPrompt);
+inquirer
+  .prompt([
+    {
+      type: 'autocomplete',
+      name: 'from',
+      message: 'Select a state to travel from',
+      source: (answersSoFar, input) => myApi.searchStates(input),
+    },
+  ])
+  .then((answers) => {
+    // etc
+  });
 ```
 
 See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.

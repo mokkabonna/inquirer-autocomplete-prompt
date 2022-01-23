@@ -1,9 +1,11 @@
-var EventEmitter = require('events').EventEmitter;
-var sinon = require('sinon');
-var util = require('util');
-var _ = require('lodash');
+'use strict';
 
-var stub = {};
+const { EventEmitter } = require('events');
+const util = require('util');
+const sinon = require('sinon');
+const _ = require('lodash');
+
+const stub = {};
 
 _.assign(stub, {
   write: sinon.stub().returns(stub),
@@ -21,13 +23,13 @@ _.assign(stub, {
     mute: sinon.stub(),
     unmute: sinon.stub(),
     __raw__: '',
-    write: function (str) {
+    write(str) {
       this.__raw__ += str;
     },
   },
 });
 
-var ReadlineStub = function () {
+const ReadlineStub = function () {
   this.line = '';
   this.input = new EventEmitter();
   EventEmitter.apply(this, arguments);
