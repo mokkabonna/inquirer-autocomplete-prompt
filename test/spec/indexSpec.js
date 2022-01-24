@@ -2,7 +2,7 @@
 
 'use strict';
 
-const { expect } = require('chai');
+const assert = require('assert').strict;
 const sinon = require('sinon');
 const inquirer = require('inquirer');
 const ReadlineStub = require('../helpers/readline.js');
@@ -57,7 +57,7 @@ describe('inquirer-autocomplete-prompt', () => {
       enter();
 
       return promiseForAnswer.then((answer) => {
-        expect(answer).to.equal('ba');
+        assert.equal(answer, 'ba');
       });
     });
 
@@ -84,7 +84,7 @@ describe('inquirer-autocomplete-prompt', () => {
       enter();
 
       return promiseForAnswer.then((answer) => {
-        expect(answer).to.equal('ba');
+        assert.equal(answer, 'ba');
       });
     });
 
@@ -110,7 +110,7 @@ describe('inquirer-autocomplete-prompt', () => {
       enter();
 
       return promiseForAnswer.then((answer) => {
-        expect(answer).to.equal('ba');
+        assert.equal(answer, 'ba');
       });
     });
 
@@ -127,7 +127,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('foo');
+          assert.equal(answer, 'foo');
         });
       });
 
@@ -136,7 +136,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('banana');
+          assert.equal(answer, 'banana');
         });
       });
     });
@@ -291,7 +291,7 @@ describe('inquirer-autocomplete-prompt', () => {
           enter();
 
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal('banana');
+            assert.equal(answer, 'banana');
           });
         });
       });
@@ -335,7 +335,7 @@ describe('inquirer-autocomplete-prompt', () => {
           enter();
 
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal(9);
+            assert.equal(answer, 9);
           });
         });
       });
@@ -358,7 +358,7 @@ describe('inquirer-autocomplete-prompt', () => {
           enter();
 
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal('foo');
+            assert.equal(answer, 'foo');
           });
         });
       });
@@ -381,7 +381,7 @@ describe('inquirer-autocomplete-prompt', () => {
           enter();
 
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal(7);
+            assert.equal(answer, 7);
           });
         });
       });
@@ -405,7 +405,7 @@ describe('inquirer-autocomplete-prompt', () => {
           enter();
 
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal(1);
+            assert.equal(answer, 1);
           });
         });
       });
@@ -432,7 +432,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('ba');
+          assert.equal(answer, 'ba');
         });
       });
     });
@@ -461,7 +461,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('ba');
+          assert.equal(answer, 'ba');
         });
       });
     });
@@ -489,27 +489,27 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('ba');
+          assert.equal(answer, 'ba');
         });
       });
     });
 
     it('requires a name', () => {
-      expect(() => {
+      assert.throws(() => {
         new Prompt({
           message: 'foo',
           source,
         });
-      }).to.throw(/name/);
+      }, /name/);
     });
 
     it('requires a source parameter', () => {
-      expect(() => {
+      assert.throws(() => {
         new Prompt({
           name: 'foo',
           message: 'foo',
         });
-      }).to.throw(/source/);
+      }, /source/);
     });
 
     it('immediately calls source with undefined', () => {
@@ -536,7 +536,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('multiline\nline2\n\nline4');
+          assert.equal(answer, 'multiline\nline2\n\nline4');
         });
       });
 
@@ -546,7 +546,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('bum');
+          assert.equal(answer, 'bum');
         });
       });
     });
@@ -574,7 +574,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal(1234);
+          assert.equal(answer, 1234);
         });
       });
 
@@ -583,7 +583,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('Option 2');
+          assert.equal(answer, 'Option 2');
         });
       });
 
@@ -593,7 +593,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('Option 3');
+          assert.equal(answer, 'Option 3');
         });
       });
 
@@ -604,7 +604,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('Option 4');
+          assert.equal(answer, 'Option 4');
         });
       });
     });
@@ -643,7 +643,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal(3);
+          assert.equal(answer, 3);
         });
       });
 
@@ -654,7 +654,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal(1);
+          assert.equal(answer, 1);
         });
       });
     });
@@ -672,7 +672,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('bar');
+          assert.equal(answer, 'bar');
         });
       });
 
@@ -683,7 +683,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('bar');
+          assert.equal(answer, 'bar');
         });
       });
 
@@ -694,7 +694,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('bar');
+          assert.equal(answer, 'bar');
         });
       });
 
@@ -705,7 +705,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('foo');
+          assert.equal(answer, 'foo');
         });
       });
 
@@ -714,7 +714,7 @@ describe('inquirer-autocomplete-prompt', () => {
         enter();
 
         return promiseForAnswer.then((answer) => {
-          expect(answer).to.equal('bum');
+          assert.equal(answer, 'bum');
         });
       });
     });
@@ -899,7 +899,7 @@ describe('inquirer-autocomplete-prompt', () => {
           enter();
 
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal('bar');
+            assert.equal(answer, 'bar');
           });
         });
       });
@@ -967,11 +967,11 @@ describe('inquirer-autocomplete-prompt', () => {
         it('stores the value as the answer and status to answered', () => {
           enter();
           return promiseForAnswer.then((answer) => {
-            expect(answer).to.equal(answerValue);
-            expect(prompt.answer).to.equal(answerValue);
-            expect(prompt.shortAnswer).to.equal('short');
-            expect(prompt.answerName).to.equal('foo');
-            expect(prompt.status).to.equal('answered');
+            assert.deepEqual(answer, answerValue);
+            assert.deepEqual(prompt.answer, answerValue);
+            assert.equal(prompt.shortAnswer, 'short');
+            assert.equal(prompt.answerName, 'foo');
+            assert.equal(prompt.status, 'answered');
           });
         });
 
@@ -991,9 +991,9 @@ describe('inquirer-autocomplete-prompt', () => {
             enter();
             sinon.assert.notCalled(source);
             return promiseForAnswer.then((answer) => {
-              expect(answer).to.equal(answerValue);
-              expect(prompt.answer).to.equal(answerValue);
-              expect(prompt.status).to.equal('answered');
+              assert.deepEqual(answer, answerValue);
+              assert.equal(prompt.answer, answerValue);
+              assert.equal(prompt.status, 'answered');
             });
           });
         });
