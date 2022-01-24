@@ -2,13 +2,19 @@
   "name": "inquirer-autocomplete-prompt",
   "description": "Autocomplete prompt for inquirer",
   "version": "1.4.0",
+  "main": "index.js",
   "files": [
     "index.js"
   ],
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
   },
+  "bugs": {
+    "url": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/issues"
+  },
+  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt#readme",
   "publishConfig": {
     "registry": "http://registry.npmjs.org",
     "access": "public"
