@@ -53,10 +53,10 @@
   "scripts": {
     "lint": "npm run prettier:check && npm run eslint",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "eslint": "eslint --report-unused-disable-directives --cache .",
+    "eslint": "eslint --report-unused-disable-directives --ignore-path .gitignore --cache .",
     "eslint:fix": "npm run eslint -- --fix",
     "mocha": "mocha test/spec",
-    "prettier:cli": "prettier \"**/*.js\" \"**/*.md\"",
+    "prettier:cli": "prettier --ignore-path .gitignore \"**/*.js\" \"**/*.md\"",
     "prettier:check": "npm run prettier:cli -- --check",
     "prettier:fix": "npm run prettier:cli -- --write",
     "flow": "flow",
