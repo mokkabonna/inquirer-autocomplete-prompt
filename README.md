@@ -6,16 +6,16 @@ Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
 ## Installation
 
-```
-npm install --save inquirer-autocomplete-prompt
+```sh
+npm install inquirer-autocomplete-prompt
 ```
 
 ## Usage
 
-
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
-```javascript
+```js
+const inquirer = require('inquirer');
 const inquirerPrompt = require('inquirer-autocomplete-prompt');
 
 inquirer.registerPrompt('autocomplete', inquirerPrompt);
@@ -31,7 +31,7 @@ Change `autocomplete` to whatever you might prefer.
 
 > **Note:** _allowed options written inside square brackets (`[]`) are optional. Others are required._
 
-`type`, `name`, `message`, `source`[, `default`,  `validate`, `filter`, `when`, `pageSize`, `prefix`, `suffix`, `askAnswered`, `loop`, `suggestOnly`, `searchText`, `emptyText`]
+`type`, `name`, `message`, `source`[, `default`, `validate`, `filter`, `when`, `pageSize`, `prefix`, `suffix`, `askAnswered`, `loop`, `suggestOnly`, `searchText`, `emptyText`]
 
 See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source**, **suggestOnly**, **searchText** and **emptyText**.
 
@@ -47,10 +47,10 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **emptyText** Is the text shown if the search returns no results. Defaults: `No results...`
 
-
 #### Example
 
-```javascript
+```js
+const inquirer = require('inquirer');
 const inquirerPrompt = require('inquirer-autocomplete-prompt');
 
 inquirer.registerPrompt('autocomplete', inquirerPrompt);
@@ -76,7 +76,7 @@ I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy)
 
 ## Credits
 
-[Martin Hansen](https://github.com/mokkabonna/)
+[Martin Hansen](https://github.com/mokkabonna)
 
 ## License
 
