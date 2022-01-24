@@ -55,14 +55,13 @@
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
     "eslint": "eslint --report-unused-disable-directives --cache .",
     "eslint:fix": "npm run eslint -- --fix",
+    "mocha": "mocha test/spec",
     "prettier:cli": "prettier \"**/*.js\" \"**/*.md\"",
     "prettier:check": "npm run prettier:cli -- --check",
     "prettier:fix": "npm run prettier:cli -- --write",
     "flow": "flow",
     "pretest": "npm run lint && npm run flow",
-    "test": "c8 --reporter=lcov mocha test/spec",
-    "coverage": "c8 report --reporter=text-lcov",
-    "develop": "nodemon --exec \"npm test\"",
-    "posttest": "c8 check-coverage --statements 85 --branches 85 --functions 85 --lines 85"
+    "test": "c8 --check-coverage npm run mocha",
+    "develop": "nodemon --exec \"npm test\""
   }
 }
