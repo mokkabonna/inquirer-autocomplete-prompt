@@ -43,6 +43,7 @@
     "inquirer": "^8.2.0",
     "lodash": "^4.17.21",
     "mocha": "^8.4.0",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "sinon": "^9.2.4"
   },
@@ -59,9 +60,9 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "flow": "flow",
     "pretest": "npm run lint && npm run flow",
-    "test": "c8 --reporter=lcov mocha test/spec --scripts-prepend-node-path",
+    "test": "c8 --reporter=lcov mocha test/spec",
     "coverage": "c8 report --reporter=text-lcov",
-    "develop": "nodemon --exec c8 --reporter=lcov mocha test/spec --scripts-prepend-node-path",
+    "develop": "nodemon --exec \"npm test\"",
     "posttest": "c8 check-coverage --statements 85 --branches 85 --functions 85 --lines 85"
   }
 }
