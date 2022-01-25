@@ -66,10 +66,10 @@ class AutocompletePrompt extends Base {
     const dontHaveAnswer = () => this.answer === undefined;
 
     events.line
-      .pipe(takeWhile(dontHaveAnswer))
+      .pipe(takeWhile(dontHaveAnswer)) // $FlowFixMe[method-unbinding]
       .forEach(this.onSubmit.bind(this));
     events.keypress
-      .pipe(takeWhile(dontHaveAnswer))
+      .pipe(takeWhile(dontHaveAnswer)) // $FlowFixMe[method-unbinding]
       .forEach(this.onKeypress.bind(this));
 
     // Call once at init
@@ -215,7 +215,7 @@ class AutocompletePrompt extends Base {
     })(choice.value);
   }
 
-  search(searchTerm /* : ?string */) {
+  search(searchTerm /* : ?string */) /*: Promise<any>*/ {
     this.selected = 0;
 
     // Only render searching state after first time
