@@ -1,8 +1,14 @@
 'use strict';
 
 const { EventEmitter } = require('events');
-const util = require('util');
 const sinon = require('sinon');
+class ReadlineStub extends EventEmitter {
+  constructor() {
+    super();
+    this.line = '';
+    this.input = new EventEmitter();
+  }
+}
 
 const stub = {};
 
@@ -28,13 +34,6 @@ Object.assign(stub, {
   },
 });
 
-const ReadlineStub = function () {
-  this.line = '';
-  this.input = new EventEmitter();
-  EventEmitter.apply(this, arguments);
-};
-
-util.inherits(ReadlineStub, EventEmitter);
 Object.assign(ReadlineStub.prototype, stub);
 
 module.exports = ReadlineStub;
