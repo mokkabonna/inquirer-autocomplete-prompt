@@ -7,13 +7,13 @@
 'use strict';
 
 const ansiEscapes = require('ansi-escapes');
-const chalk = require('chalk');
 const figures = require('figures');
 const Base = require('inquirer/lib/prompts/base');
 const Choices = require('inquirer/lib/objects/choices');
 const observe = require('inquirer/lib/utils/events');
 const utils = require('inquirer/lib/utils/readline');
 const Paginator = require('inquirer/lib/utils/paginator');
+const pc = require('picocolors');
 const runAsync = require('run-async');
 const { takeWhile } = require('rxjs/operators');
 
@@ -89,17 +89,17 @@ class AutocompletePrompt extends Base {
 
     if (this.firstRender) {
       const suggestText = this.opt.suggestOnly ? ', tab to autocomplete' : '';
-      content += chalk.dim(
+      content += pc.dim(
         '(Use arrow keys or type to search' + suggestText + ')'
       );
     }
 
     // Render choices or answer depending on the state
     if (this.status === 'answered') {
-      content += chalk.cyan(this.shortAnswer || this.answerName || this.answer);
+      content += pc.cyan(this.shortAnswer || this.answerName || this.answer);
     } else if (this.searching) {
       content += this.rl.line;
-      bottomContent += '  ' + chalk.dim(this.opt.searchText || 'Searching...');
+      bottomContent += '  ' + pc.dim(this.opt.searchText || 'Searching...');
     } else if (this.nbChoices) {
       const choicesStr = listRender(this.currentChoices, this.selected);
       content += this.rl.line;
@@ -120,12 +120,11 @@ class AutocompletePrompt extends Base {
       );
     } else {
       content += this.rl.line;
-      bottomContent +=
-        '  ' + chalk.yellow(this.opt.emptyText || 'No results...');
+      bottomContent += '  ' + pc.yellow(this.opt.emptyText || 'No results...');
     }
 
     if (error) {
-      bottomContent += '\n' + chalk.red('>> ') + error;
+      bottomContent += '\n' + pc.red('>> ') + error;
     }
 
     this.firstRender = false;
@@ -338,7 +337,7 @@ function listRender(choices, pointer /*: string */) /*: string */ {
     let line = (isSelected ? figures.pointer + ' ' : '  ') + choice.name;
 
     if (isSelected) {
-      line = chalk.cyan(line);
+      line = pc.cyan(line);
     }
 
     output += line + ' \n';
