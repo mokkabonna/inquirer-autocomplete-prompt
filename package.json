@@ -29,8 +29,8 @@
   "license": "ISC",
   "dependencies": {
     "ansi-escapes": "^4.3.2",
-    "chalk": "^4.1.2",
     "figures": "^3.2.0",
+    "picocolors": "^1.0.0",
     "run-async": "^2.4.1",
     "rxjs": "^7.5.4"
   },
