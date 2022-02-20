@@ -60,6 +60,6 @@
     "flow": "flow",
     "pretest": "npm run lint && npm run flow",
     "test": "c8 --check-coverage npm run mocha",
-    "develop": "nodemon --exec \"npm test\""
+    "develop": "nodemon --exec \"npm run mocha\""
   }
 }
