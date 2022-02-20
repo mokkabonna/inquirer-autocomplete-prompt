@@ -3,11 +3,10 @@
 const { EventEmitter } = require('events');
 const util = require('util');
 const sinon = require('sinon');
-const _ = require('lodash');
 
 const stub = {};
 
-_.assign(stub, {
+Object.assign(stub, {
   write: sinon.stub().returns(stub),
   moveCursor: sinon.stub().returns(stub),
   setPrompt: sinon.stub().returns(stub),
@@ -36,6 +35,6 @@ const ReadlineStub = function () {
 };
 
 util.inherits(ReadlineStub, EventEmitter);
-_.assign(ReadlineStub.prototype, stub);
+Object.assign(ReadlineStub.prototype, stub);
 
 module.exports = ReadlineStub;

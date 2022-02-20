@@ -5,7 +5,6 @@
 'use strict';
 
 const inquirer = require('inquirer');
-const _ = require('lodash');
 const fuzzy = require('fuzzy');
 const inquirerPrompt = require('./index.js');
 
@@ -83,7 +82,7 @@ function searchStates(answers, input = '') {
       results.splice(5, 0, new inquirer.Separator());
       results.push(new inquirer.Separator());
       resolve(results);
-    }, _.random(30, 500));
+    }, Math.random() * 470 + 30);
   });
 }
 
@@ -91,7 +90,7 @@ function searchFood(answers, input = '') {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(fuzzy.filter(input, foods).map((el) => el.original));
-    }, _.random(30, 500));
+    }, Math.random() * 470 + 30);
   });
 }
 
