@@ -3,7 +3,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  globals: {},
+  extends: 'eslint:recommended',
   rules: {
     semi: ['error', 'always'],
     'no-cond-assign': ['error', 'except-parens'],
@@ -11,7 +11,6 @@ module.exports = {
     curly: 'off',
     eqeqeq: 'error',
     'no-eq-null': 'error',
-    'no-eval': 'off',
     'wrap-iife': 'off',
     indent: [
       'error',

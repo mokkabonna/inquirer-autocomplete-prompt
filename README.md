@@ -1,24 +1,24 @@
 # inquirer-autocomplete-prompt
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mokkabonna/inquirer-autocomplete-prompt.svg)](https://greenkeeper.io/)
-
 Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
-[![build status](https://travis-ci.com/mokkabonna/inquirer-autocomplete-prompt.svg?branch=master)](https://travis-ci.com/github/mokkabonna/inquirer-autocomplete-prompt)
+[![build status](https://github.com/mokkabonna/inquirer-autocomplete-prompt/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/mokkabonna/inquirer-autocomplete-prompt/actions/workflows/ci.yml)
 
 ## Installation
 
-```
-npm install --save inquirer-autocomplete-prompt
+```sh
+npm install inquirer-autocomplete-prompt
 ```
 
 ## Usage
 
-
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
-```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
+```js
+const inquirer = require('inquirer');
+const inquirerPrompt = require('inquirer-autocomplete-prompt');
+
+inquirer.registerPrompt('autocomplete', inquirerPrompt);
 inquirer.prompt({
   type: 'autocomplete',
   ...
@@ -31,7 +31,7 @@ Change `autocomplete` to whatever you might prefer.
 
 > **Note:** _allowed options written inside square brackets (`[]`) are optional. Others are required._
 
-`type`, `name`, `message`, `source`[, `default`,  `validate`, `filter`, `when`, `pageSize`, `prefix`, `suffix`, `askAnswered`, `loop`, `suggestOnly`, `searchText`, `emptyText`]
+`type`, `name`, `message`, `source`[, `default`, `validate`, `filter`, `when`, `pageSize`, `prefix`, `suffix`, `askAnswered`, `loop`, `suggestOnly`, `searchText`, `emptyText`]
 
 See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source**, **suggestOnly**, **searchText** and **emptyText**.
 
@@ -47,22 +47,25 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **emptyText** Is the text shown if the search returns no results. Defaults: `No results...`
 
-
 #### Example
 
-```javascript
-inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));
-inquirer.prompt([{
-  type: 'autocomplete',
-  name: 'from',
-  message: 'Select a state to travel from',
-  source: function(answersSoFar, input) {
-    return myApi.searchStates(input);
-  }
-}]).then(function(answers) {
-  //etc
-});
+```js
+const inquirer = require('inquirer');
+const inquirerPrompt = require('inquirer-autocomplete-prompt');
 
+inquirer.registerPrompt('autocomplete', inquirerPrompt);
+inquirer
+  .prompt([
+    {
+      type: 'autocomplete',
+      name: 'from',
+      message: 'Select a state to travel from',
+      source: (answersSoFar, input) => myApi.searchStates(input),
+    },
+  ])
+  .then((answers) => {
+    // etc
+  });
 ```
 
 See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
@@ -73,7 +76,7 @@ I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy)
 
 ## Credits
 
-[Martin Hansen](https://github.com/mokkabonna/)
+[Martin Hansen](https://github.com/mokkabonna)
 
 ## License
 
