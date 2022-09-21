@@ -6,16 +6,16 @@
 
 'use strict';
 
-const ansiEscapes = require('ansi-escapes');
-const figures = require('figures');
-const Base = require('inquirer/lib/prompts/base');
-const Choices = require('inquirer/lib/objects/choices');
-const observe = require('inquirer/lib/utils/events');
-const utils = require('inquirer/lib/utils/readline');
-const Paginator = require('inquirer/lib/utils/paginator');
-const pc = require('picocolors');
-const runAsync = require('run-async');
-const { takeWhile } = require('rxjs/operators');
+import ansiEscapes from 'ansi-escapes';
+import figures from 'figures';
+import Base from 'inquirer/lib/prompts/base.js';
+import Choices from 'inquirer/lib/objects/choices.js';
+import observe from 'inquirer/lib/utils/events.js';
+import * as utils from 'inquirer/lib/utils/readline.js';
+import Paginator from 'inquirer/lib/utils/paginator.js';
+import pc from 'picocolors';
+import runAsync from 'run-async';
+import { takeWhile } from 'rxjs/operators';
 
 const isSelectable = (choice) =>
   choice.type !== 'separator' && !choice.disabled;
@@ -350,4 +350,4 @@ function isPromise(value) {
   return typeof value === 'object' && typeof value.then === 'function';
 }
 
-module.exports = AutocompletePrompt;
+export default AutocompletePrompt;

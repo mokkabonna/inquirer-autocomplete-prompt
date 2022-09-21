@@ -2,11 +2,11 @@
 
 'use strict';
 
-const assert = require('assert').strict;
-const sinon = require('sinon');
-const inquirer = require('inquirer');
-const ReadlineStub = require('../helpers/readline.js');
-const Prompt = require('../../index.js');
+import { strict as assert } from 'assert';
+import sinon from 'sinon';
+import inquirer from 'inquirer';
+import ReadlineStub from '../helpers/readline.js';
+import Prompt from '../../index.js';
 
 describe('inquirer-autocomplete-prompt', () => {
   let source;
