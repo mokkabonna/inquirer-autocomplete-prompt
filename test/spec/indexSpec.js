@@ -295,6 +295,31 @@ describe('inquirer-autocomplete-prompt', () => {
           });
         });
       });
+
+      it('validates only if function', () => {
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate: null,
+            source,
+            suggestOnly: true,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        resolve(defaultChoices);
+
+        return promise.then(() => {
+          type('banana');
+          enter();
+
+          return promiseForAnswer.then((answer) => {
+            assert.equal(answer, 'banana');
+          });
+        });
+      });
     });
   });
 
