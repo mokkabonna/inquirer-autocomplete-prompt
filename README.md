@@ -10,13 +10,19 @@ Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 npm install inquirer-autocomplete-prompt
 ```
 
+inquier v9 and inquirer-autocomplete-prompt v3 and higher are native esm modules, this mean you cannot use the commonjs syntax `require('inquirer-autocomplete-prompt')` anymore. If you want to learn more about using native esm in Node, I'd recommend reading [the following guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Alternatively, you can rely on an older version until you're ready to upgrade your environment:
+
+```
+npm install inquirer-autocomplete-prompt@^2.0.0
+```
+
 ## Usage
 
 This prompt is anonymous, meaning you can register this prompt with the type name you please:
 
 ```js
-const inquirer = require('inquirer');
-const inquirerPrompt = require('inquirer-autocomplete-prompt');
+import inquirer from 'inquirer';
+import inquirerPrompt from 'inquirer-autocomplete-prompt';
 
 inquirer.registerPrompt('autocomplete', inquirerPrompt);
 inquirer.prompt({
@@ -50,8 +56,8 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 #### Example
 
 ```js
-const inquirer = require('inquirer');
-const inquirerPrompt = require('inquirer-autocomplete-prompt');
+import inquirer from 'inquirer';
+import inquirerPrompt from 'inquirer-autocomplete-prompt';
 
 inquirer.registerPrompt('autocomplete', inquirerPrompt);
 inquirer
