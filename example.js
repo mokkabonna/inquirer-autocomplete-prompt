@@ -4,9 +4,9 @@
 
 'use strict';
 
-const inquirer = require('inquirer');
-const fuzzy = require('fuzzy');
-const inquirerPrompt = require('./index.js');
+import inquirer from 'inquirer';
+import fuzzy from 'fuzzy';
+import inquirerPrompt from './index.js';
 
 inquirer.registerPrompt('autocomplete', inquirerPrompt);
 
