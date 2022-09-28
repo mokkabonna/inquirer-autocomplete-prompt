@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt#readme",
   "publishConfig": {
-    "registry": "http://registry.npmjs.org",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "author": "Martin Hansen <martin@martinhansen.no>",
