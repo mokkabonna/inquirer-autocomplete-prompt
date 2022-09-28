@@ -4,8 +4,6 @@
  * `autocomplete` type prompt
  */
 
-'use strict';
-
 import ansiEscapes from 'ansi-escapes';
 import figures from 'figures';
 import Base from 'inquirer/lib/prompts/base.js';

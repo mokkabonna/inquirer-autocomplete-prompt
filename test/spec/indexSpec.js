@@ -1,7 +1,5 @@
 /* eslint-env mocha */
 
-'use strict';
-
 import { strict as assert } from 'assert';
 import sinon from 'sinon';
 import inquirer from 'inquirer';

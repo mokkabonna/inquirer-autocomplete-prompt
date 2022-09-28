@@ -1,5 +1,3 @@
-'use strict';
-
 import { EventEmitter } from 'events';
 import sinon from 'sinon';
 class ReadlineStub extends EventEmitter {

@@ -2,8 +2,6 @@
  * List prompt example
  */
 
-'use strict';
-
 import inquirer from 'inquirer';
 import fuzzy from 'fuzzy';
 import inquirerPrompt from './index.js';
