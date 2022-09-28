@@ -1,7 +1,7 @@
 'use strict';
 
-const { EventEmitter } = require('events');
-const sinon = require('sinon');
+import { EventEmitter } from 'events';
+import sinon from 'sinon';
 class ReadlineStub extends EventEmitter {
   constructor() {
     super();
@@ -36,4 +36,4 @@ Object.assign(stub, {
 
 Object.assign(ReadlineStub.prototype, stub);
 
-module.exports = ReadlineStub;
+export default ReadlineStub;
