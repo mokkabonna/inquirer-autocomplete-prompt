@@ -41,7 +41,7 @@ Change `autocomplete` to whatever you might prefer.
 
 See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of all except **source**, **suggestOnly**, **searchText** and **emptyText**.
 
-**source** will be called with previous answers object and the current user input each time the user types, it **must** return a promise.
+**source** will be called with previous answers object and the current user input each time the user types, it **must** return a promise (which resolves to an array of options).
 
 **source** will be called once at at first before the user types anything with **undefined** as the value. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
 
