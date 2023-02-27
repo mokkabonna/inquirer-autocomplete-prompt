@@ -87,7 +87,15 @@ function searchStates(answers, input = '') {
 function searchFood(answers, input = '') {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(fuzzy.filter(input, foods).map((el) => el.original));
+      resolve(
+        fuzzy.filter(input, foods).map((el) => {
+          return {
+            name: el.original,
+            value: el.original,
+            short: el.original,
+          };
+        })
+      );
     }, Math.random() * 470 + 30);
   });
 }
