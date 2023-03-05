@@ -275,12 +275,15 @@ class AutocompletePrompt extends Base {
 
     if (keyName === 'tab' && this.opt.suggestOnly) {
       if (this.currentChoices.getChoice(this.selected)) {
-        this.rl.write(ansiEscapes.cursorLeft);
         const autoCompleted = this.currentChoices.getChoice(
           this.selected
         ).value;
-        this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
-        this.rl.line = autoCompleted;
+        this.rl.input.emit('keypress', '\b', {name: 'backspace'}); // Remove redundant tab.
+        if (autoCompleted.includes(this.rl.line)) {
+          this.rl.line = '';
+          this.rl.write(autoCompleted);
+          this.rl.input.emit('keypress', '\b', {name: 'right'}); // Calibrate cursor to right position.
+        }
         this.render();
       }
     } else if (keyName === 'down' || (keyName === 'n' && e.key.ctrl)) {
