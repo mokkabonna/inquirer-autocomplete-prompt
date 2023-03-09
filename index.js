@@ -282,6 +282,9 @@ class AutocompletePrompt extends Base {
         this.rl.write(ansiEscapes.cursorForward(autoCompleted.length));
         this.rl.line = autoCompleted;
         this.render();
+        if (this.opt.searchOnAutocomplete) {
+          this.search(autoCompleted);
+        }
       }
     } else if (keyName === 'down' || (keyName === 'n' && e.key.ctrl)) {
       len = this.nbChoices;
