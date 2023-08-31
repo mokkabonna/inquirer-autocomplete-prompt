@@ -6,13 +6,14 @@
       "runner": "nx-cloud",
       "options": {
         "cacheableOperations": [
-          "build",
           "lint",
-          "test",
-          "e2e"
+          "test"
         ],
-        "accessToken": "ODJjZTFmNTktYWNjNS00MjcwLTkzMmYtZjdkMWNmYjBhMzIyfHJlYWQtd3JpdGU="
+        "accessToken": "MjJiY2FmYjYtYmRjZi00OTM3LTk0MTMtMzc4YzNjOTlmOTRkfHJlYWQtd3JpdGU="
       }
     }
+  },
+  "affected": {
+    "defaultBase": "main"
   }
 }

@@ -4,10 +4,11 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
-  "dependencies": {},
   "devDependencies": {
+    "@nx/node": "^16.7.4",
     "nx": "16.7.4",
-    "nx-cloud": "latest"
+    "nx-cloud": "latest",
+    "typescript": "^5.2.2"
   },
   "workspaces": [
     "packages/*"
