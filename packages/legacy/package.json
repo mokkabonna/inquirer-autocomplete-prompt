@@ -1,0 +1,71 @@
+{
+  "name": "inquirer-autocomplete-prompt",
+  "description": "Autocomplete prompt for inquirer",
+  "version": "3.0.0",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/issues"
+  },
+  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "author": "Martin Hansen <martin@martinhansen.no>",
+  "contributors": [
+    "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
+  ],
+  "engines": {
+    "node": ">=12"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "ansi-escapes": "^6.0.0",
+    "figures": "^5.0.0",
+    "picocolors": "^1.0.0",
+    "run-async": "^2.4.1",
+    "rxjs": "^7.5.6"
+  },
+  "devDependencies": {
+    "c8": "^7.12.0",
+    "eslint": "^8.23.1",
+    "eslint-plugin-import": "^2.26.0",
+    "flow-bin": "^0.187.1",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^9.1.2",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "sinon": "^14.0.0"
+  },
+  "peerDependencies": {
+    "inquirer": "^9.1.0"
+  },
+  "scripts": {
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "eslint": "eslint --report-unused-disable-directives --ignore-path .gitignore --cache .",
+    "eslint:fix": "npm run eslint -- --fix",
+    "mocha": "mocha test/spec",
+    "prettier:cli": "prettier --ignore-path .gitignore \"**/*.js\" \"**/*.md\"",
+    "prettier:check": "npm run prettier:cli -- --check",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "flow": "flow",
+    "pretest": "npm run lint && npm run flow",
+    "test": "c8 --check-coverage npm run mocha",
+    "develop": "nodemon --exec \"npm run mocha\""
+  },
+  "type": "module",
+  "volta": {
+    "node": "16.17.1",
+    "npm": "8.19.2"
+  }
+}
