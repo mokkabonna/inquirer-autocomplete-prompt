@@ -1,8 +1,9 @@
 {
   "name": "inquirer-autocomplete-standalone",
-  "description": "Standalone autocomplete prompt based on inquirer",
+  "description": "Standalone autocomplete cli prompt based on inquirer",
   "version": "3.0.0",
-  "main": "src/index.ts",
+  "main": "./dist/cjs/index.js",
+  "typings": "./dist/cjs/types/index.d.ts",
   "files": [
     "dist/**/*"
   ],
@@ -48,11 +49,27 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "pretest": "npm run lint",
     "test": "vitest run test --coverage",
+    "tsc": "yarn run clean && yarn run tsc:esm && yarn run tsc:cjs",
+    "clean": "rm -rf dist",
+    "tsc:esm": "tsc -p ./tsconfig.json",
+    "tsc:cjs": "tsc -p ./tsconfig.cjs.json",
     "develop": "vitest watch test --coverage"
   },
   "type": "module",
   "volta": {
     "node": "16.17.1",
     "npm": "8.19.2"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/types/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
   }
 }

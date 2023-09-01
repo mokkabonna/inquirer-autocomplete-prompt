@@ -4,6 +4,7 @@
   "compilerOptions": {
     "lib": ["ES6"],
     "target": "es6",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "dist/cjs",
     "declarationDir": "dist/cjs/types"
