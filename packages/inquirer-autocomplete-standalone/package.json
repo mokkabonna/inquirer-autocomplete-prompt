@@ -36,9 +36,7 @@
   },
   "devDependencies": {
     "@inquirer/prompts": "^3.0.2",
-    "@inquirer/testing": "^2.1.2",
-    "@sindresorhus/tsconfig": "^4.0.0",
-    "vitest": "^0.34.3"
+    "@inquirer/testing": "^2.1.2"
   },
   "scripts": {
     "lint": "npm run prettier:check && npm run eslint",
