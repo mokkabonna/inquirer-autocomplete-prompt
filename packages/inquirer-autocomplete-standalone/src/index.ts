@@ -344,3 +344,5 @@ export default createPrompt(
     return renderPrompt(firstLineExtra, list, choiceDescription, validationMsg);
   }
 );
+
+export { Separator };

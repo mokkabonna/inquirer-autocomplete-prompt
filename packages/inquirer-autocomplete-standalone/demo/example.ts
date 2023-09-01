@@ -1,5 +1,7 @@
-import autocomplete, { ChoiceOrSeparatorArray } from '../src/index.js';
-// import { Separator } from '@inquirer/core';
+import autocomplete, {
+  ChoiceOrSeparatorArray,
+  Separator,
+} from '../src/index.js';
 
 const states = [
   'Alabama',
@@ -63,32 +65,6 @@ const states = [
   'Wyoming',
 ];
 
-// import select from '@inquirer/select';
-
-// await select({
-//   message: 'Select a state (select)',
-//   choices: states.map((r) => ({
-//     value: 123,
-//     name: r,
-//     description: r,
-//     disabled: false,
-//   })),
-//   pageSize: 5,
-// });
-
-// import input from '@inquirer/input';
-// const inputfinalval = await input({
-//   message: 'Select a state (input)',
-//   default: 'Alabama',
-//   transformer: (input, { isFinal }) =>
-//     isFinal ? 'Transformed' : `transformed name: ${input}`,
-//   // validate: () => false,
-// });
-
-// console.log(inputfinalval);
-
-// const foods = ['Apple', 'Orange', 'Banana', 'Kiwi', 'Lichi', 'Grapefruit'];
-
 function searchStates(input = ''): Promise<ChoiceOrSeparatorArray<string>> {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -96,7 +72,7 @@ function searchStates(input = ''): Promise<ChoiceOrSeparatorArray<string>> {
         s.toLowerCase().includes(input.toLowerCase())
       );
 
-      const all = results.map((r) => ({
+      const all: any = results.map((r) => ({
         value: r,
         name: r,
         description: r,
@@ -107,7 +83,7 @@ function searchStates(input = ''): Promise<ChoiceOrSeparatorArray<string>> {
         all[1].disabled = true;
       }
 
-      // all.unshift(new Separator());
+      all.unshift(new Separator());
       resolve(all);
     }, 500 + 30);
   });
@@ -123,8 +99,8 @@ const answer = await autocomplete({
     }
     return `transformed name: ${input}`;
   },
-  // default: 'Flofdsafdsrida',
-  pageSize: 5,
+  default: 'Florida',
+  pageSize: 10,
 });
 
 const answer2 = await autocomplete({
