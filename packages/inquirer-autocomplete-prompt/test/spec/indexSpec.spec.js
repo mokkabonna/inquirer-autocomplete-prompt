@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import inquirer from 'inquirer';
 import ReadlineStub from '../helpers/readline.js';
 import Prompt from '../../index.js';
+import { describe, it, beforeEach } from 'vitest';
 
 describe('inquirer-autocomplete-prompt', () => {
   let source;
@@ -141,7 +142,7 @@ describe('inquirer-autocomplete-prompt', () => {
     });
 
     describe('validation', () => {
-      it('validates sync', (done) => {
+      it('validates sync', () => {
         prompt = new Prompt(
           {
             message: 'test',
@@ -160,23 +161,25 @@ describe('inquirer-autocomplete-prompt', () => {
 
         let hasCompleted = false;
 
-        promise.then(() => {
+        return promise.then(() => {
           enter();
-
-          setTimeout(() => {
-            if (hasCompleted) {
-              done(
-                new Error(
-                  'Prompt completed, but should have failed sync validation!.'
-                )
-              );
-            } else {
-              done();
-            }
-          }, 10);
 
           promiseForAnswer.then(() => {
             hasCompleted = true;
+          });
+
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (hasCompleted) {
+                reject(
+                  new Error(
+                    'Prompt completed, but should have failed sync validation!.'
+                  )
+                );
+              } else {
+                resolve();
+              }
+            }, 10);
           });
         });
       });
@@ -210,7 +213,7 @@ describe('inquirer-autocomplete-prompt', () => {
         });
       });
 
-      it('validates async false', (done) => {
+      it('validates async false', () => {
         prompt = new Prompt(
           {
             message: 'test',
@@ -238,23 +241,25 @@ describe('inquirer-autocomplete-prompt', () => {
 
         let hasCompleted = false;
 
-        promise.then(() => {
+        return promise.then(() => {
           enter();
-
-          setTimeout(() => {
-            if (hasCompleted) {
-              done(
-                new Error(
-                  'Prompt completed, but should have failed async validation!.'
-                )
-              );
-            } else {
-              done();
-            }
-          }, 50);
 
           promiseForAnswer.then(() => {
             hasCompleted = true;
+          });
+
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (hasCompleted) {
+                reject(
+                  new Error(
+                    'Prompt completed, but should have failed async validation!.'
+                  )
+                );
+              } else {
+                resolve();
+              }
+            }, 10);
           });
         });
       });
@@ -806,7 +811,7 @@ describe('inquirer-autocomplete-prompt', () => {
         });
       });
 
-      it('validates sync', (done) => {
+      it('validates sync', () => {
         prompt = new Prompt(
           {
             message: 'test',
@@ -824,28 +829,30 @@ describe('inquirer-autocomplete-prompt', () => {
 
         let hasCompleted = false;
 
-        promise.then(() => {
+        return promise.then(() => {
           enter();
-
-          setTimeout(() => {
-            if (hasCompleted) {
-              done(
-                new Error(
-                  'Prompt completed, but should have failed sync validation!.'
-                )
-              );
-            } else {
-              done();
-            }
-          }, 10);
 
           promiseForAnswer.then(() => {
             hasCompleted = true;
           });
+
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (hasCompleted) {
+                reject(
+                  new Error(
+                    'Prompt completed, but should have failed sync validation!.'
+                  )
+                );
+              } else {
+                resolve();
+              }
+            }, 10);
+          });
         });
       });
 
-      it('validates async false', (done) => {
+      it('validates async false', () => {
         prompt = new Prompt(
           {
             message: 'test',
@@ -872,23 +879,25 @@ describe('inquirer-autocomplete-prompt', () => {
 
         let hasCompleted = false;
 
-        promise.then(() => {
+        return promise.then(() => {
           enter();
-
-          setTimeout(() => {
-            if (hasCompleted) {
-              done(
-                new Error(
-                  'Prompt completed, but should have failed async validation!.'
-                )
-              );
-            } else {
-              done();
-            }
-          }, 50);
 
           promiseForAnswer.then(() => {
             hasCompleted = true;
+          });
+
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              if (hasCompleted) {
+                reject(
+                  new Error(
+                    'Prompt completed, but should have failed sync validation!.'
+                  )
+                );
+              } else {
+                resolve();
+              }
+            }, 10);
           });
         });
       });
