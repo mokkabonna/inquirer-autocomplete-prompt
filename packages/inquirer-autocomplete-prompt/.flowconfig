@@ -1,7 +1,10 @@
-[ignore]
-<PROJECT_ROOT>/node_modules/resolve/test/resolver/malformed_package_json/package.json
-
 [include]
+../../node_modules
+
+[ignore]
+.*/node_modules/resolve/test/resolver/malformed_package_json/package.json
+.*/dist/._
+.*/node*modules/.*
 
 [libs]
 

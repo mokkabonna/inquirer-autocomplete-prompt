@@ -1,0 +1,15 @@
+{
+  "extends": "@sindresorhus/tsconfig",
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["./src"],
+  "compilerOptions": {
+    "skipLibCheck": false,
+    "lib": ["ESNext"],
+    "target": "es2022",
+    "moduleResolution": "nodenext",
+    "outDir": "dist/esm",
+    "declarationDir": "dist/esm/types"
+  }
+}

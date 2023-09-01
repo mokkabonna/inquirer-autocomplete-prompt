@@ -66,6 +66,7 @@ describe('inquirer-autocomplete-prompt', () => {
           name: 'name',
           filter(val) {
             const done = this.async();
+
             setTimeout(() => {
               done(null, val.slice(0, 2));
             }, 100);

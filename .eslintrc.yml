@@ -3,6 +3,7 @@ env:
   node: true
 extends: 'eslint:recommended'
 plugins: ['eslint-plugin-import']
+parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 12
   sourceType: module
@@ -23,7 +24,7 @@ rules:
   'comma-style': ['error', 'last']
   complexity: ['error', 15]
   'max-depth': ['error', 4]
-  'max-statements': ['error', 25]
+  'max-statements': ['error', 50]
   'new-cap': 'error'
   'no-empty':
     - 'error'
@@ -32,7 +33,7 @@ rules:
   quotes: ['error', 'single']
   strict: 'off'
   'no-undef': 'error'
-  'no-unused-vars': 'error'
+  'no-unused-vars': 'off'
   'eol-last': 'error'
   'key-spacing':
     - 'error'

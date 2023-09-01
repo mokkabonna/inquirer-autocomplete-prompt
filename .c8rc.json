@@ -1,9 +1,5 @@
 {
-  "reporter": [
-    "lcov",
-    "html",
-    "text"
-  ],
+  "reporter": ["lcov", "html", "text"],
   "statements": 85,
   "branches": 85,
   "functions": 85,
