@@ -3,6 +3,7 @@ import {
   createPrompt,
   isBackspaceKey,
   isEnterKey,
+  KeypressEvent,
   ResolvedPromptConfig,
   Separator,
   useEffect,
@@ -35,10 +36,10 @@ type AutocompleteConfig<Value> = AsyncPromptConfig &
     validate?: (value: Value) => boolean | string | Promise<string | boolean>;
     transformer?: (value: string, { isFinal }: { isFinal: boolean }) => string;
     default?: string;
-    suggestOnly?: boolean;
     emptyText?: string;
-    searchText?: string;
     pageSize?: number;
+    searchText?: string;
+    suggestOnly?: boolean;
   };
 
 enum AsyncStatus {
@@ -53,11 +54,11 @@ function isSelectableChoice(choice: Choice<any> | Separator | null) {
 /**
  * The isUpKey and isDownKey functions from inquirer include a check for j/k keys and we don't want that here
  */
-function isUpKey(key: any) {
+function isUpKey(key: KeypressEvent) {
   return key.name === 'up';
 }
 
-function isDownKey(key: any) {
+function isDownKey(key: KeypressEvent) {
   return key.name === 'down';
 }
 

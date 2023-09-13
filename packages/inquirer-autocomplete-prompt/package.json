@@ -6,7 +6,38 @@
   "files": [
     "index.js"
   ],
-  "keywords": [],
+  "keywords": [
+    "answer",
+    "answers",
+    "ask",
+    "base",
+    "cli",
+    "command",
+    "command-line",
+    "enquirer",
+    "input",
+    "inquire",
+    "inquirer",
+    "interface",
+    "iterm",
+    "javascript",
+    "menu",
+    "node",
+    "nodejs",
+    "prompt",
+    "promptly",
+    "prompts",
+    "question",
+    "readline",
+    "stdin",
+    "stdout",
+    "terminal",
+    "tty",
+    "ui",
+    "yeoman",
+    "yo",
+    "zsh"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
@@ -14,7 +45,7 @@
   "bugs": {
     "url": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/issues"
   },
-  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt#readme",
+  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/main/packages/inquirer-autocomplete-prompt/README.md",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"

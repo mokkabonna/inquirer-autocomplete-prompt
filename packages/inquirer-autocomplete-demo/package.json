@@ -1,0 +1,21 @@
+{
+  "name": "inquirer-autocomplete-demo",
+  "description": "Simplified demo of inquirer-autocomplete-standalone prompt. Run with npx inquirer-autocomplete-demo",
+  "version": "0.0.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "eslint": "eslint **/*.js",
+    "eslint:fix": "npm run eslint -- --fix",
+    "prettier:cli": "prettier src",
+    "prettier:check": "npm run prettier:cli -- --check",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "pretest": "npm run lint",
+    "test": ""
+  },
+  "main": "src/index.js",
+  "bin": "./src/index.js"
+}

@@ -30,7 +30,7 @@ rules:
     - 'error'
     - allowEmptyCatch: true
   'no-new': 'off'
-  quotes: ['error', 'single']
+  quotes: ['error', 'single', { avoidEscape: true }]
   strict: 'off'
   'no-undef': 'error'
   'no-unused-vars': 'off'

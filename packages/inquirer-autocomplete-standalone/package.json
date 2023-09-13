@@ -1,29 +1,57 @@
 {
   "name": "inquirer-autocomplete-standalone",
-  "description": "Standalone autocomplete cli prompt based on inquirer",
-  "version": "3.0.0",
+  "description": "Standalone autocomplete cli prompt based on inquirer core",
+  "version": "0.0.0",
   "main": "./dist/cjs/index.js",
   "typings": "./dist/cjs/types/index.d.ts",
   "files": [
     "dist/**/*"
   ],
-  "keywords": [],
+  "keywords": [
+    "answer",
+    "answers",
+    "ask",
+    "base",
+    "cli",
+    "command",
+    "command-line",
+    "enquirer",
+    "input",
+    "inquire",
+    "inquirer",
+    "interface",
+    "iterm",
+    "javascript",
+    "menu",
+    "node",
+    "nodejs",
+    "prompt",
+    "promptly",
+    "prompts",
+    "question",
+    "readline",
+    "stdin",
+    "stdout",
+    "terminal",
+    "tty",
+    "ui",
+    "yeoman",
+    "yo",
+    "zsh"
+  ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:mokkabonna/inquirer-autocomplete-standalone.git"
+    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
   },
   "bugs": {
-    "url": "https://github.com/mokkabonna/inquirer-autocomplete-standalone/issues"
+    "url": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/issues"
   },
-  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-standalone#readme",
+  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "author": "Martin Hansen <martin@martinhansen.no>",
-  "contributors": [
-    "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
-  ],
   "engines": {
     "node": ">=16"
   },
@@ -50,6 +78,7 @@
     "pretest": "npm run lint",
     "test": "vitest run test --coverage",
     "tsc": "yarn run clean && yarn run tsc:esm && yarn run tsc:cjs",
+    "build": "yarn run tsc",
     "clean": "rm -rf dist",
     "tsc:esm": "tsc -p ./tsconfig.json",
     "tsc:cjs": "tsc -p ./tsconfig.cjs.json",
@@ -63,8 +92,8 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/types/index.d.mts",
-        "default": "./dist/esm/index.mjs"
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/index.js"
       },
       "require": {
         "types": "./dist/cjs/types/index.d.ts",
