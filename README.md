@@ -16,6 +16,8 @@ If you want the legacy version used with inquirer version 9 and below then that 
 npm install inquirer-autocomplete-prompt
 ```
 
+That version will still be maintained for bugs and other issues, but is not the recommended way to use this prompt. This is following the change that Inquirer itself chose. Now the preferred way is to have standalone prompts that you can pick and choose from.
+
 ## Demo
 
 Run a quick demo locally with
