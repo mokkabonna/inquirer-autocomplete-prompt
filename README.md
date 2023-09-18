@@ -10,7 +10,7 @@ Allows you do do show dynamic choices in a list based on user input, both synchr
 npm install inquirer-autocomplete-standalone
 ```
 
-If you want the legacy version used with inquirer version 9 and below then that is located [here](./packages/inquirer-autocomplete-prompt/README.md) and can be installed with:
+If you want the legacy version used with inquirer version 9 and below then that is located [here](https://www.npmjs.com/package/inquirer-autocomplete-prompt) and can be installed with:
 
 ```js
 npm install inquirer-autocomplete-prompt
@@ -49,7 +49,7 @@ const answer = await autocomplete({
 console.log(answer) // Norway
 ```
 
-![Example render](packages/inquirer-autocomplete-standalone/assets/example.png)
+![Example render](https://raw.githubusercontent.com/mokkabonna/inquirer-autocomplete-prompt/master/packages/inquirer-autocomplete-standalone/assets/example.png)
 
 ## Options
 

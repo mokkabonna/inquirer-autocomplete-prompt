@@ -1,6 +1,6 @@
 # inquirer-autocomplete-standalone
 
-Standalone autocomplete prompt based on [inquirer](https://github.com/SBoudrias/Inquirer.js) core.
+Standalone autocomplete prompt for the CLI based on [inquirer](https://github.com/SBoudrias/Inquirer.js) core.
 
 Allows you do do show dynamic choices in a list based on user input, both synchronous or asynchronous allowing you to connect to an external service.
 
@@ -8,6 +8,22 @@ Allows you do do show dynamic choices in a list based on user input, both synchr
 
 ```
 npm install inquirer-autocomplete-standalone
+```
+
+If you want the legacy version used with inquirer version 9 and below then that is located [here](https://www.npmjs.com/package/inquirer-autocomplete-prompt) and can be installed with:
+
+```js
+npm install inquirer-autocomplete-prompt
+```
+
+That version will still be maintained for bugs and other issues, but is not the recommended way to use this prompt. This is following the change that Inquirer itself chose. Now the preferred way is to have standalone prompts that you can pick and choose from.
+
+## Demo
+
+Run a quick demo locally with
+
+```js
+npx inquirer-autocomplete-demo
 ```
 
 ## Usage
@@ -33,7 +49,7 @@ const answer = await autocomplete({
 console.log(answer) // Norway
 ```
 
-![Example render](assets/example.png)
+![Example render](https://raw.githubusercontent.com/mokkabonna/inquirer-autocomplete-prompt/master/packages/inquirer-autocomplete-standalone/assets/example.png)
 
 ## Options
 
