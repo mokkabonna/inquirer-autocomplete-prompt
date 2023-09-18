@@ -49,7 +49,7 @@ const answer = await autocomplete({
 console.log(answer) // Norway
 ```
 
-![Example render](assets/example.png)
+![Example render](packages/inquirer-autocomplete-standalone/assets/example.png)
 
 ## Options
 
