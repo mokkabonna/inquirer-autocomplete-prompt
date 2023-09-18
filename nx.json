@@ -5,16 +5,17 @@
     "default": {
       "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "lint",
-          "test",
-          "build"
-        ],
+        "cacheableOperations": ["lint", "test", "build"],
         "accessToken": "NThiM2Y0ZDYtOWVkNy00NWJiLTgzMDktZjRjYjhkYTUzZTI5fHJlYWQtd3JpdGU="
       }
     }
   },
   "affected": {
     "defaultBase": "main"
+  },
+  "targetDefaults": {
+    "test": {
+      "outputs": ["{projectRoot}/coverage"]
+    }
   }
 }

@@ -85,10 +85,6 @@
     "develop": "vitest watch test --coverage"
   },
   "type": "module",
-  "volta": {
-    "node": "16.17.1",
-    "npm": "8.19.2"
-  },
   "exports": {
     ".": {
       "import": {

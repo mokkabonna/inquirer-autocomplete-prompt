@@ -750,7 +750,7 @@ describe('inquirer-autocomplete-prompt', () => {
     it('does not render call1 results if another call is made before call1 completes', async () => {
       sourceStub.returns(
         new Promise((resolve) => {
-          setTimeout(() => resolve([{ value: 1 }]), 10);
+          setTimeout(() => resolve([{ value: 1 }]), 100);
         })
       ); // keep it pending
       await renderPrompt();
