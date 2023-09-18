@@ -1,7 +1,7 @@
 {
   "name": "inquirer-autocomplete-demo",
   "description": "Simplified demo of inquirer-autocomplete-standalone prompt. Run with npx inquirer-autocomplete-demo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "type": "module",
   "scripts": {
