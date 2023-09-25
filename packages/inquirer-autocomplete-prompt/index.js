@@ -235,11 +235,11 @@ class AutocompletePrompt extends Base {
     }
 
     // Store this promise for check in the callback
-    const lastPromise = thisPromise;
+    this.lastPromise = thisPromise;
 
     return thisPromise.then((choices) => {
       // If another search is triggered before the current search finishes, don't set results
-      if (thisPromise !== lastPromise) return;
+      if (thisPromise !== this.lastPromise) return;
 
       this.currentChoices = new Choices(choices);
 

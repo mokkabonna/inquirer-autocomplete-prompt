@@ -327,6 +327,42 @@ describe('inquirer-autocomplete-prompt', () => {
     });
   });
 
+  it('does not show previous result if later result finishes before it', async () => {
+    const source = sinon.stub();
+    rl = new ReadlineStub();
+    prompt = new Prompt(
+      {
+        message: 'test',
+        name: 'name',
+        source,
+      },
+      rl
+    );
+
+    // even this finishes after the second one, it should not be shown since a new call has been made
+    const promise1 = new Promise((res) => {
+      setTimeout(() => {
+        res(['result1']);
+      }, 100);
+    });
+
+    const promise2 = new Promise((res) => {
+      setTimeout(() => {
+        res(['result2']);
+      }, 10);
+    });
+    source.onCall(0).returns(promise1);
+    source.onCall(1).returns(promise2);
+
+    const runPromise = prompt.run();
+    type('c');
+
+    await promise1;
+    enter();
+    const answer = await runPromise;
+    assert.deepEqual(answer, 'result2');
+  });
+
   describe('suggestOnly = false', () => {
     beforeEach(() => {
       defaultChoices = ['foo', new inquirer.Separator(), 'bar', 'bum'];
