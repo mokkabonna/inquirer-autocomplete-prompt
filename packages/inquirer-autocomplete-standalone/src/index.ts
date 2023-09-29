@@ -13,7 +13,6 @@ import {
   useRef,
   useState,
 } from '@inquirer/core';
-import ansiEscapes from 'ansi-escapes';
 import figures from 'figures';
 import pc from 'picocolors';
 import type {} from '@inquirer/type';
