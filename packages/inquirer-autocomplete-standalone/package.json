@@ -80,6 +80,7 @@
     "test": "vitest run test --coverage",
     "tsc": "yarn run clean && yarn run tsc:esm && yarn run tsc:cjs",
     "build": "yarn run tsc && node ./scripts/build-module-fixup.js",
+    "publish": "yarn run build && npm publish",
     "clean": "rm -rf dist",
     "tsc:esm": "tsc -p ./tsconfig.json",
     "tsc:cjs": "tsc -p ./tsconfig.cjs.json",
