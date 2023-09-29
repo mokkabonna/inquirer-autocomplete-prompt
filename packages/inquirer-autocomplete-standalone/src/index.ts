@@ -127,7 +127,7 @@ export default createPrompt(
   <Value extends unknown>(
     config: AutocompleteConfig<Value>,
     done: (value: Value) => void
-  ): string => {
+  ): string | [string, string] => {
     config.suggestOnly ??= false;
     const [searchStatus, setSearchStatus] = useState<AsyncStatus>(
       AsyncStatus.Pending
@@ -298,13 +298,14 @@ export default createPrompt(
 
     let formattedValue = transformMaybe(input);
 
-    function renderPrompt(extra: string, ...rest: string[]) {
+    function renderPrompt(
+      extra: string,
+      ...rest: string[]
+    ): string | [string, string] {
       const firstLine = `${prefix} ${message} ${extra}`;
-
       const below = rest.join('');
-      const results = below ? `\n${below}` : '';
 
-      return `${firstLine}${results}${ansiEscapes.cursorHide}`;
+      return [`${firstLine}`, `${below}`];
     }
 
     if (finalValue !== null) {
