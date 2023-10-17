@@ -1,7 +1,7 @@
 {
   "name": "inquirer-autocomplete-standalone",
   "description": "Standalone autocomplete cli prompt based on inquirer core",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
