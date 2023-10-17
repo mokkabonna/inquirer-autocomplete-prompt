@@ -6,9 +6,4 @@ Promise.all([
     JSON.stringify({ type: 'module' }, null, 2),
     'utf8'
   ),
-  writeFile(
-    './dist/cjs/package.json',
-    JSON.stringify({ type: 'commonjs' }, null, 2),
-    'utf8'
-  ),
 ]);

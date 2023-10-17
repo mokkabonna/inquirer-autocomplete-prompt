@@ -4,8 +4,9 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "target": "es2022",
+    "module": "Node16",
     "moduleResolution": "nodenext",
-    "outDir": "dist/esm",
-    "declarationDir": "dist/esm/types"
+    "outDir": "dist",
+    "declarationDir": "dist/types"
   }
 }

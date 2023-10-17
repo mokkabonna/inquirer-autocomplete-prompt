@@ -10,6 +10,21 @@ Allows you do do show dynamic choices in a list based on user input, both synchr
 npm install inquirer-autocomplete-standalone
 ```
 
+This is a native ES module package. If you are using it with commonjs you need to import it like this:
+
+```js
+async function main() {
+  const { default: autocomplete, Separator } = await import(
+    'inquirer-autocomplete-standalone'
+  );
+  const answer = await autocomplete({});
+}
+
+main();
+```
+
+To
+
 If you want the legacy version used with inquirer version 9 and below then that is located [here](https://www.npmjs.com/package/inquirer-autocomplete-prompt) and can be installed with:
 
 ```js
