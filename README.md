@@ -23,7 +23,7 @@ async function main() {
 main();
 ```
 
-To
+If you are using it with typescript see [here](https://github.com/mokkabonna/import-esm-in-typescript-examples) for examples of how to use it if emitting commonjs or esm from your typescript.
 
 If you want the legacy version used with inquirer version 9 and below then that is located [here](https://www.npmjs.com/package/inquirer-autocomplete-prompt) and can be installed with:
 
