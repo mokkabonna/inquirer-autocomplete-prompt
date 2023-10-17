@@ -43,7 +43,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:mokkabonna/inquirer-autocomplete-prompt.git"
+    "url": "git+ssh://git@github.com/mokkabonna/inquirer-autocomplete-prompt.git"
   },
   "bugs": {
     "url": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/issues"
