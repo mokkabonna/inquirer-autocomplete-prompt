@@ -2,7 +2,7 @@
 
 Standalone autocomplete prompt for the CLI based on [inquirer](https://github.com/SBoudrias/Inquirer.js) core.
 
-Allows you do do show dynamic choices in a list based on user input, both synchronous or asynchronous allowing you to connect to an external service.
+Allows you to show dynamic choices in a list based on user input, both synchronous or asynchronous, allowing you to connect to an external service.
 
 ## Installation
 
