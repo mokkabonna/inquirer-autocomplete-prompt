@@ -35,7 +35,7 @@ Now that we know everything is installed correctly lets get your local setup wor
 
     ```
     import autocomplete from 'inquirer-autocomplete-standalone';
-    import { searchCountries } = './some-external-api';
+    import { listCountries } = './some-external-api';
 
     const answer = await autocomplete({
         message: 'Travel from what country?',
@@ -56,28 +56,25 @@ Now that we know everything is installed correctly lets get your local setup wor
 
 Next, we need to modify the second import to
 
-    import { searchCountries } from './Countries.mjs';
+    import { listCountries } from './Countries.mjs';
 
 ### Step 6
 
 Create another file at the same level as the previous file called "Countries" and copy this function into it and save it. 
 
 ```  
-// This is a simplified example
-async function searchCountries(input) {
-    // Simulate an API call or use a real API here to fetch the list of countries
+// Example function 
+async function listCountries(input) {
+    // You can add below anything you want to appear as an option in the CLI
     const countries = [
-      'Hello Welcome to this Program where we will be using a UI',
-      'Sweden',
-      'Denmark',
-      'Finland',
-      'Germany',
-      'Netherlands',
+      'United States of America',
       'France',
-      // ...other country names
+      'Australia',
+      'Russia',
+      'Germany',
+      'Mexico',
+      'Argentina',
     ];
-  
-    // Filter the list of countries based on the user's input
     const filteredCountries = countries.filter(country =>
       country.toLowerCase()
     );
@@ -85,7 +82,7 @@ async function searchCountries(input) {
     return filteredCountries;
   }
   
-  export { searchCountries };
+  export { listCountries };
   
   ```
 
