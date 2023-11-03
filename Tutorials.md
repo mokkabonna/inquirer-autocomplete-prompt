@@ -31,7 +31,7 @@ This should allow you to use the arrow keys ito interactively select a country.
 
 ### Step 5
 
-Inside the directory that your project is in create a main.mjs file and. Next copy the following code into it 
+Now that we know everything is installed correctly lets get your local setup working. Inside the directory that your project is in create a main.mjs file and. Next copy the following code into it 
 
     ```
     import autocomplete from 'inquirer-autocomplete-standalone';
