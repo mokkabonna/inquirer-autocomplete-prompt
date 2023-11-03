@@ -20,11 +20,6 @@ Download inquirer-autocomplete-standalone by running the command in the command 
 
     npm install inquirer-autocomplete-standalone
 
-If prompted you should also run 
-
-    npm fund 
-
-
 ### Step 4
 
 Once downlaoded to make sure its installed correctly inside the command line run this command: 
@@ -59,6 +54,10 @@ Inside the directory that your project is in create a main.mjs file and. Next co
 
     ```
 
+Next, we need to modify the second import to
+
+    import { searchCountries } from './Countries.mjs';
+
 ### Step 6
 
 Create another file at the same level as the previous file called "Countries" and copy this function into it and save it. 
@@ -90,14 +89,7 @@ async function searchCountries(input) {
   
   ```
 
-
 ### Step 7
-
-Next lets go back and look at main.mjs. Inside here we need to modify the second import to be 
-
-    import { searchCountries } from './Countries.mjs';
-
-### Step 8
 
 The final step is to in the command line if you aren't already there is to navigate to the folder that the project is in and run the following command
 
