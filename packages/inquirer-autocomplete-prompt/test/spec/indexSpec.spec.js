@@ -382,6 +382,72 @@ describe('inquirer-autocomplete-prompt', () => {
       );
     });
 
+    describe('error handling', () => {
+      it('handles async error in source function', async () => {
+        const error = new Error('Something went wrong!');
+        source.returns(Promise.reject(error));
+
+        promiseForAnswer = getPromiseForAnswer();
+
+        const successSpy = sinon.spy();
+        const errorSpy = sinon.spy();
+
+        await promiseForAnswer.then(successSpy).catch(errorSpy);
+
+        sinon.assert.notCalled(successSpy);
+        sinon.assert.calledOnce(errorSpy);
+        sinon.assert.calledWithExactly(errorSpy, error);
+      });
+
+      it('handles sync error in source function', async () => {
+        const error = new Error('Something went wrong!');
+        source.throws(error);
+
+        promiseForAnswer = getPromiseForAnswer();
+
+        const successSpy = sinon.spy();
+        const errorSpy = sinon.spy();
+
+        await promiseForAnswer.then(successSpy).catch(errorSpy);
+
+        sinon.assert.notCalled(successSpy);
+        sinon.assert.calledOnce(errorSpy);
+        sinon.assert.calledWithExactly(errorSpy, error);
+      });
+
+      it('renders sync error in validate function as validation error', async () => {
+        const error = new Error('Something went wrong2!');
+        source.returns(['foo', 'bar']);
+
+        const validate = sinon.stub();
+
+        let fail = true;
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate,
+            source,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        enter();
+
+        validate.throws(error);
+        sinon.assert.calledOnce(validate);
+
+        validate.returns(true);
+        enter();
+        sinon.assert.calledTwice(validate);
+
+        return promiseForAnswer.then((answer) => {
+          assert.equal(answer, 'foo');
+        });
+      });
+    });
+
     describe('default behaviour', () => {
       it('sets the first to selected when no default', () => {
         prompt = new Prompt(
@@ -975,8 +1041,10 @@ describe('inquirer-autocomplete-prompt', () => {
     });
 
     describe('submit', () => {
+      let validate;
       describe('without choices in result', () => {
         beforeEach(() => {
+          validate = sinon.stub().returns(true);
           rl = new ReadlineStub();
           prompt = new Prompt(
             {
@@ -992,9 +1060,15 @@ describe('inquirer-autocomplete-prompt', () => {
           return promise;
         });
 
-        it('searches again, since not possible to select something that does not exist', () => {
+        it('searches again, since not possible to select something that does not exist', async () => {
+          // called once at start
           sinon.assert.calledOnce(source);
+
+          // try to select and await validation result (even sync validation is async)
           enter();
+          await validate;
+
+          // Now search again
           sinon.assert.calledTwice(source);
         });
       });

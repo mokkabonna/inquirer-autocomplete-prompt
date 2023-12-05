@@ -18,6 +18,15 @@ import { takeWhile } from 'rxjs/operators';
 const isSelectable = (choice) =>
   choice.type !== 'separator' && !choice.disabled;
 
+const tryCallPromiseFail = (fn, ...args) => {
+  try {
+    const result = fn(...args);
+    return Promise.resolve(result);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 class AutocompletePrompt extends Base {
   constructor(
     questions /*: Array<any> */,
@@ -52,8 +61,9 @@ class AutocompletePrompt extends Base {
    * @param  {Function} cb      Callback when prompt is done
    * @return {this}
    */
-  _run(cb /*: Function */) /*: this*/ {
+  _run(cb /*: Function */, errCb) /*: this*/ {
     this.done = cb;
+    this.errCb = errCb;
 
     if (Array.isArray(this.rl.history)) {
       this.rl.history = [];
@@ -155,14 +165,22 @@ class AutocompletePrompt extends Base {
 
       let validationResult;
       if (this.opt.suggestOnly) {
-        validationResult = this.opt.validate(lineOrRl, this.answers);
+        validationResult = tryCallPromiseFail(
+          this.opt.validate,
+          lineOrRl,
+          this.answers
+        );
       } else {
         const choice = this.currentChoices.getChoice(this.selected);
-        validationResult = this.opt.validate(choice, this.answers);
+        validationResult = tryCallPromiseFail(
+          this.opt.validate,
+          choice,
+          this.answers
+        );
       }
 
       if (isPromise(validationResult)) {
-        validationResult.then(checkValidationResult);
+        validationResult.then(checkValidationResult, checkValidationResult);
       } else {
         checkValidationResult(validationResult);
       }
@@ -226,38 +244,38 @@ class AutocompletePrompt extends Base {
 
     this.lastSearchTerm = searchTerm;
 
-    let thisPromise;
-    try {
-      const result = this.opt.source(this.answers, searchTerm);
-      thisPromise = Promise.resolve(result);
-    } catch (error) {
-      thisPromise = Promise.reject(error);
-    }
+    const thisPromise = tryCallPromiseFail(
+      this.opt.source,
+      this.answers,
+      searchTerm
+    );
 
     // Store this promise for check in the callback
     this.lastPromise = thisPromise;
 
-    return thisPromise.then((choices) => {
-      // If another search is triggered before the current search finishes, don't set results
-      if (thisPromise !== this.lastPromise) return;
+    return thisPromise
+      .then((choices) => {
+        // If another search is triggered before the current search finishes, don't set results
+        if (thisPromise !== this.lastPromise) return;
 
-      this.currentChoices = new Choices(choices);
+        this.currentChoices = new Choices(choices);
 
-      const realChoices = choices.filter((choice) => isSelectable(choice));
-      this.nbChoices = realChoices.length;
+        const realChoices = choices.filter((choice) => isSelectable(choice));
+        this.nbChoices = realChoices.length;
 
-      const selectedIndex = realChoices.findIndex(
-        (choice) =>
-          choice === this.initialValue || choice.value === this.initialValue
-      );
+        const selectedIndex = realChoices.findIndex(
+          (choice) =>
+            choice === this.initialValue || choice.value === this.initialValue
+        );
 
-      if (selectedIndex >= 0) {
-        this.selected = selectedIndex;
-      }
+        if (selectedIndex >= 0) {
+          this.selected = selectedIndex;
+        }
 
-      this.searching = false;
-      this.render();
-    });
+        this.searching = false;
+        this.render();
+      })
+      .catch(this.errCb);
   }
 
   ensureSelectedInRange() {
@@ -269,7 +287,9 @@ class AutocompletePrompt extends Base {
    * When user type
    */
 
-  onKeypress(e /* : {key: { name: string, ctrl: boolean }, value: string } */) {
+  async onKeypress(
+    e /* : {key: { name: string, ctrl: boolean }, value: string } */
+  ) {
     let len;
     const keyName = (e.key && e.key.name) || undefined;
 
