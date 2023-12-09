@@ -62,5 +62,5 @@ This feature is only useful when suggestOnly is set to true. This is because if 
 
 
 ### Enter is selected without selecting a value
-<img src="Images/DefaultImage.JPG" alt="Page Limit Result" width="400" height="80">
+<img src="Images/DefaultImage.jpg" alt="Page Limit Result" width="400" height="80">
 
