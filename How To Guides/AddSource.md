@@ -85,4 +85,4 @@ The final step is to in the command line if you aren't already there is to navig
 
 This should populate the command line with a list of options that are listed in Countries.mjs and that you can interact with using your arrow keys. Once you hit enter on the option of your choosing it will be returned to the command line. This is shown below:
 
-<img src="Images/AddSource.JPG" alt="Page Limit Result" width="700" height="260">
+<img src="Images/AddSource.jpg" alt="Page Limit Result" width="700" height="260">
