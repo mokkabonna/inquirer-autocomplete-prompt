@@ -73,7 +73,7 @@ __Notice that suggestOnly is set to true. So if the user hits enter without firs
 
 If you enter an invalid value then the command line will look like this:
 
-<img src="Images/InvalidEntry.JPG" alt="Page Limit Result" width="1000" height="200">
+<img src="Images/InvalidEntry.jpg" alt="Page Limit Result" width="1000" height="200">
 
 The user will still be able to select another value.
 
