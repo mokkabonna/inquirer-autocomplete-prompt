@@ -136,6 +136,10 @@ const answer = await autocomplete({
   Norway
 ```
 
+## Documentation - How To Guides
+
+Follow the link to [How To Guides](./How%20To%20Guides/) to learn how to setup and use this project using ECMAScript Modules. 
+
 ## Credits
 
 [Martin Hansen](https://github.com/mokkabonna)
