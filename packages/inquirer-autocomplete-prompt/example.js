@@ -95,6 +95,10 @@ function searchFood(answers, input = '') {
 inquirer
   .prompt([
     {
+      type: 'input',
+      name: 'first_name',
+    },
+    {
       type: 'autocomplete',
       name: 'fruit',
       suggestOnly: true,
@@ -161,4 +165,7 @@ inquirer
   ])
   .then((answers) => {
     console.log(JSON.stringify(answers, null, 2));
+  })
+  .catch((err) => {
+    console.log(err);
   });

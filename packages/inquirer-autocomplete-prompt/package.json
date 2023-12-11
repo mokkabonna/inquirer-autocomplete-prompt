@@ -84,7 +84,7 @@
     "flow": "flow",
     "pretest": "npm run lint && npm run flow",
     "test": "vitest run test --coverage",
-    "develop": "vitest watch test --coverage --reporter=basic"
+    "develop": "vitest watch test -c ../../vitest.develop.config.mjs"
   },
   "type": "module"
 }
