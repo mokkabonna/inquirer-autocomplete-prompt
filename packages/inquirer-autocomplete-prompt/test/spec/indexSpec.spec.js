@@ -421,7 +421,6 @@ describe('inquirer-autocomplete-prompt', () => {
 
         const validate = sinon.stub();
 
-        let fail = true;
         prompt = new Prompt(
           {
             message: 'test',
@@ -433,22 +432,49 @@ describe('inquirer-autocomplete-prompt', () => {
         );
 
         promiseForAnswer = getPromiseForAnswer();
-        enter();
-
         validate.throws(error);
-        sinon.assert.calledOnce(validate);
-
-        validate.returns(true);
         enter();
-        sinon.assert.calledTwice(validate);
 
-        return promiseForAnswer.then((answer) => {
-          assert.equal(answer, 'foo');
-        });
+        const successSpy = sinon.spy();
+        const errorSpy = sinon.spy();
+
+        await promiseForAnswer.then(successSpy).catch(errorSpy);
+
+        sinon.assert.notCalled(successSpy);
+        sinon.assert.calledOnce(errorSpy);
+      });
+
+      it('renders async error in validate function', async () => {
+        const error = new Error('Something went wrong in validation!');
+        source.returns(['foo', 'bar']);
+
+        const validate = sinon.stub();
+
+        prompt = new Prompt(
+          {
+            message: 'test',
+            name: 'name',
+            validate,
+            source,
+          },
+          rl
+        );
+
+        promiseForAnswer = getPromiseForAnswer();
+        validate.rejects(error);
+        enter();
+
+        const successSpy = sinon.spy();
+        const errorSpy = sinon.spy();
+
+        await promiseForAnswer.then(successSpy).catch(errorSpy);
+
+        sinon.assert.notCalled(successSpy);
+        sinon.assert.calledOnce(errorSpy);
       });
     });
 
-    describe('default behaviour', () => {
+    describe('default behavior', () => {
       it('sets the first to selected when no default', () => {
         prompt = new Prompt(
           {
@@ -568,7 +594,7 @@ describe('inquirer-autocomplete-prompt', () => {
       });
     });
 
-    it('applies filter async with done calback', () => {
+    it('applies filter async with done callback', () => {
       prompt = new Prompt(
         {
           message: 'test',
@@ -867,7 +893,7 @@ describe('inquirer-autocomplete-prompt', () => {
         sinon.assert.callCount(source, 4);
       });
 
-      it('does not search again if same searchterm (not input added)', () => {
+      it('does not search again if same search term (not input added)', () => {
         type('ice');
         sinon.assert.calledThrice(source);
         source.reset();

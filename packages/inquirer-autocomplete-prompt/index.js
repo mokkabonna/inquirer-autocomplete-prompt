@@ -61,7 +61,7 @@ class AutocompletePrompt extends Base {
    * @param  {Function} cb      Callback when prompt is done
    * @return {this}
    */
-  _run(cb /*: Function */, errCb) /*: this*/ {
+  _run(cb /*: Function */, errCb /*: Function */) /*: this*/ {
     this.done = cb;
     this.errCb = errCb;
 
@@ -179,11 +179,7 @@ class AutocompletePrompt extends Base {
         );
       }
 
-      if (isPromise(validationResult)) {
-        validationResult.then(checkValidationResult, checkValidationResult);
-      } else {
-        checkValidationResult(validationResult);
-      }
+      validationResult.then(checkValidationResult, this.errCb);
     } else {
       this.onSubmitAfterValidation(lineOrRl);
     }
@@ -362,10 +358,6 @@ function listRender(choices, pointer /*: string */) /*: string */ {
   });
 
   return output.replace(/\n$/, '');
-}
-
-function isPromise(value) {
-  return typeof value === 'object' && typeof value.then === 'function';
 }
 
 export default AutocompletePrompt;

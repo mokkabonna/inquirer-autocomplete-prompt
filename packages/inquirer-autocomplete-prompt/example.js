@@ -85,7 +85,6 @@ function searchStates(answers, input = '') {
 }
 
 function searchFood(answers, input = '') {
-  // return Promise.reject(new Error('Something went wrong!'));
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(fuzzy.filter(input, foods).map((el) => el.original));
@@ -110,7 +109,6 @@ inquirer
       source: searchFood,
       pageSize: 4,
       validate(val) {
-        throw new Error('val error');
         return val ? true : 'Type something!';
       },
     },

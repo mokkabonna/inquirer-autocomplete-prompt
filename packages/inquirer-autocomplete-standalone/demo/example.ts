@@ -66,7 +66,7 @@ const states = [
 ];
 
 function searchStates(input = ''): Promise<ChoiceOrSeparatorArray<string>> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       const results = states.filter((s) =>
         s.toLowerCase().includes(input.toLowerCase())
