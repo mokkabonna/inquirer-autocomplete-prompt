@@ -78,9 +78,9 @@
     "prettier:fix": "npm run prettier:cli -- --write",
     "pretest": "npm run lint",
     "test": "vitest run test --coverage",
-    "build-and-publish": "yarn run build && npm publish",
+    "build-and-publish": "npm run build && npm publish",
     "clean": "rm -rf dist",
-    "build": "yarn run clean && yarn run tsc",
+    "build": "npm run clean && npm run tsc",
     "tsc": "tsc -p ./tsconfig.json",
     "develop": "vitest watch test --coverage --reporter=basic"
   }
