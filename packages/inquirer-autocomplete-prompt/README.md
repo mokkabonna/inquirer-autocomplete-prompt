@@ -8,6 +8,8 @@ Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
 ## Installation
 
+Requires Node.js 22.13.0 or newer. Version 3 is the last release line that supports Node.js 16.
+
 ```sh
 npm install inquirer-autocomplete-prompt
 ```

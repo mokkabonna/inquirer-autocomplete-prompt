@@ -55,7 +55,7 @@
   },
   "author": "Martin Hansen <martin@martinhansen.no>",
   "engines": {
-    "node": ">=16"
+    "node": ">=22.13.0"
   },
   "license": "ISC",
   "dependencies": {

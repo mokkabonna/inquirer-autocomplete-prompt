@@ -55,7 +55,7 @@
     "Karl Horky <karl.horky@gmail.com> (https://github.com/karlhorky)"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=22.13.0"
   },
   "license": "ISC",
   "dependencies": {

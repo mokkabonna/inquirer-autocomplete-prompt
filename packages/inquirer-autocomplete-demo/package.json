@@ -3,6 +3,9 @@
   "description": "Simplified demo of inquirer-autocomplete-standalone prompt. Run with npx inquirer-autocomplete-demo",
   "version": "0.3.0",
   "private": false,
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/index.js",

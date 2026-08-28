@@ -10,6 +10,9 @@
     "test:legacy-package": "node scripts/smoke-test-legacy-package.mjs"
   },
   "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "devDependencies": {
     "@eslint/js": "^8.57.1",
     "@nx/node": "^16.7.4",
@@ -32,6 +35,6 @@
     "packages/*"
   ],
   "volta": {
-    "node": "18.17.1"
+    "node": "24.12.0"
   }
 }

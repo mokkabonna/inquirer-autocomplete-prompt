@@ -6,6 +6,8 @@ Allows you to show dynamic choices in a list based on user input, both synchrono
 
 ## Installation
 
+Requires Node.js 22.13.0 or newer.
+
 ```
 npm install inquirer-autocomplete-standalone
 ```
