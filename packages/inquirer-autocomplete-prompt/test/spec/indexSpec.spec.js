@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-
 import { strict as assert } from 'assert';
 import sinon from 'sinon';
 import inquirer from 'inquirer';
