@@ -11,6 +11,7 @@ describe('inquirer-autocomplete-prompt', () => {
   let answer;
   let events;
   let getScreen;
+  let nextRender;
 
   beforeEach(() => {
     sourceStub = sinon.stub();
@@ -18,6 +19,7 @@ describe('inquirer-autocomplete-prompt', () => {
 
   afterEach(() => {
     getScreen = null;
+    nextRender = null;
     events = null;
     if (answer) {
       answer.cancel();
@@ -29,9 +31,11 @@ describe('inquirer-autocomplete-prompt', () => {
     config.message ??= 'msg';
     config.source ??= sourceStub;
     const renderResult = await render(autocomplete, config);
+    renderResult.answer.catch(() => {});
     answer = renderResult.answer;
     events = renderResult.events;
     getScreen = renderResult.getScreen;
+    nextRender = renderResult.nextRender;
     return renderResult;
   }
 
@@ -296,8 +300,7 @@ describe('inquirer-autocomplete-prompt', () => {
 
       events.keypress('enter');
 
-      await Promise.resolve();
-
+      await nextRender();
       expect(getScreen()).to.toMatchInlineSnapshot('"? msg name"');
 
       // resolves to value even if renders name
@@ -372,7 +375,7 @@ describe('inquirer-autocomplete-prompt', () => {
 
       events.keypress('enter');
 
-      await Promise.resolve();
+      await new Promise(setImmediate);
 
       expect(getScreen()).to.toMatchInlineSnapshot(`
         "? msg (Use arrow keys or type to search)
@@ -386,7 +389,7 @@ describe('inquirer-autocomplete-prompt', () => {
       events.keypress('down');
       events.keypress('enter');
 
-      await Promise.resolve();
+      await new Promise(setImmediate);
       expect(getScreen()).to.toMatchInlineSnapshot('"? msg 2"');
     });
   });
@@ -726,8 +729,13 @@ describe('inquirer-autocomplete-prompt', () => {
       sinon.assert.calledOnce(sourceStub);
       sinon.assert.calledWith(sourceStub, undefined);
 
+      let resolveSource;
       sourceStub.reset();
-      sourceStub.resolves([{ value: 2 }]);
+      sourceStub.returns(
+        new Promise((resolve) => {
+          resolveSource = resolve;
+        })
+      );
 
       events.type('a');
 
@@ -736,10 +744,11 @@ describe('inquirer-autocomplete-prompt', () => {
 
       expect(getScreen()).to.toMatchInlineSnapshot(`
         "? msg a
-        Searching..."
+        No results..."
       `);
 
-      await sourceStub.firstCall.returnValue;
+      resolveSource([{ value: 2 }]);
+      await new Promise(setImmediate);
 
       expect(getScreen()).to.toMatchInlineSnapshot(`
         "? msg a
@@ -791,12 +800,14 @@ describe('inquirer-autocomplete-prompt', () => {
         No results..."
       `);
 
+      sourceStub.reset();
+      sourceStub.returns(new Promise(() => {}));
       events.type('a');
 
       // input is shown
       expect(getScreen()).to.toMatchInlineSnapshot(`
         "? msg a
-        Searching..."
+        No results..."
       `);
 
       events.keypress('backspace');

@@ -1,10 +1,8 @@
 import {
-  AsyncPromptConfig,
   createPrompt,
   isBackspaceKey,
   isEnterKey,
   KeypressEvent,
-  ResolvedPromptConfig,
   Separator,
   useEffect,
   useKeypress,
@@ -15,7 +13,6 @@ import {
 } from '@inquirer/core';
 import figures from 'figures';
 import pc from 'picocolors';
-import type {} from '@inquirer/type';
 
 type Choice<Value> = {
   value: Value;
@@ -29,17 +26,30 @@ export type ChoiceOrSeparatorArray<Value> = ReadonlyArray<
   Choice<Value> | Separator
 >;
 
-type AutocompleteConfig<Value> = AsyncPromptConfig &
-  ResolvedPromptConfig & {
-    source: (input?: string) => Promise<ChoiceOrSeparatorArray<Value>>;
-    validate?: (value: Value) => boolean | string | Promise<string | boolean>;
-    transformer?: (value: string, { isFinal }: { isFinal: boolean }) => string;
-    default?: string;
-    emptyText?: string;
-    pageSize?: number;
-    searchText?: string;
-    suggestOnly?: boolean;
-  };
+type AutocompleteConfig<Value> = {
+  message: string;
+  source: (
+    input?: string
+  ) => ChoiceOrSeparatorArray<Value> | Promise<ChoiceOrSeparatorArray<Value>>;
+  validate?: (value: Value) => boolean | string | Promise<string | boolean>;
+  transformer?: (value: string, { isFinal }: { isFinal: boolean }) => string;
+  default?: string;
+  emptyText?: string;
+  pageSize?: number;
+  searchText?: string;
+  suggestOnly?: boolean;
+};
+
+async function validateChoice<Value>(
+  validate: AutocompleteConfig<Value>['validate'],
+  value: Value
+) {
+  if (!validate) {
+    return true;
+  }
+
+  return validate(value);
+}
 
 enum AsyncStatus {
   Pending = 'pending',
@@ -95,8 +105,10 @@ function renderList<Value>(
   cursorPosition: number,
   config: AutocompleteConfig<Value>
 ) {
-  const choicesAsString = choices
-    .map((choice, index) => {
+  return usePagination({
+    items: choices,
+    active: cursorPosition,
+    renderItem: ({ item: choice, isActive }) => {
       if (Separator.isSeparator(choice)) {
         return ` ${choice.separator}`;
       }
@@ -108,17 +120,13 @@ function renderList<Value>(
         return pc.dim(`- ${line} ${disabledLabel}`);
       }
 
-      if (index === cursorPosition) {
+      if (isActive) {
         return pc.cyan(`${figures.pointer} ${line}`);
       }
 
       return `  ${line}`;
-    })
-    .join('\n');
-
-  return usePagination(choicesAsString, {
-    active: cursorPosition,
-    pageSize: config.pageSize,
+    },
+    pageSize: config.pageSize ?? 7,
   });
 }
 
@@ -135,7 +143,7 @@ export default createPrompt(
     const [defaultValue = '', setDefaultValue] = useState<string | undefined>(
       config.default
     );
-    const prefix = usePrefix();
+    const prefix = usePrefix({});
     const [isDirty, setIsDirty] = useState(false);
     const [choices, setChoices] = useState<ChoiceOrSeparatorArray<Value>>([]);
     const [choice, setChoice] = useState<Choice<Value> | null>(null);
@@ -211,7 +219,10 @@ export default createPrompt(
     useEffect(search, [input]);
 
     async function validateAndSetDone(choice: Choice<Value>) {
-      const validationResult = await config.validate(choice.value);
+      const validationResult = await validateChoice(
+        config.validate,
+        choice.value
+      );
       if (validationResult !== true) {
         setValidationError(
           validationResult || 'Enter something, tab to autocomplete!'
