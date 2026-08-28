@@ -1,8 +1,5 @@
 {
   "extends": "@sindresorhus/tsconfig",
-  "ts-node": {
-    "esm": true
-  },
   "include": ["./src"],
   "compilerOptions": {
     "skipLibCheck": false,
