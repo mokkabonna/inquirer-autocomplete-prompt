@@ -74,21 +74,27 @@ const foods = ['Apple', 'Orange', 'Banana', 'Kiwi', 'Lichi', 'Grapefruit'];
 
 function searchStates(answers, input = '') {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      const results = fuzzy.filter(input, states).map((el) => el.original);
+    setTimeout(
+      () => {
+        const results = fuzzy.filter(input, states).map((el) => el.original);
 
-      results.splice(5, 0, new inquirer.Separator());
-      results.push(new inquirer.Separator());
-      resolve(results);
-    }, Math.random() * 470 + 30);
+        results.splice(5, 0, new inquirer.Separator());
+        results.push(new inquirer.Separator());
+        resolve(results);
+      },
+      Math.random() * 470 + 30
+    );
   });
 }
 
 function searchFood(answers, input = '') {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(fuzzy.filter(input, foods).map((el) => el.original));
-    }, Math.random() * 470 + 30);
+    setTimeout(
+      () => {
+        resolve(fuzzy.filter(input, foods).map((el) => el.original));
+      },
+      Math.random() * 470 + 30
+    );
   });
 }
 

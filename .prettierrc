@@ -1,4 +1,12 @@
 {
   "singleQuote": true,
-  "trailingComma": "es5"
+  "trailingComma": "es5",
+  "overrides": [
+    {
+      "files": "packages/inquirer-autocomplete-prompt/**/*.js",
+      "options": {
+        "parser": "acorn"
+      }
+    }
+  ]
 }

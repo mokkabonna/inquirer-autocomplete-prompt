@@ -311,7 +311,7 @@ export default createPrompt(
       return renderPrompt(pc.cyan(transformMaybe(String(finalValue))));
     }
 
-    let firstLineExtra = isDirty ? formattedValue ?? '' : listHelpText;
+    let firstLineExtra = isDirty ? (formattedValue ?? '') : listHelpText;
 
     if (defaultValue && !isDone && !input) {
       firstLineExtra = pc.dim(`(${defaultValue}) `) + firstLineExtra;
