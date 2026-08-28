@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "nx run-many -t lint",
     "test": "nx run-many -t test",
-    "build": "nx run-many -t build"
+    "build": "nx run-many -t build",
+    "test:legacy-package": "node scripts/smoke-test-legacy-package.mjs"
   },
   "private": true,
   "devDependencies": {

@@ -45,7 +45,7 @@
   "bugs": {
     "url": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/issues"
   },
-  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/main/packages/inquirer-autocomplete-prompt/README.md",
+  "homepage": "https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/packages/inquirer-autocomplete-prompt/README.md",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"

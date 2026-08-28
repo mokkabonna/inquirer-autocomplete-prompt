@@ -2,6 +2,8 @@
 
 Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 
+> This package supports Inquirer 9. For newer versions of Inquirer, use [inquirer-autocomplete-standalone](https://www.npmjs.com/package/inquirer-autocomplete-standalone).
+
 [![build status](https://github.com/mokkabonna/inquirer-autocomplete-prompt/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/mokkabonna/inquirer-autocomplete-prompt/actions/workflows/ci.yml)
 
 ## Installation
@@ -10,7 +12,7 @@ Autocomplete prompt for [inquirer](https://github.com/SBoudrias/Inquirer.js)
 npm install inquirer-autocomplete-prompt
 ```
 
-inquirer v9 and inquirer-autocomplete-prompt v3 and higher are native esm modules, this mean you cannot use the commonjs syntax `require('inquirer-autocomplete-prompt')` anymore. If you want to learn more about using native esm in Node, I'd recommend reading [the following guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Alternatively, you can rely on an older version until you're ready to upgrade your environment:
+Inquirer v9 and inquirer-autocomplete-prompt v3 and higher are native ESM modules. This means you cannot use the CommonJS syntax `require('inquirer-autocomplete-prompt')` anymore. If you want to learn more about using native ESM in Node, see [this guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Alternatively, you can rely on an older version until you're ready to upgrade your environment:
 
 ```
 npm install inquirer-autocomplete-prompt@^2.0.0
@@ -43,7 +45,7 @@ See [inquirer](https://github.com/SBoudrias/Inquirer.js) readme for meaning of a
 
 **source** will be called with previous answers object and the current user input each time the user types, it **must** return a promise (which resolves to an array of options).
 
-**source** will be called once at at first before the user types anything with **undefined** as the value. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
+**source** will be called once at first before the user types anything with **undefined** as the value. If a new search is triggered by user input it maintains the correct order, meaning that if the first call completes after the second starts, the results of the first call are never displayed.
 
 **suggestOnly** is default **false**. Setting it to true turns the input into a normal text input. Meaning that pressing enter selects whatever value you currently have. And pressing tab autocompletes the currently selected value in the list. This way you can accept manual input instead of forcing a selection from the list.
 
@@ -74,7 +76,7 @@ inquirer
   });
 ```
 
-See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/example.js) for a working example.
+See also [example.js](https://github.com/mokkabonna/inquirer-autocomplete-prompt/blob/master/packages/inquirer-autocomplete-prompt/example.js) for a working example.
 
 I recommend using this package with [fuzzy](https://www.npmjs.com/package/fuzzy) if you want fuzzy search. Again, see the example for a demonstration of this.
 

@@ -34,6 +34,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Smoke test legacy package
+        run: npm run test:legacy-package
+
       - name: Run Coveralls
         uses: coverallsapp/github-action@v2
         if: matrix.node == 18
