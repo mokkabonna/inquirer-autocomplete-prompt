@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "npm run --workspaces --if-present lint",
+    "pretest": "npm run build",
     "test": "npm run --workspaces --if-present test",
     "build": "npm run --workspaces --if-present build",
     "test:legacy-package": "node scripts/smoke-test-legacy-package.mjs"
