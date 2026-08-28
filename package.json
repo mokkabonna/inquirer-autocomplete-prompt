@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "nx run-many -t lint",
-    "test": "nx run-many -t test",
-    "build": "nx run-many -t build",
+    "lint": "npm run --workspaces --if-present lint",
+    "test": "npm run --workspaces --if-present test",
+    "build": "npm run --workspaces --if-present build",
     "test:legacy-package": "node scripts/smoke-test-legacy-package.mjs"
   },
   "private": true,
@@ -15,7 +15,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^8.57.1",
-    "@nx/node": "^16.7.4",
     "@sindresorhus/tsconfig": "^4.0.0",
     "@typescript-eslint/parser": "^6.5.0",
     "@vitest/coverage-v8": "^4.1.11",
@@ -23,8 +22,6 @@
     "eslint": "^8.57.1",
     "globals": "^13.24.0",
     "inquirer": "^9.1.2",
-    "nx": "16.7.4",
-    "nx-cloud": "latest",
     "prettier": "^2.7.1",
     "sinon": "^15.2.0",
     "ts-node": "^10.9.1",
