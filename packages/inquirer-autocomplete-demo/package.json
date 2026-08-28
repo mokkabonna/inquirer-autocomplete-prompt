@@ -14,10 +14,10 @@
     "prettier:check": "npm run prettier:cli -- --check",
     "prettier:fix": "npm run prettier:cli -- --write",
     "pretest": "npm run lint",
-    "test": ""
+    "test": "vitest run test"
   },
   "dependencies": {
-    "inquirer-autocomplete-standalone": "latest"
+    "inquirer-autocomplete-standalone": "^0.8.1"
   },
   "main": "src/index.js",
   "bin": "./src/index.js"

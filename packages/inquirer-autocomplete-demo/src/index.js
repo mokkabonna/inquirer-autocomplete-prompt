@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import autocomplete, { Separator } from 'inquirer-autocomplete-standalone';
+import { pathToFileURL } from 'node:url';
 
 const countries = [
   'Afghanistan',
@@ -199,7 +200,7 @@ const countries = [
   'Zimbabwe',
 ];
 
-function searchCountries(input = '') {
+export function searchCountries(input = '') {
   return new Promise((resolve) => {
     setTimeout(() => {
       const results = countries.filter((s) =>
@@ -224,37 +225,46 @@ function searchCountries(input = '') {
   });
 }
 
-function upperFirst(input) {
+export function upperFirst(input) {
   return input.charAt(0).toUpperCase() + input.slice(1);
 }
 
-const answer = await autocomplete({
-  message: 'Select a country (suggest only)',
-  source: searchCountries,
-  suggestOnly: true,
-  searchText: 'Searching for countries...',
-  emptyText: 'No countries found.',
-  transformer: (input, { isFinal }) => {
-    if (isFinal) {
-      return 'You selected: ' + upperFirst(input);
-    }
+async function main() {
+  const answer = await autocomplete({
+    message: 'Select a country (suggest only)',
+    source: searchCountries,
+    suggestOnly: true,
+    searchText: 'Searching for countries...',
+    emptyText: 'No countries found.',
+    transformer: (input, { isFinal }) => {
+      if (isFinal) {
+        return 'You selected: ' + upperFirst(input);
+      }
 
-    return upperFirst(input);
-  },
-  validate(value) {
-    if (!value) {
-      return 'Please select a country';
-    }
-    return true;
-  },
-  default: 'Norway',
-  pageSize: 7,
-});
+      return upperFirst(input);
+    },
+    validate(value) {
+      if (!value) {
+        return 'Please select a country';
+      }
+      return true;
+    },
+    default: 'Norway',
+    pageSize: 7,
+  });
 
-const answer2 = await autocomplete({
-  message: 'Select a country',
-  source: searchCountries,
-  pageSize: 5,
-});
+  const answer2 = await autocomplete({
+    message: 'Select a country',
+    source: searchCountries,
+    pageSize: 5,
+  });
 
-console.log(answer, answer2);
+  console.log(answer, answer2);
+}
+
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  await main();
+}
