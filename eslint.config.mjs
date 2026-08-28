@@ -24,7 +24,8 @@ export default [
       eqeqeq: 'error',
       'no-eq-null': 'error',
       'no-use-before-define': 'off',
-      complexity: ['error', 15],
+      // ESLint 10 counts logical assignment as a branch.
+      complexity: ['error', 16],
       'max-depth': ['error', 4],
       'max-statements': ['error', 50],
       'new-cap': 'error',

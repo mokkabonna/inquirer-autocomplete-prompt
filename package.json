@@ -14,13 +14,13 @@
     "node": ">=22.13.0"
   },
   "devDependencies": {
-    "@eslint/js": "^8.57.1",
+    "@eslint/js": "^10.0.1",
     "@sindresorhus/tsconfig": "^4.0.0",
-    "@typescript-eslint/parser": "^6.5.0",
+    "@typescript-eslint/parser": "^8.68.0",
     "@vitest/coverage-v8": "^4.1.11",
     "@vitest/ui": "^4.1.11",
-    "eslint": "^8.57.1",
-    "globals": "^13.24.0",
+    "eslint": "^10.9.1",
+    "globals": "^17.11.0",
     "inquirer": "^9.1.2",
     "prettier": "^2.7.1",
     "sinon": "^15.2.0",
