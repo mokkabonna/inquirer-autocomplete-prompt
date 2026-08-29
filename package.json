@@ -8,6 +8,8 @@
     "pretest": "npm run build",
     "test": "npm run --workspaces --if-present test",
     "build": "npm run --workspaces --if-present build",
+    "pretest:standalone-package": "npm run build",
+    "test:standalone-package": "node scripts/smoke-test-standalone-package.mjs",
     "test:legacy-package": "node scripts/smoke-test-legacy-package.mjs"
   },
   "private": true,
