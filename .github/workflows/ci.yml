@@ -37,6 +37,9 @@ jobs:
       - name: Smoke test legacy package
         run: npm run test:legacy-package
 
+      - name: Smoke test standalone package
+        run: npm run test:standalone-package
+
       - name: Run Coveralls
         uses: coverallsapp/github-action@v2
         if: matrix.node == 22
