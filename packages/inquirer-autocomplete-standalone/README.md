@@ -75,7 +75,7 @@ The generic type `Value` is whatever type the value of your choices are.
 | Property    | Type                                                                                    | Required | Description                                                                                                                                                                                                                                                                                                                          |
 | ----------- | --------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | message     | `string`                                                                                | yes      | The question to ask                                                                                                                                                                                                                                                                                                                  |
-| source      | `(input?: string) => Promise<Choice<Value> \| Separator> \| Choice<Value> \| Separator` | yes      | A function that will be called first once with `undefined` at the start. Then later with whatever value the user has typed. See table below for full description of the `Choice<Value>` type. Can also return choices synchronous.                                                                                                   |
+| source      | `(input?: string) => ChoiceOrSeparatorArray<Value> \| Promise<ChoiceOrSeparatorArray<Value>>` | yes      | A function that will be called first once with `undefined` at the start. Then later with whatever value the user has typed. See table below for full description of the `Choice<Value>` type. It may return choices synchronously.                                                                                               |
 | transformer | `(string, { isFinal: boolean }) => string`                                              | no       | Transform/Format the raw value entered by the user. Once the prompt is completed, isFinal will be true. This function is purely visual, modify the answer in your code if needed.                                                                                                                                                    |
 | validate    | `(value: Value) => boolean \| string \| Promise<string \| boolean>`                     | no       | On submit, validate the filtered answered content. When returning a string, it'll be used as the error message displayed to the user. Note: returning a rejected promise, we'll assume a code error happened and crash.                                                                                                              |
 | default     | `string`                                                                                | no       | If `suggestOnly` is `true`: will select that value if pressing enter and no input. If `false`: will select the choice with this value in the list when `source` resolves.                                                                                                                                                            |
@@ -87,11 +87,13 @@ The generic type `Value` is whatever type the value of your choices are.
 ## Choice type and description
 
 ```ts
-type Choice<Value> = {
-  value: Value;
-  name?: string;
-  description?: string;
-  disabled?: boolean | string;
+import type { Choice } from 'inquirer-autocomplete-standalone';
+
+const choice: Choice<string> = {
+  value: 'Norway',
+  name: 'Norway',
+  description: 'A Nordic country',
+  disabled: false,
 };
 ```
 

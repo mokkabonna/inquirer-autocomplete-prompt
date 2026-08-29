@@ -14,7 +14,7 @@ import {
 import figures from 'figures';
 import pc from 'picocolors';
 
-type Choice<Value> = {
+export type Choice<Value> = {
   value: Value;
   name?: string;
   description?: string;
@@ -26,7 +26,7 @@ export type ChoiceOrSeparatorArray<Value> = ReadonlyArray<
   Choice<Value> | Separator
 >;
 
-type AutocompleteConfig<Value> = {
+export type AutocompleteConfig<Value> = {
   message: string;
   source: (
     input?: string
