@@ -51,10 +51,12 @@ async function validateChoice<Value>(
   return validate(value);
 }
 
-enum AsyncStatus {
-  Pending = 'pending',
-  Done = 'done',
-}
+const AsyncStatus = {
+  Pending: 'pending',
+  Done: 'done',
+} as const;
+
+type AsyncStatusValue = (typeof AsyncStatus)[keyof typeof AsyncStatus];
 
 function isSelectableChoice(choice: Choice<any> | Separator | null) {
   return choice !== null && !Separator.isSeparator(choice) && !choice.disabled;
@@ -136,7 +138,7 @@ export default createPrompt(
     done: (value: Value) => void
   ): string | [string, string] => {
     config.suggestOnly ??= false;
-    const [searchStatus, setSearchStatus] = useState<AsyncStatus>(
+    const [searchStatus, setSearchStatus] = useState<AsyncStatusValue>(
       AsyncStatus.Pending
     );
     const [input, setInput] = useState<string | undefined>(undefined);
